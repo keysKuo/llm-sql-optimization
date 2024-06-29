@@ -6,8 +6,9 @@
 The project is built on the idea of optimizing SQL query statements. Its goal is to enhance query optimization by leveraging large language models (LLMs). The primary model applied in the project is Llama3, integrated with several techniques to support visual query analysis. Through various extensions, the project aims to directly execute SQL statements and visualize them using different types of charts.
 
 <h3 align="center">
-    <img width="700" style="border-radius:5px;" alt="screenshot" src="frontend/public/llama-local.png">
+    
 </h3>
+    ![Funny Cat](https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif)
 
 # Built with:
     Flask
@@ -37,7 +38,8 @@ npm install
 
 # Environment:
 Setup ``.env`` according to ``.env.example`` 
-```
+
+```shell
 DB_USER=dbuser
 DB_PASSWORD=dbpassword
 DB_NAME_SETUP=sys
