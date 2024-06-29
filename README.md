@@ -35,6 +35,19 @@ cd frontend/
 npm install
 ```
 
+# Environment:
+Setup ``.env`` according to ``.env.example`` 
+```
+DB_USER=dbuser
+DB_PASSWORD=dbpassword
+DB_NAME_SETUP=sys
+DB_NAME_USE=dbname
+
+OPENAI_API_BASE=https://api.groq.com/openai/v1
+OPENAI_MODEL_NAME=llama3-70b-8192
+OPENAI_API_KEY=groqapikey
+```
+
 # Run app:
 
 ```bash
@@ -47,3 +60,4 @@ cd frontend/
 npm run dev 
 # http://localhost:5173
 ```
+
