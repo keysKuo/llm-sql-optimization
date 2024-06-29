@@ -5,10 +5,8 @@
 
 The project is built on the idea of optimizing SQL query statements. Its goal is to enhance query optimization by leveraging large language models (LLMs). The primary model applied in the project is Llama3, integrated with several techniques to support visual query analysis. Through various extensions, the project aims to directly execute SQL statements and visualize them using different types of charts.
 
-<h3 align="center">
-    
-</h3>
-    ![Funny Cat](https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif)
+
+![Funny Cat](./frontend/public/Llama3Visualization-ezgif.com-video-to-gif-converter.gif)
 
 # Built with:
     Flask
