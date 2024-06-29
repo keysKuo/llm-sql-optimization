@@ -20,7 +20,7 @@ export default function HomePage() {
 			<div className="flex-1 h-[100svh] flex flex-col items-center shadow-messagebox">
 				<MessageBox formData={formData} setFormData={setFormData} />
 			</div>
-			<div className="w-[30rem] h-[100svh] flex flex-col items-center shadow-messagebox">
+			<div className="w-[30%] h-[100svh] flex flex-col items-center shadow-messagebox">
 				<label
 					className="bg-zinc-700 w-full text-white text-center h-16 flex items-center justify-center"
 					htmlFor=""

@@ -4,9 +4,13 @@
 
 body {
   background-color: #F2EFF2;
-  font-family: "Nunito Sans";
+  font-family: "Nunito Sans" !important;
   font-optical-sizing: auto;
   font-weight: 700;
+}
+
+code[class*="language-"] {
+  font-family: "Nunito Sans" !important;
 }
 
 .avatar.offline:before {

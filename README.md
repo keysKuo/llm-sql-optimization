@@ -22,10 +22,10 @@ The project is built on the idea of optimizing SQL query statements. Its goal is
 
 ```bash
 # Clone dự án từ GitHub
-git clone https://github.com/keysKuo/CrewAI-Test.git
+git clone https://github.com/keysKuo/Llama3-sql-optimization.git
 
 # Đi vào thư mục của dự án
-cd CrewAI-Test/
+cd Llama3-sql-optimization/
 
 # Cài đặt các package từ tệp requirements.txt
 pip install -r requirements.txt
