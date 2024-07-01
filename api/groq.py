@@ -13,7 +13,7 @@ import re
 # Define model
 # model = Ollama(model="llama3")
 
-def generate(question, schema, memory=""):
+def generate_groq(question, schema, memory=""):
     generator = Agent(
         role="Database Query Specialist",
         goal="Generate SQL queries based on user input while adhering to strict guidelines.",

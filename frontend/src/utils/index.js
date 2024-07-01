@@ -31,7 +31,7 @@ function isDate(str) {
     return !isNumber(str) && !isNaN(new Date(str).getTime())
 }
 
-console.log(isDate  ("GDP value in USD trillion for South Africa in 2000"))
+
 
 function ArraysToMap(columns, rows){
     const result = []

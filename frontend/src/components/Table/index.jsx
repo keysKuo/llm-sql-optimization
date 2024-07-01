@@ -21,7 +21,7 @@ const Table = ({ data, columns }) => {
 								const isNum = isNumber(cell);
 								return !isNum ? (
 									<td
-										className="text-[#ccc] text-xs"
+										className="text-[#F6F5F5] text-xs"
 										key={cellIndex}
 									>
 										{cell}

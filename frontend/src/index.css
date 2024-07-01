@@ -9,8 +9,30 @@ body {
   font-weight: 700;
 }
 
+pre[class*="language-"] , textarea {
+  line-height: 1.8;
+  font-size: 14px;
+  white-space: pre;
+  word-spacing: 3px;
+  word-break: normal;
+  word-wrap: normal;
+}
+
+span.token.keyword {
+  color: #FFAA71;
+}
+
+span.token.number,span.token.boolean {
+  color: #71b190;
+}
+
+span.token.string {
+  color: #E78895;
+}
+
 code[class*="language-"] {
   font-family: "Nunito Sans" !important;
+  word-spacing: 3px;
 }
 
 .avatar.offline:before {
@@ -132,6 +154,9 @@ pre {
 .scroll-smooth {
   scroll-behavior: smooth;
 }
+
+
+
 
 @keyframes ring {
   0% {

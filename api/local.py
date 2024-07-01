@@ -10,7 +10,7 @@ model = Ollama(model="llama3")
 running = True;
 past_result = ""
 
-def generate(question, schema, memory=""):
+def generate_local(question, schema, memory=""):
     generator = Agent(
         role="Database Query Specialist",
         goal="Generate SQL queries based on user input while adhering to strict guidelines.",

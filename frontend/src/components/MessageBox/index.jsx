@@ -2,29 +2,22 @@ import React, { useEffect, useRef, useState } from "react";
 import {
 	LuChevronDown,
 	LuCode2,
-	LuFile,
-	LuLogOut,
-	LuMoreHorizontal,
-	LuPhone,
+	LuDatabase,
+	LuMic,
 	LuSend,
-	LuSmile,
-	LuVideo,
+	LuUpload,
 } from "react-icons/lu";
 import Message from "./Message";
 import Picker from "@emoji-mart/react";
 import data from "@emoji-mart/data";
 import classNames from "classnames";
-import useFetch from "../../hooks/useFetch";
 import axios from "axios";
-import Markdown from "../Markdown";
-import Table from "../Table";
 import Response from "./Response";
-import { ArraysToMap } from "../../utils";
+import configs from '../../configs';
 
-export default function MessageBox({ formData, setFormData }) {
+export default function MessageBox({ formData, setFormData, showDatabase, setShowDatabase }) {
 	const [input, setInput] = useState("");
 	const [visiblePicker, setVisiblePicker] = useState(false);
-	// const { fetch, loading, error } = useFetch();
 	const [loading, setLoading] = useState(false);
 	const [messages, setMessages] = useState([]);
 	const chatBoxRef = useRef(null);
@@ -42,7 +35,7 @@ export default function MessageBox({ formData, setFormData }) {
 		setLoading(true);
 		addMessage("question", input);
 		const options = {
-			url: "http://localhost:5000/test",
+			url: `${configs['BACKEND_URL']}/test`,
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -106,6 +99,10 @@ export default function MessageBox({ formData, setFormData }) {
 		scrollToBottom();
 	}, [messages]);
 
+	const onChangeModel = (e) => {
+		setFormData({...formData, model: e.target.name})
+	}
+
 	return (
 		<>
 			{/* HEADER */}
@@ -120,38 +117,32 @@ export default function MessageBox({ formData, setFormData }) {
 								role="button"
 								className="px-6 py-2 rounded-lg flex items-center justify-between hover:bg-gray-300 m-1 text-[#000]"
 							>
-								Llama3 Local <LuChevronDown />
+								Llama3 {formData['model']} <LuChevronDown />
 							</div>
 							<ul
 								tabIndex={0}
 								className="dropdown-content menu bg-base-100 rounded-lg z-[1] w-52 p-2 shadow"
 							>
 								<li>
-									<a>Llama3 Groq</a>
+									<a name="Local" onClick={onChangeModel}>
+										Llama3 Local
+									</a>
 								</li>
-								<li>
-									<a>Llama3 Local</a>
+								<li name="Groq" onClick={onChangeModel}>
+									<a>Llama3 Groq</a>
 								</li>
 							</ul>
 						</div>
 					</div>
 				</div>
 
-				<div className="flex items-center justify-center gap-3">
-					{/* <div className="p-2 rounded-full hover:bg-[#E8ECEF] cursor-pointer ">
-						<LuVideo size={20} />
+				<div className="flex items-center justify-center gap-3">		
+					<div onClick={() => setShowDatabase((prev) => !prev)} className={classNames({
+						"p-2 rounded-full hover:bg-gray-300 cursor-pointer text-black ": true,
+						"hidden": showDatabase
+					})}>
+						<LuDatabase size={20} />
 					</div>
-					<div className="p-2 rounded-full hover:bg-[#E8ECEF] cursor-pointer ">
-						<LuPhone size={18} />
-					</div> */}
-					<div className="p-2 rounded-full hover:bg-gray-300 cursor-pointer text-black ">
-						<LuMoreHorizontal size={20} />
-					</div>
-					{/* <div
-						className="p-2 rounded-full hover:bg-[#E8ECEF] text-red-400 cursor-pointer "
-					>
-						<LuLogOut size={20} />
-					</div> */}
 				</div>
 			</div>
 
@@ -213,7 +204,7 @@ export default function MessageBox({ formData, setFormData }) {
 						/>
 					</div>
 
-					<LuCode2
+					<LuMic
 						onClick={() => {
 							setVisiblePicker((prev) => !prev);
 						}}
