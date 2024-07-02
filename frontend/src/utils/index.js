@@ -31,6 +31,8 @@ function isDate(str) {
     return !isNumber(str) && !isNaN(new Date(str).getTime())
 }
 
+// console.log(isDate("Sat, 23 Mar 2024 00:00:00 GMT"))
+
 
 
 function ArraysToMap(columns, rows){
@@ -50,6 +52,7 @@ function ArraysToMap(columns, rows){
 
     return result;
 } 
+
 
 // const columns = ['OrderID', 'FirstName', 'ProductName', 'Total', 'OrderDate', 'Status'];
 // const rows = [

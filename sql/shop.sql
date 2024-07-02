@@ -4,8 +4,7 @@ CREATE TABLE
         CategoryName VARCHAR(100) NOT NULL,
         Description TEXT
     );
-
--- Create the Products table
+    
 CREATE TABLE
     Products (
         ProductID INT PRIMARY KEY AUTO_INCREMENT,
@@ -17,7 +16,6 @@ CREATE TABLE
         FOREIGN KEY (CategoryID) REFERENCES Categories (CategoryID)
     );
 
--- Create the Customers table
 CREATE TABLE
     Customers (
         CustomerID INT PRIMARY KEY AUTO_INCREMENT,
@@ -29,7 +27,6 @@ CREATE TABLE
         Phone VARCHAR(15)
     );
 
--- Create the Orders table
 CREATE TABLE
     Orders (
         OrderID INT PRIMARY KEY AUTO_INCREMENT,
@@ -40,7 +37,6 @@ CREATE TABLE
         FOREIGN KEY (CustomerID) REFERENCES Customers (CustomerID)
     );
 
--- Create the OrderDetails table
 CREATE TABLE
     OrderDetails (
         OrderDetailID INT PRIMARY KEY AUTO_INCREMENT,

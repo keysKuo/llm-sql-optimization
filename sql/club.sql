@@ -1,9 +1,10 @@
-CREATE TABLE Clubs (
-    club_id INT AUTO_INCREMENT PRIMARY KEY,
-    club_name VARCHAR(100) NOT NULL,
-    club_type VARCHAR(50),
-    establishment_date DATE
-);
+CREATE TABLE
+    Clubs (
+        club_id INT AUTO_INCREMENT PRIMARY KEY,
+        club_name VARCHAR(100) NOT NULL,
+        club_type VARCHAR(50),
+        establishment_date DATE
+    );
 
 INSERT INTO
     Clubs (club_name, club_type, establishment_date)
@@ -16,13 +17,14 @@ VALUES
     ('Du lịch', 'Sở thích', '2019-10-22'),
     ('Ngôn ngữ', 'Học thuật', '2021-01-12');
 
-CREATE TABLE Students (
-    student_id INT AUTO_INCREMENT PRIMARY KEY,
-    student_name VARCHAR(100) NOT NULL,
-    date_of_birth DATE,
-    major VARCHAR(50),
-    email VARCHAR(100) UNIQUE
-);
+CREATE TABLE
+    Students (
+        student_id INT AUTO_INCREMENT PRIMARY KEY,
+        student_name VARCHAR(100) NOT NULL,
+        date_of_birth DATE,
+        major VARCHAR(50),
+        email VARCHAR(100) UNIQUE
+    );
 
 INSERT INTO
     Students (student_name, date_of_birth, major, email)
@@ -88,46 +90,39 @@ VALUES
         'kvu@example.com'
     );
 
-CREATE TABLE Members (
-    member_id INT AUTO_INCREMENT PRIMARY KEY,
-    club_id INT,
-    student_id INT,
-    join_date DATE,
-    FOREIGN KEY (club_id) REFERENCES Clubs(club_id),
-    FOREIGN KEY (student_id) REFERENCES Students(student_id)
-);
+CREATE TABLE
+    Members (
+        member_id INT AUTO_INCREMENT PRIMARY KEY,
+        club_id INT,
+        student_id INT,
+        join_date DATE,
+        FOREIGN KEY (club_id) REFERENCES Clubs (club_id),
+        FOREIGN KEY (student_id) REFERENCES Students (student_id)
+    );
 
 INSERT INTO
     Members (club_id, student_id, join_date)
 VALUES
-    (1, 101, '2023-02-15'),
-    (1, 102, '2023-03-20'),
-    (2, 103, '2023-01-10'),
-    (3, 104, '2023-04-05'),
-    (3, 105, '2023-02-28'),
-    (4, 106, '2023-03-12'),
-    (5, 107, '2023-01-25'),
-    (6, 108, '2023-04-18'),
-    (6, 109, '2023-03-02'),
-    (7, 110, '2023-02-10');
+    (1, 1, '2023-02-15'),
+    (1, 2, '2023-03-20'),
+    (2, 3, '2023-01-10'),
+    (3, 4, '2023-04-05'),
+    (3, 5, '2023-02-28'),
+    (4, 6, '2023-03-12'),
+    (5, 7, '2023-01-25'),
+    (6, 8, '2023-04-18'),
+    (6, 9, '2023-03-02'),
+    (7, 10, '2023-02-10');
 
-CREATE TABLE Attendance (
-    attendance_id INT AUTO_INCREMENT PRIMARY KEY,
-    member_id INT,
-    event_id INT,
-    attendance_date DATE,
-    FOREIGN KEY (member_id) REFERENCES Members(member_id),
-    FOREIGN KEY (event_id) REFERENCES Events(event_id)
-);
-
-CREATE TABLE Events (
-    event_id INT AUTO_INCREMENT PRIMARY KEY,
-    event_name VARCHAR(100) NOT NULL,
-    event_type VARCHAR(50),
-    event_date DATE,
-    organizer VARCHAR(100),
-    description TEXT
-);
+CREATE TABLE
+    Events (
+        event_id INT AUTO_INCREMENT PRIMARY KEY,
+        event_name VARCHAR(100) NOT NULL,
+        event_type VARCHAR(50),
+        event_date DATE,
+        organizer VARCHAR(100),
+        description TEXT
+    );
 
 INSERT INTO
     Events (
@@ -174,6 +169,16 @@ VALUES
         'Chuyến tham quan các địa danh nổi tiếng của thủ đô Hà Nội.'
     );
 
+CREATE TABLE
+    Attendance (
+        attendance_id INT AUTO_INCREMENT PRIMARY KEY,
+        member_id INT,
+        event_id INT,
+        attendance_date DATE,
+        FOREIGN KEY (member_id) REFERENCES Members (member_id),
+        FOREIGN KEY (event_id) REFERENCES Events (event_id)
+    );
+
 INSERT INTO
     Attendance (member_id, event_id, attendance_date)
 VALUES
@@ -185,27 +190,30 @@ VALUES
     (6, 4, '2023-03-20'),
     (7, 5, '2023-02-18'),
     (8, 5, '2023-02-18'),
-    (9, 6, '2023-04-25'),
-    (10, 7, '2023-03-05');
+    (9, 5, '2023-04-25'),
+    (10, 1, '2023-03-05');
 
-CREATE TABLE ClubEvents (
-    club_id INT,
-    event_id INT,
-    PRIMARY KEY (club_id, event_id),
-    FOREIGN KEY (club_id) REFERENCES Clubs(club_id),
-    FOREIGN KEY (event_id) REFERENCES Events(event_id)
-);
+CREATE TABLE
+    ClubEvents (
+        club_id INT,
+        event_id INT,
+        PRIMARY KEY (club_id, event_id),
+        FOREIGN KEY (club_id) REFERENCES Clubs (club_id),
+        FOREIGN KEY (event_id) REFERENCES Events (event_id)
+    );
 
 INSERT INTO
     ClubEvents (club_id, event_id)
 VALUES
+    (1, 2),
+    (1, 1),
     (2, 1),
+    (2, 4),
+    (3, 1),
     (3, 2),
+    (3, 3),
     (4, 3),
     (5, 4),
-    (6, 5),
-    (7, 5),
     (6, 3),
-    (1, 2),
-    (2, 4),
-    (3, 1);
+    (6, 5),
+    (7, 5);

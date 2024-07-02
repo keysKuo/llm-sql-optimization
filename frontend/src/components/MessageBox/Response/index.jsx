@@ -2,7 +2,7 @@ import React from "react";
 import Markdown from "../../Markdown";
 import { LuCopy, LuRefreshCcw, LuThumbsDown } from "react-icons/lu";
 import Table from "../../Table";
-import { ArraysToMap, formatTimestamp } from "../../../utils";
+import { ArraysToMap, formatTimestamp, isNumber } from "../../../utils";
 import classNames from "classnames";
 import BarChart from "../../Charts/Barchart";
 
@@ -52,7 +52,13 @@ export default function Response({ message, isSkeleton = false }) {
 												columns={message?.data?.columns}
 											/>
 
-                                            <BarChart data={message?.data} />
+											{message?.data?.execute[0]?.some(
+												(e) => isNumber(e)
+											) && (
+												<BarChart
+													data={message?.data}
+												/>
+											)}
 										</>
 									) : (
 										<p className="text-rose-700 text-sm p-[8px]">
@@ -82,7 +88,7 @@ export default function Response({ message, isSkeleton = false }) {
 									<span className="flex" data-state="closed">
 										<button className="rounded-lg text-token-text-secondary hover:bg-[#ccc]">
 											<span className="flex h-[30px] w-[30px] items-center justify-center">
-												<LuRefreshCcw  />
+												<LuRefreshCcw />
 											</span>
 										</button>
 									</span>

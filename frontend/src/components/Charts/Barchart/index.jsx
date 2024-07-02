@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import { ResponsiveBar } from "@nivo/bar";
-import { ArraysToMap } from "../../../utils";
+import { ArraysToMap, isNumber } from "../../../utils";
 import classNames from "classnames";
 
 const BarChart = ({ data }) => {
 	const columns = data?.columns;
 	const execute = data?.execute;
+	const yStart = data?.execute[0].findIndex((e) => isNumber(e));
 	const mapData = ArraysToMap(columns, execute);
 	const [axis, setAxis] = useState({
 		x: 0,
-		y: 0,
+		y: yStart,
 	});
 
 	return (
@@ -19,41 +20,44 @@ const BarChart = ({ data }) => {
 					<strong>Visualization:</strong>
 				</p>
 
-				<div className="flex flex-col">
-					<ul className="menu menu-vertical lg:menu-horizontal bg-base-400 text-zinc-800 gap-2 text-xs">
-						{columns.map((col, idx) => (
-							<li
-								onClick={() => {
-									setAxis({ ...axis, y: idx });
-								}}
-								className={classNames({
-									"bg-[#bdc] text-zinc-800 rounded-lg":
-										axis["y"] === idx,
-								})}
-								key={idx}
-							>
-								<a>{col}</a>
-							</li>
-						))}
-					</ul>
+				<div className="flex flex-col"></div>
+				<ul className="w-full menu menu-vertical lg:menu-horizontal bg-base-400 text-zinc-800 gap-2 text-xs">
+					{columns.map((col, idx) => {
+						if (isNumber(execute[0][idx])) {
+							return (
+								<li
+									onClick={() => {
+										setAxis({ ...axis, y: idx });
+									}}
+									className={classNames({
+										"bg-[#bdc] text-zinc-800 rounded-lg":
+											axis["y"] === idx,
+									})}
+									key={idx}
+								>
+									<a>{col}</a>
+								</li>
+							);
+						}
+					})}
+				</ul>
 
-					<ul className="menu menu-vertical lg:menu-horizontal bg-base-400 text-zinc-800 gap-2 text-xs">
-						{columns.map((col, idx) => (
-							<li
-								onClick={() => {
-									setAxis({ ...axis, x: idx });
-								}}
-								className={classNames({
-									"bg-[#bdc] text-zinc-800 rounded-lg":
-										axis["x"] === idx,
-								})}
-								key={idx}
-							>
-								<a>{col}</a>
-							</li>
-						))}
-					</ul>
-				</div>
+				<ul className="menu menu-vertical lg:menu-horizontal bg-base-400 text-zinc-800 gap-2 text-xs">
+					{columns.map((col, idx) => (
+						<li
+							onClick={() => {
+								setAxis({ ...axis, x: idx });
+							}}
+							className={classNames({
+								"bg-[#bdc] text-zinc-800 rounded-lg":
+									axis["x"] === idx,
+							})}
+							key={idx}
+						>
+							<a>{col}</a>
+						</li>
+					))}
+				</ul>
 			</div>
 
 			<div style={{ height: "400px" }}>

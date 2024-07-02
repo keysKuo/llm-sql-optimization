@@ -99,9 +99,6 @@ export default function MessageBox({ formData, setFormData, showDatabase, setSho
 		scrollToBottom();
 	}, [messages]);
 
-	const onChangeModel = (e) => {
-		setFormData({...formData, model: e.target.name})
-	}
 
 	return (
 		<>
@@ -124,11 +121,11 @@ export default function MessageBox({ formData, setFormData, showDatabase, setSho
 								className="dropdown-content menu bg-base-100 rounded-lg z-[1] w-52 p-2 shadow"
 							>
 								<li>
-									<a name="Local" onClick={onChangeModel}>
+									<a name="Local" onClick={() => setFormData({...formData, model: 'Local'})}>
 										Llama3 Local
 									</a>
 								</li>
-								<li name="Groq" onClick={onChangeModel}>
+								<li name="Groq" onClick={() => setFormData({...formData, model: 'Groq'})}>
 									<a>Llama3 Groq</a>
 								</li>
 							</ul>
