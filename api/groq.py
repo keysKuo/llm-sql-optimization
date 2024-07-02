@@ -119,7 +119,7 @@ def generate_groq(question, schema, memory=""):
     try:
         DB = DatabaseManager("mysql")
         DB.setup(schema)
-        result, columns = DB.query(sql_query)
+        result, columns, error = DB.query(sql_query)
 
         # return test result
         d = dict()

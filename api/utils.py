@@ -31,6 +31,26 @@ def parseQuery(sql):
 
     return table_name, columns
 
+def markdownSQL(query):    
+    return f"```sql\n{query}\n```"
+
+def extractMarkdown(markdown_text):
+    # Regular expression to match SQL statements in markdown
+    sql_patterns = [
+        re.compile(r"```sql\n(.*?)\n```", re.DOTALL),
+        re.compile(r"```\n(.*?)\n```", re.DOTALL)
+    ]
+    
+    # Find all SQL matches from both patterns
+    sql_matches = []
+    for pattern in sql_patterns:
+        sql_matches.extend(pattern.findall(markdown_text))
+    
+    if len(sql_matches) == 0:
+        return markdown_text
+    else:
+        return sql_matches[0]
+
 # Example usage:
 # create_table_sql = """
 # CREATE TABLE Orders (

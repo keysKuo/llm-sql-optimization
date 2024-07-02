@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 import { ResponsiveBar } from "@nivo/bar";
 import { ArraysToMap, isNumber } from "../../../utils";
 import classNames from "classnames";
+import LazyLoad from 'react-lazyload';
 
-const BarChart = ({ data }) => {
+const BarChart = memo(({ data }) => {
 	const columns = data?.columns;
 	const execute = data?.execute;
 	const yStart = data?.execute[0].findIndex((e) => isNumber(e));
@@ -14,7 +15,7 @@ const BarChart = ({ data }) => {
 	});
 
 	return (
-		<>
+		<LazyLoad offset={100} unmountIfInvisible>
 			<div className="markdown prose w-full break-words dark:prose-invert dark text-sm leading-6 p-2 mt-4">
 				<p>
 					<strong>Visualization:</strong>
@@ -79,8 +80,8 @@ const BarChart = ({ data }) => {
 					motionDamping={15}
 				/>
 			</div>
-		</>
+		</LazyLoad>
 	);
-};
+});
 
 export default BarChart;

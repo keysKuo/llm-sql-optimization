@@ -43,7 +43,7 @@ class DatabaseManager:
                 
                 for line in lines:
                     cursor.execute(line.strip())
-                    print(line)
+                    # print(line)
 
                 print("Setup Database successfully")
 
@@ -71,13 +71,15 @@ def queryMySQL_v2(ssql):
             cursor.execute(ssql)
             result = cursor.fetchall()
             columns = [i[0] for i in cursor.description]
+            error = None
             print("Query successfully")
 
-            return result, columns
+            return result, columns, error
 
     except Error as e:
         print(f"Error: {e}")
-        return None, None
+        error = str(e)
+        return None, None, error 
     finally:
         if connection.is_connected():
             cursor.close()
