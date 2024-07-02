@@ -15,8 +15,10 @@ def generate_local(question, schema, memory=""):
     json = filterSchema(schema)
     err = "nothing"
     count = 0
+    d = dict()
     
     while err is not None and count < 5:
+        
         generator = Agent(
             role="Database Query Specialist",
             goal="Generate SQL queries based on user input while adhering to strict guidelines.",
@@ -142,9 +144,8 @@ def generate_local(question, schema, memory=""):
                 err = error
                 count = count + 1
                 continue
-            
+
             # return test result
-            d = dict()
             d['output'] = markdownSQL(ssql)
             d['execute'] = result
             d['columns'] = columns
@@ -154,6 +155,8 @@ def generate_local(question, schema, memory=""):
 
         except Exception as e:
             print("Lỗi ở local: " + str(e))
-            d = dict()
             d['output'] = output
             return d
+    return d
+
+

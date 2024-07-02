@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Message from "../components/MessageBox/Message";
 import MessageBox from "../components/MessageBox";
-import Markdown from "../components/Markdown";
 import Sidebar from "../components/Sidebar";
 import classNames from "classnames";
 

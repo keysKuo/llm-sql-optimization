@@ -2,7 +2,6 @@ import React, { useState, memo } from "react";
 import { ResponsiveBar } from "@nivo/bar";
 import { ArraysToMap, isNumber } from "../../../utils";
 import classNames from "classnames";
-import LazyLoad from 'react-lazyload';
 
 const BarChart = memo(({ data }) => {
 	const columns = data?.columns;
@@ -15,7 +14,7 @@ const BarChart = memo(({ data }) => {
 	});
 
 	return (
-		<LazyLoad offset={100} unmountIfInvisible>
+		<>
 			<div className="markdown prose w-full break-words dark:prose-invert dark text-sm leading-6 p-2 mt-4">
 				<p>
 					<strong>Visualization:</strong>
@@ -23,24 +22,20 @@ const BarChart = memo(({ data }) => {
 
 				<div className="flex flex-col"></div>
 				<ul className="w-full menu menu-vertical lg:menu-horizontal bg-base-400 text-zinc-800 gap-2 text-xs">
-					{columns.map((col, idx) => {
-						if (isNumber(execute[0][idx])) {
-							return (
-								<li
-									onClick={() => {
-										setAxis({ ...axis, y: idx });
-									}}
-									className={classNames({
-										"bg-[#bdc] text-zinc-800 rounded-lg":
-											axis["y"] === idx,
-									})}
-									key={idx}
-								>
-									<a>{col}</a>
-								</li>
-							);
-						}
-					})}
+					{columns.map((col, idx) => (
+						<li
+							onClick={() => {
+								setAxis({ ...axis, y: idx });
+							}}
+							className={classNames({
+								"bg-[#bdc] text-zinc-800 rounded-lg":
+									axis["y"] === idx,
+							})}
+							key={idx}
+						>
+							<a>{col}</a>
+						</li>
+					))}
 				</ul>
 
 				<ul className="menu menu-vertical lg:menu-horizontal bg-base-400 text-zinc-800 gap-2 text-xs">
@@ -80,7 +75,7 @@ const BarChart = memo(({ data }) => {
 					motionDamping={15}
 				/>
 			</div>
-		</LazyLoad>
+		</>
 	);
 });
 

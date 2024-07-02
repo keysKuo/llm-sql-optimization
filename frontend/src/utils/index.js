@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 function formatTimestamp(timestamp) {
     // Kiểm tra tính hợp lệ của timestamp
     const date = new Date(timestamp);
@@ -28,11 +30,8 @@ function isNumber(str) {
 }
 
 function isDate(str) {
-    return !isNumber(str) && !isNaN(new Date(str).getTime())
+    return ("" + str).includes('GMT') || moment(str, moment.ISO_8601, true).isValid();
 }
-
-// console.log(isDate("Sat, 23 Mar 2024 00:00:00 GMT"))
-
 
 
 function ArraysToMap(columns, rows){
