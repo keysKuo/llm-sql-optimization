@@ -8,7 +8,7 @@ export default function HomePage() {
 		question: "",
 		schema: "",
 		memory: "None",
-		model: "Groq",
+		model: "8b",
 	});
 
 	const [showDatabase, setShowDatabase] = useState(false);

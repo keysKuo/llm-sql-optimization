@@ -20,12 +20,13 @@ def createPrompt(question, schema):
     * Respond as a valid MySQL query in type string
     * 'SELECT' at least 4 columns in query
     * DO NOT use 'SELECT *'
+    * DO NOT use 'WHERE' clause unless Question mention
     * All tables referenced MUST be aliased
     * ONLY use exact names of columns and tables in the Schema
     * CHECK exactly whether columns name is belong to right tables.
     * ALWAYS use 'LIMIT' function to limit for instance 20 rows.
     * Keep your query as simple and straightforward as possible; do not use subqueries
-    * Use function to get the current date, if the question involves "today".
+    * Use function 'CURRENT_DATE', if the question involves "today".
     * Use 'JOIN' function to join tables if there are tables need to be joined
     * ONLY query columns that are needed to answer the user question.
     * 'GROUP BY' enough essential columns

@@ -111,24 +111,26 @@ export default function MessageBox({ formData, setFormData, showDatabase, setSho
 						<div className="dropdown">
 							<div
 								tabIndex={0}
+								onClick={() => setVisiblePicker(true)}
 								role="button"
 								className="px-6 py-2 rounded-lg flex items-center justify-between hover:bg-gray-300 m-1 text-[#000]"
 							>
 								Llama3 {formData['model']} <LuChevronDown />
 							</div>
-							<ul
+							{visiblePicker && <ul
+								onClick={() => setVisiblePicker(false)}
 								tabIndex={0}
 								className="dropdown-content menu bg-base-100 rounded-lg z-[1] w-52 p-2 shadow"
 							>
 								<li>
-									<a name="Local" onClick={() => setFormData({...formData, model: 'Local'})}>
-										Llama3 Local
+									<a name="Local" onClick={() => setFormData({...formData, model: '8b'})}>
+										Llama3 8b
 									</a>
 								</li>
-								<li name="Groq" onClick={() => setFormData({...formData, model: 'Groq'})}>
-									<a>Llama3 Groq</a>
+								<li name="Groq" onClick={() => setFormData({...formData, model: '70b'})}>
+									<a>Llama3 70b</a>
 								</li>
-							</ul>
+							</ul>}
 						</div>
 					</div>
 				</div>
@@ -183,23 +185,6 @@ export default function MessageBox({ formData, setFormData, showDatabase, setSho
 						onChange={handleChangeInput}
 						onKeyDown={onPressEnter}
 					/>
-
-					<div
-						className={classNames({
-							hidden: !visiblePicker,
-							"fixed z-[100] bottom-[24dvh]": visiblePicker,
-						})}
-					>
-						<Picker
-							data={data}
-							previewPosition="none"
-							onEmojiSelect={(e) => {
-								setInput((prev) => prev + e.native);
-								setVisiblePicker((prev) => !prev);
-							}}
-							theme={"light"}
-						/>
-					</div>
 
 					<LuMic
 						onClick={() => {
