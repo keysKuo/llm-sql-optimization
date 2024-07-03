@@ -54,7 +54,7 @@ export default function MessageBox({ formData, setFormData, showDatabase, setSho
 					setFormData({...formData, memory: output})
 				}
 				else {
-					setFormData({...formData, memory: ""})
+					setFormData({...formData, memory: "None"})
 				}
 			})
 			.catch((err) => console.log(err))

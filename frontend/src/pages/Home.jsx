@@ -7,7 +7,7 @@ export default function HomePage() {
 	const [formData, setFormData] = useState({
 		question: "",
 		schema: "",
-		memory: "",
+		memory: "None",
 		model: "Groq",
 	});
 
