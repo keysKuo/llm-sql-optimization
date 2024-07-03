@@ -1,9 +1,10 @@
 
 
 
-# About this project:
+# SQL Optimization with Llama3
+---
 
-The project is built on the idea of optimizing SQL query statements. Its goal is to enhance query optimization by leveraging large language models (LLMs). The primary model applied in the project is Llama3, integrated with several techniques to support visual query analysis. Through various extensions, the project aims to directly execute SQL statements and visualize them using different types of charts.
+**The project is built on the idea of optimizing SQL query statements. Its goal is to enhance query optimization by leveraging large language models (LLMs). The primary model applied in the project is Llama3, integrated with several techniques to support visual query analysis. Through various extensions, the project aims to directly execute SQL statements and visualize them using different types of charts.**
 
 
 <div align="center">
@@ -40,27 +41,27 @@ npm install
 # Environment:
 Setup ``.env`` according to ``.env.example`` 
 
-```shell
-DB_USER=dbuser
-DB_PASSWORD=dbpassword
-DB_NAME_SETUP=sys
-DB_NAME_USE=dbname
+```sh
+DB_USER=<username>
+DB_PASSWORD=<password>
+DB_NAME_SETUP=sys # Initial database
+DB_NAME_USE=<databasename> # Using database
 
 OPENAI_API_BASE=https://api.groq.com/openai/v1
 OPENAI_MODEL_NAME=llama3-70b-8192
-OPENAI_API_KEY=groqapikey
+OPENAI_API_KEY=groqapikey # Groq cloud API Key
 ```
 
 # Run app:
 
 ```bash
-# Khởi động backend từ thư mục gốc
-python api/index.py 
-# http://localhost:5000
+# Run Backend from root directory
+python crewai/index.py 
+# Default http://localhost:5000
 
-# Khởi động frontend từ thư mục frontend
+# Run Frontend from frontend directory
 cd frontend/
 npm run dev 
-# http://localhost:5173
+# Default http://localhost:5173
 ```
 
