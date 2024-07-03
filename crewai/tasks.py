@@ -35,7 +35,7 @@ class SQLTasks():
                     * DO NOT write any DML statements (INSERT, UPDATE, DELETE, DROP etc.) to the database."""),
             agent=agent,
             expected_output="""
-                MySQL query.
+                MySQL query as markdown.
                 No Explaination, No Note.
             """
         )

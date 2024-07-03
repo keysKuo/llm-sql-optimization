@@ -8,7 +8,7 @@
 
 
 <div align="center">
-  <img width="1200" src="./frontend/public/Llama3Visualization-ezgif.com-video-to-gif-converter.gif" alt="Demo" />
+  <img width="1200" src="./frontend/public/demo.gif" alt="Demo" />
 </div>
 
 

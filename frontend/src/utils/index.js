@@ -33,6 +33,7 @@ function isDate(str) {
     return ("" + str).includes('GMT') || moment(str, moment.ISO_8601, true).isValid();
 }
 
+// console.log(isNumber("85000.00"))
 
 function ArraysToMap(columns, rows){
     const result = []

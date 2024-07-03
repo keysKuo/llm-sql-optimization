@@ -1,5 +1,3 @@
-
-
 CREATE TABLE
     phim (
         ma_phim INT NOT NULL PRIMARY KEY AUTO_INCREMENT,

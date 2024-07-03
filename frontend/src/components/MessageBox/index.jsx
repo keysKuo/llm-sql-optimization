@@ -1,33 +1,29 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import {
 	LuChevronDown,
-	LuCode2,
 	LuDatabase,
 	LuMic,
 	LuSend,
-	LuUpload,
 } from "react-icons/lu";
 import Message from "./Message";
-import Picker from "@emoji-mart/react";
-import data from "@emoji-mart/data";
 import classNames from "classnames";
 import axios from "axios";
 import Response from "./Response";
 import configs from '../../configs';
 
-export default function MessageBox({ formData, setFormData, showDatabase, setShowDatabase }) {
+const MessageBox = ({ formData, setFormData, showDatabase, setShowDatabase }) => {
 	const [input, setInput] = useState("");
 	const [visiblePicker, setVisiblePicker] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const [messages, setMessages] = useState([]);
 	const chatBoxRef = useRef(null);
 
-	const handleChangeInput = (e) => {
+	const handleChangeInput = useCallback((e) => {
 		setInput(e.target.value);
-		setFormData({ ...formData, question: e.target.value });
-	};
+		setFormData((prevFormData) => ({ ...prevFormData, question: e.target.value }));
+	}, [setFormData]);
 
-	const onSendMessage = async () => {
+	const onSendMessage = useCallback(async () => {
 		if (input === "") {
 			return;
 		}
@@ -44,24 +40,22 @@ export default function MessageBox({ formData, setFormData, showDatabase, setSho
 		};
 
 		clearInput();
-		await axios
-			.request(options)
-			.then((response) => response.data)
-			.then((result) => {
-				const { output, execute, columns } = result;
-				addMessage("response", output, {columns, execute});
-				if(!execute) {
-					setFormData({...formData, memory: output})
-				}
-				else {
-					setFormData({...formData, memory: "None"})
-				}
-			})
-			.catch((err) => console.log(err))
-			.finally(() => {
-				setLoading(false);
-			})
-	};
+		try {
+			const response = await axios.request(options);
+			const result = response.data;
+			const { output, execute, columns } = result;
+			addMessage("response", output, { columns, execute });
+			if (!execute) {
+				setFormData((prevFormData) => ({ ...prevFormData, memory: output }));
+			} else {
+				setFormData((prevFormData) => ({ ...prevFormData, memory: "None" }));
+			}
+		} catch (err) {
+			console.log(err);
+		} finally {
+			setLoading(false);
+		}
+	}, [input, formData, setFormData]);
 
 	const onPressEnter = (e) => {
 		if (e.key === "Enter") {
@@ -74,18 +68,16 @@ export default function MessageBox({ formData, setFormData, showDatabase, setSho
 		setVisiblePicker(false);
 	};
 
-	const addMessage = (type, mess, data={}) => {
-		setMessages((prev) => {
-			return [
-				...prev,
-				{
-					type: type,
-					body: mess,
-					data: data,
-					createdAt: new Date().toISOString(),
-				},
-			];
-		});
+	const addMessage = (type, mess, data = {}) => {
+		setMessages((prev) => [
+			...prev,
+			{
+				type: type,
+				body: mess,
+				data: data,
+				createdAt: new Date().toISOString(),
+			},
+		]);
 		scrollToBottom();
 	};
 
@@ -99,13 +91,10 @@ export default function MessageBox({ formData, setFormData, showDatabase, setSho
 		scrollToBottom();
 	}, [messages]);
 
-
 	return (
 		<>
 			{/* HEADER */}
-			<div
-				className="chatbox-header w-full flex items-center justify-between px-4 py-2 mb-5 text-[#ccc]"
-			>
+			<div className="chatbox-header w-full flex items-center justify-between px-4 py-2 mb-5 text-[#ccc]">
 				<div className="flex items-center justify-center gap-2">
 					<div className="flex flex-col items-start justify-center text-[#ccc]">
 						<div className="dropdown">
@@ -117,29 +106,34 @@ export default function MessageBox({ formData, setFormData, showDatabase, setSho
 							>
 								Llama3 {formData['model']} <LuChevronDown />
 							</div>
-							{visiblePicker && <ul
-								onClick={() => setVisiblePicker(false)}
-								tabIndex={0}
-								className="dropdown-content menu bg-base-100 rounded-lg z-[1] w-52 p-2 shadow"
-							>
-								<li>
-									<a name="Local" onClick={() => setFormData({...formData, model: '8b'})}>
-										Llama3 8b
-									</a>
-								</li>
-								<li name="Groq" onClick={() => setFormData({...formData, model: '70b'})}>
-									<a>Llama3 70b</a>
-								</li>
-							</ul>}
+							{visiblePicker && (
+								<ul
+									onClick={() => setVisiblePicker(false)}
+									tabIndex={0}
+									className="dropdown-content menu bg-base-100 rounded-lg z-[1] w-52 p-2 shadow"
+								>
+									<li>
+										<a name="Local" onClick={() => setFormData({ ...formData, model: '8b' })}>
+											Llama3 8b
+										</a>
+									</li>
+									<li name="Groq" onClick={() => setFormData({ ...formData, model: '70b' })}>
+										<a>Llama3 70b</a>
+									</li>
+								</ul>
+							)}
 						</div>
 					</div>
 				</div>
 
-				<div className="flex items-center justify-center gap-3">		
-					<div onClick={() => setShowDatabase((prev) => !prev)} className={classNames({
-						"p-2 rounded-full hover:bg-gray-300 cursor-pointer text-black ": true,
-						"hidden": showDatabase
-					})}>
+				<div className="flex items-center justify-center gap-3">
+					<div
+						onClick={() => setShowDatabase((prev) => !prev)}
+						className={classNames({
+							"p-2 rounded-full hover:bg-gray-300 cursor-pointer text-black ": true,
+							hidden: showDatabase,
+						})}
+					>
 						<LuDatabase size={20} />
 					</div>
 				</div>
@@ -150,11 +144,7 @@ export default function MessageBox({ formData, setFormData, showDatabase, setSho
 				<div className="w-full flex flex-col items-start justify-between space-y-5">
 					{messages.length === 0 ? (
 						<div className="w-full h-[80svh] flex flex-col items-center justify-center">
-							<img
-								className="w-72"
-								src="https://ezticket.io.vn/logo_2.png"
-								alt=""
-							></img>
+							<img className="w-72" src="https://ezticket.io.vn/logo_2.png" alt=""></img>
 						</div>
 					) : (
 						<>
@@ -198,6 +188,7 @@ export default function MessageBox({ formData, setFormData, showDatabase, setSho
 					<button
 						disabled={loading}
 						className="absolute right-2 flex items-center justify-center p-3 cursor-pointer"
+						onClick={onSendMessage}
 					>
 						{loading ? (
 							<span className="loading loading-bars loading-sm"></span>
@@ -210,3 +201,5 @@ export default function MessageBox({ formData, setFormData, showDatabase, setSho
 		</>
 	);
 }
+
+export default React.memo(MessageBox);
