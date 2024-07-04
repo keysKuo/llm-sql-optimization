@@ -6,7 +6,7 @@ class DatabaseManager:
     type = "mysql"
 
     def __init__(self, type):
-        self.type = type 
+        self.type = type
 
     def query(self, ssql):
         actions = {
@@ -27,20 +27,18 @@ class DatabaseManager:
             
             if connection.is_connected():
                 cursor = connection.cursor()
-
-                ssql = f"""
-                    DROP DATABASE IF EXISTS {DB_NAME_USE};
-                    CREATE DATABASE {DB_NAME_USE};
-                    USE {DB_NAME_USE};
-
-                    {schema}
-                """
-                lines = ssql.split(";\n")
+               
+                cursor.execute(f"DROP DATABASE IF EXISTS {DB_NAME_USE};")
+                cursor.execute(f"CREATE DATABASE {DB_NAME_USE};")
+                cursor.execute(f"USE {DB_NAME_USE};")
                 
-                for line in lines:
-                    cursor.execute(line.strip())
-                    # print(line)
-
+                lines = schema.split(");")
+                print(lines)
+                for i in range(0, len(lines) - 1):
+                    print(str(i) + ". " + lines[i].strip() + ");")
+                    cursor.execute(lines[i].strip() + ");")
+                    i = i + 1
+                    
                 print("Setup Database successfully")
 
         except Error as e:

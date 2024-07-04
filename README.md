@@ -47,9 +47,9 @@ DB_PASSWORD=<password>
 DB_NAME_SETUP=sys # Initial database
 DB_NAME_USE=<databasename> # Using database
 
-OPENAI_API_BASE=https://api.groq.com/openai/v1
-OPENAI_MODEL_NAME=llama3-70b-8192
-OPENAI_API_KEY=groqapikey # Groq cloud API Key
+GROQ_API_BASE=https://api.groq.com/openai/v1
+GROQ_MODEL_NAME=llama3-70b-8192
+GROQ_API_KEY=groqapikey # Groq cloud API Key
 ```
 
 # Run app:

@@ -3,7 +3,7 @@ import classNames from "classnames";
 import configs from "../../configs";
 import useFetch from "../../hooks/useFetch";
 import Header from "./Header";
-import TextInput from "./TextInput";
+import Input from "./Input";
 import ChatBox from "./ChatBox";
 
 const MessageBox = ({
@@ -25,31 +25,27 @@ const MessageBox = ({
 				createdAt: new Date().toISOString(),
 			},
 		]);
-		clearInput();
 	};
 
-	const onSendMessage = useCallback(async () => {
-		if (formData["question"] === "") {
+	const onSendMessage = useCallback(async (input, callback) => {
+		if (!input) {
 			return;
 		}
 
-		addMessage("question", formData["question"]);
+		addMessage("question", input);
+		callback();
 		const options = {
 			url: `${configs["BACKEND_URL"]}/test`,
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
 			},
-			data: JSON.stringify(formData),
+			data: JSON.stringify({...formData, question: input}),
 		};
 
 		const { output, execute, columns } = await fetch(options);
 		addMessage("response", output, { columns, execute });
 	}, [formData, addMessage]);
-
-	const clearInput = () => {
-		handleChangeForm("question", "");
-	};
 
 	return (
 		<>
@@ -62,13 +58,10 @@ const MessageBox = ({
 			/>
 
 			{/* CONVERSATION'S MESSAGES */}
-			<ChatBox
-				loading={loading}
-				messages={messages}
-			/>
+			<ChatBox loading={loading} messages={messages} />
 
 			{/* MESSAGE INPUT */}
-			<TextInput
+			<Input
 				loading={loading}
 				formData={formData}
 				handleChangeForm={handleChangeForm}

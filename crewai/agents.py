@@ -1,9 +1,9 @@
 import os 
-from configs import OPENAI_API_BASE, OPENAI_MODEL_NAME, OPENAI_API_KEY
+from configs import GROQ_API_BASE, GROQ_MODEL_NAME, GROQ_API_KEY
 
-os.environ["OPENAI_API_BASE"] = OPENAI_API_BASE
-os.environ["OPENAI_MODEL_NAME"] = OPENAI_MODEL_NAME  # Adjust based on available model
-os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
+os.environ["OPENAI_API_BASE"] = GROQ_API_BASE
+os.environ["OPENAI_MODEL_NAME"] = GROQ_MODEL_NAME  # Adjust based on available model
+os.environ["OPENAI_API_KEY"] = GROQ_API_KEY
 
 from textwrap import dedent
 from crewai import Agent

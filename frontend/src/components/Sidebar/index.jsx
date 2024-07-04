@@ -7,9 +7,9 @@ export default function Sidebar({
 	formData,
 	handleChangeForm,
 	showDatabase,
-	setShowDatabase
+	handleToggleDatabase
 }) {
-	const [isMarkdownView, setIsMarkdownView] = useState(false);
+	const [isMarkdownView, setIsMarkdownView] = useState(true);
 
 	const handleToggleView = () => {
 		setIsMarkdownView(!isMarkdownView);
@@ -49,7 +49,7 @@ export default function Sidebar({
 							</a>
 						</li>
 						<li>
-							<a onClick={() => setShowDatabase((prev) => !prev)}>
+							<a onClick={handleToggleDatabase}>
 								Close
 							</a>
 						</li>
