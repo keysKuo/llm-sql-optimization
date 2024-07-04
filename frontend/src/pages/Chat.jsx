@@ -8,14 +8,14 @@ export default function ChatPage() {
 		question: "",
 		schema: "",
 		memory: "None",
-		model: "8b",
+		model: "gemma2",
 	});
 
     const handleChangeForm = useCallback((name, value) => {
 		setFormData({ ...formData, [name]: value });
 	}, [formData]);
 
-	const [showDatabase, setShowDatabase] = useState(false);
+	const [showDatabase, setShowDatabase] = useState(true);
     const handleToggleDatabase = useCallback(() => {
         setShowDatabase(prev => !prev)
     }, [])

@@ -2,7 +2,21 @@ import classNames from "classnames";
 import { useState } from "react";
 import { LuChevronDown, LuDatabase } from "react-icons/lu";
 
-export default function Header({ formData, handleChangeForm, showDatabase, handleToggleDatabase }) {
+const MODELS = [
+	{ name: "Gemma2 9b", model: "gemma2" },
+	{ name: "Mistral 7b", model: "mistral" },
+	{ name: "Llama3 8b", model: "llama3" },
+	{ name: "Llama3 70b", model: "llama3" },
+	{ name: "Phi3 Mini", model: "phi3:3.8b" },
+	{ name: "Phi3 Medium", model: "phi3:14b" },
+];
+
+export default function Header({
+	formData,
+	handleChangeForm,
+	showDatabase,
+	handleToggleDatabase,
+}) {
 	const [visiblePicker, setVisiblePicker] = useState(false);
 
 	return (
@@ -16,7 +30,7 @@ export default function Header({ formData, handleChangeForm, showDatabase, handl
 							role="button"
 							className="px-6 py-2 rounded-lg flex items-center justify-between hover:bg-gray-300 m-1 text-[#000]"
 						>
-							Llama3 {formData["model"]} <LuChevronDown />
+							{formData["model"]} <LuChevronDown />
 						</div>
 						{visiblePicker && (
 							<ul
@@ -24,22 +38,16 @@ export default function Header({ formData, handleChangeForm, showDatabase, handl
 								tabIndex={0}
 								className="dropdown-content menu bg-base-100 rounded-lg z-[1] w-52 p-2 shadow"
 							>
-								<li>
-									<a
-										onClick={() =>
-											handleChangeForm("model", "8b")
-										}
-									>
-										Llama3 8b
-									</a>
-								</li>
-								<li
-									onClick={() =>
-										handleChangeForm("model", "70b")
-									}
-								>
-									<a>Llama3 70b</a>
-								</li>
+								{MODELS.map((m, idx) => {
+									return (
+										<li key={idx}>
+											<a onClick={() => handleChangeForm("model", m.model)}>
+												{m.name}
+											</a>
+										</li>
+									);
+								})}
+								
 							</ul>
 						)}
 					</div>
