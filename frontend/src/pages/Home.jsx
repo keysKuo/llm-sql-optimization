@@ -5,7 +5,7 @@ import classNames from "classnames";
 
 export default function HomePage() {
 	const [formData, setFormData] = useState({
-		question: "",
+		// question: "",
 		schema: "",
 		memory: "None",
 		model: "8b",
@@ -34,7 +34,7 @@ export default function HomePage() {
 					setShowDatabase={setShowDatabase}
 				/>
 			</div>
-
+			
 			<Sidebar
 				formData={formData}
 				handleChangeValue={handleChangeValue}

@@ -1,6 +1,6 @@
 import { Navigate, createBrowserRouter, RouterProvider } from "react-router-dom";
 import { MainLayout } from "./layouts";
-import { HomePage, ChartPage } from "./pages";
+import { HomePage, ChartPage, ChatPage } from "./pages";
 
 function App() {
   return (
@@ -9,7 +9,7 @@ function App() {
           path: "/",
           element: <MainLayout />,
           children: [
-              { path: "/", element: <HomePage /> },
+              { path: "/", element: <ChatPage /> },
               { path: "/chart", element: <ChartPage /> },
           ],
       }

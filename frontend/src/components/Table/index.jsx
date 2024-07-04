@@ -5,7 +5,7 @@ const Table = ({ data, columns }) => {
 	// console.log(columns)
 	return (
 		<div className="overflow-x-auto p-[8px]">
-			<table className="table bg-base-300 rounded-none">
+			<table className="table bg-[#2d2d2d] rounded-none">
 				{/* head */}
 				<thead className="bg-[#bdc] text-zinc-800 font-bold">
 					<tr>
@@ -16,7 +16,7 @@ const Table = ({ data, columns }) => {
 				</thead>
 				<tbody>
 					{data?.map((row, rowIndex) => (
-						<tr key={rowIndex}>
+						<tr className="border-0" key={rowIndex}>
 							{row.map((cell, cellIndex) => {
 								const isNum = isNumber(cell);
 								return !isNum ? (
