@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { LuSave, LuSend } from "react-icons/lu";
 import useFetch from "../../../hooks/useFetch";
 import configs from "../../../configs";
+import Modal from "../../Modal";
 
 export default function Input({
 	loading,
@@ -11,6 +12,8 @@ export default function Input({
 }) {
 	const { fetch, loading: fileLoading, error } = useFetch();
 	const [input, setInput] = useState("");
+	const [showModal, setShowModal] = useState(true);
+
 	const onChangeFile = async (e) => {
 		const file = e.target.files[0];
 		const formData = new FormData();
@@ -22,33 +25,46 @@ export default function Input({
 			headers: {
 				"Content-Type": "multipart/form-data",
 			},
-			data: formData
+			data: formData,
 		};
 
 		const result = await fetch(options);
 		if (!error) {
-			handleChangeForm('schema', result['sql_content'])
+			handleChangeForm("schema", result["sql_content"]);
 		}
 	};
 
 	const onPressEnter = (e) => {
 		if (e.key === "Enter") {
-			onSendMessage(input, clearInput);
+			showModal
+				? document.getElementById("confirm").showModal()
+				: onSendMessage(input, clearInput);
 		}
 	};
 
-	const clearInput = () => {
+	const clearInput = useCallback(() => {
 		setInput("");
-	};
+	}, [input]);
 
 	return (
 		<div className="chatbox-input w-full flex items-center justify-between px-5 py-2 gap-3">
+			<Modal
+				onSendMessage={onSendMessage}
+				input={input}
+				clearInput={clearInput}
+				setShowModal={setShowModal}
+			/>
+
 			{/* TEXT INPUT */}
 			<div className="relative flex items-center justify-start w-[50%] mx-auto text-gray-500 my-3">
 				<input
 					disabled={loading || fileLoading}
 					type="text"
-					placeholder={fileLoading ? "Loading Schema ..." : "Type your request ..."}
+					placeholder={
+						fileLoading
+							? "Loading Schema ..."
+							: "Type your request ..."
+					}
 					className="px-16 py-3 rounded-badge focus:outline-0 w-full bg-[#F5F6F6] text-base shadow-messagebox"
 					value={input}
 					onChange={(e) =>
@@ -58,7 +74,7 @@ export default function Input({
 					onKeyDown={onPressEnter}
 				/>
 
-				<div className="absolute ml-4 cursor-pointer p-2 hover:text-zinc-800">
+				<div className="absolute ml-4 p-2 hover:text-zinc-800">
 					<div className="relative w-full flex items-center">
 						<LuSave size={22} className="absolute" />
 						<input
@@ -75,7 +91,12 @@ export default function Input({
 				<button
 					disabled={loading || fileLoading}
 					className="absolute right-2 flex items-center justify-center p-3 cursor-pointer hover:text-zinc-800"
-					onClick={onSendMessage}
+					// onClick={onSendMessage}
+					onClick={() =>
+						showModal
+							? document.getElementById("confirm").showModal()
+							: onSendMessage(input, clearInput)
+					}
 				>
 					{loading || fileLoading ? (
 						<span className="loading loading-bars loading-sm"></span>

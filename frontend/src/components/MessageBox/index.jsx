@@ -14,7 +14,7 @@ const MessageBox = ({
 }) => {
 	const [messages, setMessages] = useState([]);
 	const { fetch, error, loading } = useFetch();
-
+	
 	const addMessage = (type, mess, data = {}) => {
 		setMessages((prev) => [
 			...prev,
@@ -48,7 +48,7 @@ const MessageBox = ({
 	}, [formData, addMessage]);
 
 	return (
-		<>
+		<>	
 			{/* HEADER */}
 			<Header
 				formData={formData}

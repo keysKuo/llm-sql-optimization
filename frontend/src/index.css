@@ -2,12 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+
 body {
   background-color: #F2EFF2;
   font-family: "Nunito Sans" !important;
   font-optical-sizing: auto;
   font-weight: 700;
 }
+
 
 pre[class*="language-"] , textarea {
   line-height: 1.8;

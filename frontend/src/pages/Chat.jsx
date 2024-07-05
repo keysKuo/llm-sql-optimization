@@ -23,6 +23,7 @@ export default function ChatPage() {
 
 	return (
 		<div className="flex justify-start items-center w-full gap-0">
+			
 			<div
 				className={classNames({
 					"h-[100svh] flex flex-col items-center shadow-messagebox": true,
@@ -39,7 +40,7 @@ export default function ChatPage() {
 			</div>
 			<div
 				className={classNames({
-					"fixed right-0 w-[30%] h-[100svh] flex flex-col items-center shadow-messagebox bg-[#2d2d2d] p-2": true,
+					"fixed right-0 w-[30%] h-[100svh] flex flex-col items-center shadow-messagebox bg-[#2d2d2d]": true,
 					hidden: !showDatabase,
 				})}
 			>

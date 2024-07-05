@@ -61,7 +61,7 @@ def markdownSQL(query):
 def extractMarkdown(markdown_text):
     # Regular expression to match SQL statements in markdown
     sql_patterns = [
-        re.compile(r"\n```sql\n(.*?)\n```", re.DOTALL),
+        re.compile(r"```sql\r\n(.*?)\n```", re.DOTALL),
         re.compile(r"```sql\n(.*?)\n```", re.DOTALL),
         re.compile(r"```\nsql\n(.*?)\n```", re.DOTALL),
         re.compile(r"```\n(.*?)\n```", re.DOTALL),
@@ -73,6 +73,7 @@ def extractMarkdown(markdown_text):
     for pattern in sql_patterns:
         sql_matches.extend(pattern.findall(markdown_text))
     
+    # print(sql_matches)
     if len(sql_matches) == 0:
         return markdown_text
     else:

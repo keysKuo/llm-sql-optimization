@@ -26,7 +26,7 @@ export default function Sidebar({
 
 	return (
 		<>
-			<div className="bg-zinc-800 border-b border-zinc-600 w-full text-[#ccc] px-4 text-center h-12 flex items-center justify-between">
+			<div className="bg-zinc-800 border-b border-zinc-600 w-full text-[#ccc] px-4 text-center h-14 flex items-center justify-between">
 				<div className="flex items-center justify-center gap-2 cursor-default">
 					<LuDatabase size={20} /> MySQL
 				</div>
