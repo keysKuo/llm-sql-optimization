@@ -8,6 +8,7 @@ export default function ChatPage() {
 		question: "",
 		schema: "",
 		memory: "None",
+		is_explain: false,
 		model: "gemma2",
 	});
 

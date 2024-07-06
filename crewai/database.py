@@ -33,7 +33,7 @@ class DatabaseManager:
                 cursor.execute(f"USE {DB_NAME_USE};")
                 
                 lines = schema.split(");")
-                print(lines)
+                # print(lines)
                 for i in range(0, len(lines) - 1):
                     print(str(i) + ". " + lines[i].strip() + ");")
                     cursor.execute(lines[i].strip() + ");")

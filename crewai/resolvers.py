@@ -18,21 +18,30 @@ class Resolvers():
             print("Error: " + str(e))
             return False
     
-    def generate_sql(self, requirement, schema, model):
+    def generate_sql(self, requirement, schema, model, is_explain=False):
         filter = filterSchema_v2(schema)
-
+        print(is_explain)
         specialist = agents.sql_specialist_agent_groq() if model == 'groq' else agents.sql_specialist_agent(model)
         design_task = tasks.sql_design_task(specialist, requirement, filter)
-        expert = agents.sql_expert_agent_groq() if model == 'groq' else agents.sql_expert_agent(model)
-        analyze_task = tasks.sql_expert_task(expert, design_task)
-
-        crew = Crew(
-            agents=[specialist, expert],
-            tasks=[design_task, analyze_task],
-            verbose=True,
-            process=Process.sequential
-        )
+        crew = None
         
+        if is_explain == True:
+            expert = agents.sql_expert_agent_groq() if model == 'groq' else agents.sql_expert_agent(model)
+            analyze_task = tasks.sql_expert_task(expert, design_task)
+            
+            crew = Crew(
+                agents=[specialist, expert],
+                tasks=[design_task, analyze_task],
+                verbose=True,
+                process=Process.sequential
+            )
+        else:
+            crew = Crew(
+                agents=[specialist],
+                tasks=[design_task],
+                verbose=True,
+            )
+    
         output = crew.kickoff()
         print(output)
         ssql = extractMarkdown(output)

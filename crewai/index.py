@@ -13,8 +13,10 @@ async def test():
     question = req['question']
     schema = req['schema']
     model = req['model']
+    is_explain = req['is_explain']
+    
     resolver = Resolvers()
-    return resolver.generate_sql(question, schema, model)
+    return resolver.generate_sql(question, schema, model, is_explain)
 
 @app.route('/upload', methods=['POST'])
 async def upload():

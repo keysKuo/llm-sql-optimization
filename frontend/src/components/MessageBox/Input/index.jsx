@@ -104,6 +104,21 @@ export default function Input({
 						<LuSend size={22} />
 					)}
 				</button>
+
+				{/* TOGGLE EXPLAIN */}
+				<div className="absolute right-[-9rem]">
+					<label className="label cursor-pointer flex gap-2">
+						<input
+							type="checkbox"
+							name="is_explain"
+							className="toggle toggle-sm checked:text-emerald-300"
+							onChange={(e) => {
+								handleChangeForm("is_explain", e.target.checked)
+							}}
+						/>
+						<span className="label-text">Explaination</span>
+					</label>
+				</div>
 			</div>
 		</div>
 	);
