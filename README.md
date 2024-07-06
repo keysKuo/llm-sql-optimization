@@ -1,10 +1,10 @@
 
 
 
-# SQL Optimization with Llama3
+# SQL Learning Support System with Large Language Models
 ---
 
-**The project is built on the idea of optimizing SQL query statements. Its goal is to enhance query optimization by leveraging large language models (LLMs). The primary model applied in the project is Llama3, integrated with several techniques to support visual query analysis. Through various extensions, the project aims to directly execute SQL statements and visualize them using different types of charts.**
+**The SQL Learning Support System with Large Language Models is designed to improve how individuals learn and work with SQL. By using advanced language models like Llama3, Gemma2, Mistral,... this system provides smart and helpful support for understanding, writing, and optimizing SQL queries. It offers an interactive platform where learners can ask questions, get clear explanations and visualizations, receive real-time help with their SQL tasks. Whether you're a beginner learning the basics or an experienced user looking to enhance your skills, this system can be a significant supporter to your SQL learning.**
 
 
 <div align="center">
@@ -13,11 +13,21 @@
 
 
 # Built with:
-    Flask
-    Groq Cloud
-    Langchain Communitity
-    Llama3 8b (local)
-    Llama3 70b (groq)
+* [![React][React.js]][React-url]
+* [![TailwindCSS][TailwindCSS]][TailwindCSS-url]
+* [![Flask][Flask]][Flask-url]
+
+# Requiments:
+* Ollama >= 0.147
+* Groq Cloud
+* Langchain community
+* Models:
+  * Gamma2 - 9b
+  * Mistral - 7b
+  * Llama3 - 8b
+  * Llama3 - 70b
+  * Phi3 - mini
+  * Phi3 - medium
 
 # Installation:
 
@@ -65,3 +75,10 @@ npm run dev
 # Default http://localhost:5173
 ```
 
+
+[TailwindCSS]: https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white
+[TailwindCSS-url]: https://tailwindcss.com
+[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[React-url]: https://reactjs.org/
+[Flask]: https://img.shields.io/badge/Flask-1D5C87?style=for-the-badge&logo=flask&logoColor=white
+[Flask-url]: https://flask.palletsprojects.com/en/3.0.x/
