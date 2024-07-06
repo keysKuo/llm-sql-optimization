@@ -26,3 +26,18 @@ class SQLTasks():
                 No Explaination, No Note.
             """
         )
+        
+    def sql_expert_task(self, agent, context):
+        return Task(
+            description=dedent(f"""
+            You will analyze and evaluate the query from the 'SQL Specialist' if it is optimize, how it work and show its problem if it is irrelevant to the Requirement.
+            """),
+            agent=agent,
+            # context=[context],
+            expected_output="""
+                Result includes:
+                - **SQL Query**: markdown (Query from 'SQL Specialist')
+                - **Explaination**: text (Explain how query work)
+                - **Problems**: text (Show the problems if exist)
+            """
+        )

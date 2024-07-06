@@ -4,7 +4,7 @@ import { LuChevronDown, LuDatabase } from "react-icons/lu";
 
 const MODELS = [
 	{ name: "Gemma2 9b", model: "gemma2:9b" },
-	{ name: "Mistral 7b", model: "mistral:7b" },
+	{ name: "Mistral 7b", model: "mistral" },
 	{ name: "Llama3 8b", model: "llama3:8b" },
 	{ name: "Llama3 70b", model: "llama3:70b" },
 	{ name: "Phi3 Mini", model: "phi3:3.8b" },

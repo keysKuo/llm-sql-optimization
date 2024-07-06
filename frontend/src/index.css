@@ -127,9 +127,13 @@ code[class*="language-"] {
   animation: ring 1s infinite ease-in-out;
 }
 
+.agent-turn .markdown ul, .agent-turn .markdown p, .agent-turn .markdown ol, .agent-turn .markdown pre {
+  margin-top: 15px !important;
+}
+
 
 code {
-  color: #71b190;
+  color: #40AA90;
   font-size: 0.7rem;
 }
 

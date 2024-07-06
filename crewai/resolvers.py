@@ -19,19 +19,24 @@ class Resolvers():
             return False
     
     def generate_sql(self, requirement, schema, model):
-        # specialist = agents.sql_specialist_agent_70b() if model == '70b' else agents.sql_specialist_agent_8b()
+        filter = filterSchema_v2(schema)
+
         specialist = agents.sql_specialist_agent_groq() if model == 'groq' else agents.sql_specialist_agent(model)
-        design_task = tasks.sql_design_task(specialist, requirement, filterSchema_v2(schema))
-        
+        design_task = tasks.sql_design_task(specialist, requirement, filter)
+        expert = agents.sql_expert_agent_groq() if model == 'groq' else agents.sql_expert_agent(model)
+        analyze_task = tasks.sql_expert_task(expert, design_task)
+
         crew = Crew(
-            agents=[specialist],
-            tasks=[design_task],
-            verbose=True
+            agents=[specialist, expert],
+            tasks=[design_task, analyze_task],
+            verbose=True,
+            process=Process.sequential
         )
         
         output = crew.kickoff()
         print(output)
         ssql = extractMarkdown(output)
+        
         response = dict()
         
         try:
@@ -40,7 +45,7 @@ class Resolvers():
             result, columns, error = DB.query(ssql)
 
             # Return test result
-            response['output'] = markdownSQL(ssql)
+            response['output'] = output
             response['execute'] = result
             response['columns'] = columns
             return response

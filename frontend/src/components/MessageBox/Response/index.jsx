@@ -36,9 +36,9 @@ export default function Response({ message, isSkeleton = false }) {
 				<div className="group/conversation-turn relative flex w-full min-w-0 flex-col agent-turn">
 					<div className="flex-col gap-1 md:gap-3">
 						<div className="flex flex-grow flex-col w-full max-w-full">
-							<div className="min-h-[20px] text-message flex flex-col items-start whitespace-pre-wrap break-words [.text-message+&amp;]:mt-5 juice:w-full juice:items-end overflow-x-auto gap-2">
+							<div className="min-h-[20px] text-message flex flex-col items-start break-words juice:w-full juice:items-end overflow-x-auto gap-2">
 								<div className="flex w-full flex-col gap-1 juice:empty:hidden juice:first:pt-[3px]">
-									<div className="markdown prose w-full break-words dark:prose-invert dark text-sm leading-6 p-2 rounded-lg">
+									<div className="markdown prose w-full break-words dark:prose-invert dark text-sm leading-7 p-2 rounded-lg space-y-6">
 										<Markdown content={message?.body} />
 									</div>
 
