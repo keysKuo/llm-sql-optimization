@@ -22,22 +22,26 @@ class SQLTasks():
             """),
             agent=agent,
             expected_output="""
-                MySQL query code.
-                No Explaination, No Note.
+                Result includes:
+                - **SQL Query** (output)
             """
         )
         
     def sql_expert_task(self, agent, context):
         return Task(
             description=dedent(f"""
-            You will analyze and evaluate the query from the 'SQL Specialist' if it is optimize, how it work and show its problem if it is irrelevant to the Requirement.
+            You will analyze and evaluate the query from the 'SQL Specialist'.
+            If query is optimize, explain how it works,
+            else you will suggest how to optimize it (such as index, partition, ...) and show its problem if it is irrelevant to the Requirement
             """),
+            output_file='outputs/result.txt',
+            create_directory=True,
             agent=agent,
-            # context=[context],
             expected_output="""
                 Result includes:
-                - **SQL Query**: markdown (Query from 'SQL Specialist')
-                - **Explaination**: text (Explain how query work)
-                - **Problems**: text (Show the problems if exist)
+                - **SQL Query:** (Query from 'SQL Specialist')
+                - **Explanation:** (Explain how query work)
+                - **Suggestion:** (Suggest how to optimize)
+                - **Problems:** (Show the problems if exist)
             """
         )

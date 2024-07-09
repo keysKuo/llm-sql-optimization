@@ -63,6 +63,7 @@ def extractMarkdown(markdown_text):
     sql_patterns = [
         re.compile(r"```sql\r\n(.*?)\n```", re.DOTALL),
         re.compile(r"```sql\n(.*?)\n```", re.DOTALL),
+        re.compile(r"```vbnet\n(.*?)\n```", re.DOTALL),
         re.compile(r"```\nsql\n(.*?)\n```", re.DOTALL),
         re.compile(r"```\n(.*?)\n```", re.DOTALL),
         re.compile(r"```(.*?)```", re.DOTALL)

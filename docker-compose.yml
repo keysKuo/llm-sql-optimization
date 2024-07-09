@@ -1,0 +1,34 @@
+version: '3.9'
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: llm-frontend
+    ports:
+      - "5173:5173"
+    networks:
+      - llm-network
+
+  crewai:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: llm-crewai
+    ports:
+      - "5000:5000"
+    networks:
+      - llm-network
+    environment:
+      - DB_USER=root
+      - DB_PASSWORD=9952811
+      - DB_NAME_SETUP=sys
+      - DB_NAME_USE=ManageTest
+      - GROQ_API_BASE=https://api.groq.com/openai/v1
+      - GROQ_MODEL_NAME=gemma2-9b-it
+      - GROQ_API_KEY=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
+
+networks:
+  llm-network:
+    driver: bridge

@@ -1,0 +1,17 @@
+- **SQL Query:** 
+```sql
+SELECT o.order_id, c.customer_name, o.order_date, o.total_amount
+FROM Orders o
+JOIN Customer c ON o.customer_id = c.customer_id
+LIMIT 20;
+```
+
+- **Explanation:** This query retrieves order information from two tables: 'Orders' and 'Customer'. 
+    - It uses a `JOIN` clause to combine rows from both tables based on the common column 'customer_id'. 
+    -  The `SELECT` clause specifies the columns to be retrieved: 'order_id', 'customer_name', 'order_date', and 'total_amount'. 
+    - Finally, `LIMIT 20` restricts the result set to the first 20 matching rows.
+
+- **Suggestion:** The query appears to be functionally correct. However,  performance can be improved by creating indexes on the 'customer_id' column in both the 'Orders' and 'Customer' tables. This will speed up the join operation, as the database can quickly locate matching rows.
+
+- **Problems:** 
+    - Without indexes on 'customer_id', the query might perform poorly, especially on large tables, as the database has to perform a table scan to find matching rows.
