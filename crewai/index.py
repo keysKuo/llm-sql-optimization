@@ -5,8 +5,6 @@ from resolvers import Resolvers
 app = Flask(__name__)
 CORS(app)
 
-
-
 @app.route('/test', methods=['POST'])
 async def test():
     req = request.json

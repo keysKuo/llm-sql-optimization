@@ -1,17 +1,26 @@
-- **SQL Query:** 
+The SQL query provided is used to retrieve data from two tables, 'Orders' and 'Customers', and join them based on their common column 'CustomerID'. Here's how it works step by step:
+
+1. `SELECT Orders.OrderID AS 'Order ID', Customers.FirstName AS 'Customer First Name', Customers.LastName AS 'Customer Last Name', Orders.OrderDate AS 'Order Date'` - This part of the query specifies which columns from the 'Orders' and 'Customers' tables to retrieve and what aliases to give them.
+
+2. `FROM Orders JOIN Customers ON Orders.CustomerID = Customers.CustomerID` - This part of the query sets up the join operation between the 'Orders' and 'Customers' tables based on their common column 'CustomerID'.
+
+3. `LIMIT 20;` - This part of the query limits the result set to only the first 20 records.
+
+Now, let me suggest some ways to optimize this query:
+
+- Since we are frequently joining on the CustomerID field, it would be beneficial to create an index on that column in both tables for faster lookups. You can do this by executing the following command:
+
 ```sql
-SELECT o.order_id, c.customer_name, o.order_date, o.total_amount
-FROM Orders o
-JOIN Customer c ON o.customer_id = c.customer_id
-LIMIT 20;
+CREATE INDEX idx_Orders_CustomerID ON Orders(CustomerID);
+CREATE INDEX idx_Customers_CustomerID ON Customers(CustomerID);
 ```
 
-- **Explanation:** This query retrieves order information from two tables: 'Orders' and 'Customer'. 
-    - It uses a `JOIN` clause to combine rows from both tables based on the common column 'customer_id'. 
-    -  The `SELECT` clause specifies the columns to be retrieved: 'order_id', 'customer_name', 'order_date', and 'total_amount'. 
-    - Finally, `LIMIT 20` restricts the result set to the first 20 matching rows.
-
-- **Suggestion:** The query appears to be functionally correct. However,  performance can be improved by creating indexes on the 'customer_id' column in both the 'Orders' and 'Customer' tables. This will speed up the join operation, as the database can quickly locate matching rows.
-
-- **Problems:** 
-    - Without indexes on 'customer_id', the query might perform poorly, especially on large tables, as the database has to perform a table scan to find matching rows.
+In case there are any problems with the query, here's what you should check:
+
+- Ensure that both tables 'Orders' and 'Customers' have appropriate indexes on their primary keys. This will help the join operation run faster when dealing with large datasets.
+
+- Check the data types of columns involved in the join condition to make sure they are compatible. If not, you might need to convert one or both columns to a compatible data type using a CAST or CONVERT function.
+
+- If the dataset is still too large and performance is an issue, consider partitioning the tables based on some common criteria (e.g., date range for 'Orders' table). This can help in reducing the amount of data scanned during the join operation.
+
+- Lastly, check if there are any missing or inconsistent values in the 'CustomerID' column that could cause issues with the join operation.

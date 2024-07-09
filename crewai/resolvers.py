@@ -52,18 +52,17 @@ class Resolvers():
             
             crew.kickoff()
             
-        query_output = design_task.output.raw_output      
+        query_output = extractMarkdown(design_task.output.raw_output)      
         print(query_output)      
-        ssql = extractMarkdown(query_output)
         response = dict()
         
         try:
             DB = DatabaseManager("mysql")
             # DB.setup(schema)     
-            result, columns, error = DB.query(ssql)
+            result, columns, error = DB.query(query_output)
 
             # Return test result
-            response['output'] = markdownSQL(ssql) if explain_output == None else explain_output
+            response['output'] = markdownSQL(query_output) if explain_output == None else explain_output
             response['execute'] = result
             response['columns'] = columns
             return response
