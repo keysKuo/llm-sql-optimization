@@ -20,7 +20,7 @@ export default function Input({
 		formData.append("file", file);
 
 		const options = {
-			url: configs["BACKEND_URL"] + "/upload",
+			url: configs["CREWAI_URL"] + "/upload",
 			method: "POST",
 			headers: {
 				"Content-Type": "multipart/form-data",

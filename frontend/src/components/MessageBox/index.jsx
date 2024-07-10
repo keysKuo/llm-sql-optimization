@@ -35,7 +35,7 @@ const MessageBox = ({
 		addMessage("question", input);
 		callback();
 		const options = {
-			url: `${configs["BACKEND_URL"]}/test`,
+			url: `${configs["CREWAI_URL"]}/test`,
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
