@@ -24,10 +24,22 @@ export default function ChatPage() {
 
 	return (
 		<div className="flex justify-start items-center w-full gap-0">
-			
 			<div
 				className={classNames({
-					"h-[100svh] flex flex-col items-center shadow-messagebox": true,
+					"w-[30%] h-[100svh] flex flex-col items-center shadow-messagebox bg-[#2d2d2d]": true,
+					hidden: !showDatabase,
+				})}
+			>
+				<Sidebar
+					formData={formData}
+					handleChangeForm={handleChangeForm}
+					showDatabase={showDatabase}
+					handleToggleDatabase={handleToggleDatabase}
+				/>
+			</div>
+			<div
+				className={classNames({
+					"h-[100svh] flex flex-1 flex-col items-center shadow-messagebox": true,
 					"w-[70%]": showDatabase,
 					"w-[100%]": !showDatabase,
 				})}
@@ -39,19 +51,7 @@ export default function ChatPage() {
                     handleToggleDatabase={handleToggleDatabase}
 				/>
 			</div>
-			<div
-				className={classNames({
-					"fixed right-0 w-[30%] h-[100svh] flex flex-col items-center shadow-messagebox bg-[#2d2d2d]": true,
-					hidden: !showDatabase,
-				})}
-			>
-				<Sidebar
-					formData={formData}
-					handleChangeForm={handleChangeForm}
-					showDatabase={showDatabase}
-					handleToggleDatabase={handleToggleDatabase}
-				/>
-			</div>
+			
 		</div>
 	);
 }

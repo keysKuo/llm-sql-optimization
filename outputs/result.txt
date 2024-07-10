@@ -1,26 +1,19 @@
-The SQL query provided is used to retrieve data from two tables, 'Orders' and 'Customers', and join them based on their common column 'CustomerID'. Here's how it works step by step:
-
-1. `SELECT Orders.OrderID AS 'Order ID', Customers.FirstName AS 'Customer First Name', Customers.LastName AS 'Customer Last Name', Orders.OrderDate AS 'Order Date'` - This part of the query specifies which columns from the 'Orders' and 'Customers' tables to retrieve and what aliases to give them.
-
-2. `FROM Orders JOIN Customers ON Orders.CustomerID = Customers.CustomerID` - This part of the query sets up the join operation between the 'Orders' and 'Customers' tables based on their common column 'CustomerID'.
-
-3. `LIMIT 20;` - This part of the query limits the result set to only the first 20 records.
-
-Now, let me suggest some ways to optimize this query:
-
-- Since we are frequently joining on the CustomerID field, it would be beneficial to create an index on that column in both tables for faster lookups. You can do this by executing the following command:
-
+**SQL Query:**
 ```sql
-CREATE INDEX idx_Orders_CustomerID ON Orders(CustomerID);
-CREATE INDEX idx_Customers_CustomerID ON Customers(CustomerID);
+SELECT p.ma_phim AS 'Movie ID',
+       p.ten_phim AS 'Movie Name',
+       pc.ten_phong AS 'Theater Name',
+       lc.ngay_chieu AS 'Release Date'
+FROM phim AS p
+JOIN lich_chieu AS lc ON p.ma_phim = lc.ma_phim
+JOIN phong_chieu AS pc ON lc.ma_phong = pc.ma_phong
+LIMIT 20;
 ```
+**Explanation:**
+This query retrieves the Movie ID, Movie Name, Theater Name, and Release Date from the `phim`, `lich_chieu`, and `phong_chieu` tables, respectively. It joins these tables based on their relations: movies have multiple screenings (in `lich_chieu`) which in turn are associated with specific theaters (in `phong_chieu`). Finally, it limits the results to 20 rows using the LIMIT keyword.
 
-In case there are any problems with the query, here's what you should check:
+**Suggestion:**
+To optimize this query, you could create indexes on columns used for joining or filtering, like `ma_phim` in `lich_chieu` and `ma_phong` in `phong_chieu`. This helps the database engine to quickly locate matching rows during a join operation.
 
-- Ensure that both tables 'Orders' and 'Customers' have appropriate indexes on their primary keys. This will help the join operation run faster when dealing with large datasets.
-
-- Check the data types of columns involved in the join condition to make sure they are compatible. If not, you might need to convert one or both columns to a compatible data type using a CAST or CONVERT function.
-
-- If the dataset is still too large and performance is an issue, consider partitioning the tables based on some common criteria (e.g., date range for 'Orders' table). This can help in reducing the amount of data scanned during the join operation.
-
-- Lastly, check if there are any missing or inconsistent values in the 'CustomerID' column that could cause issues with the join operation.
+**Problems:**
+If there are too many records in these tables, this query may take a long time to execute due to the volume of data being processed. Also, if there is no index on the columns used for joining or filtering, the query could be slow as the database engine needs to scan through the entire table to find matching rows. In such cases, creating indexes would help to speed up the query execution.
