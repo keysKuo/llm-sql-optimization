@@ -149,6 +149,10 @@ code {
   font-size: 0.8rem;
 }
 
+.active {
+  background-color: #353535;
+}
+
 pre {
   padding: 1em;
     margin: .5em 0;

@@ -29,7 +29,7 @@ export default function ChatTab({
 				</div>
 				<ul>
 					<li>
-						<div className="chat-title relative rounded-lg active:opacity-90 hover:bg-[#353535] cursor-pointer">
+						<div className="active chat-title relative rounded-lg active:opacity-90 hover:bg-[#353535] cursor-pointer">
 							<a className="flex items-center justify-between gap-2 py-2 px-4">
 								<p>New chat</p>
 								<div className="flex items-center opacity-0">
@@ -76,7 +76,7 @@ export default function ChatTab({
 								href=""
 								className="flex items-center justify-between gap-2 py-2 px-4"
 							>
-								<p>Python Flask Destructuring JSON</p>
+								<p>Asynchronous function in Python</p>
 								<div className="flex items-center opacity-0">
 									<div className="p-2 hover:bg-[#2d2d2d] rounded-full">
 										<LuPencil />
