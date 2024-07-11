@@ -1,8 +1,8 @@
 import React from "react";
-import Markdown from "../../Markdown";
+import Markdown from "../../../Markdown";
 import { LuCopy, LuRefreshCcw, LuThumbsDown } from "react-icons/lu";
 import Table from "../../Table";
-import { ArraysToMap, formatTimestamp, isNumber } from "../../../utils";
+import { formatTimestamp, isNumber } from "../../../../utils";
 import classNames from "classnames";
 import BarChart from "../../Charts/Barchart";
 

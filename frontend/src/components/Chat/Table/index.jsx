@@ -1,5 +1,5 @@
 import React from "react";
-import { isNumber } from "../../utils";
+import { isNumber } from "../../../utils";
 
 const Table = ({ data, columns }) => {
 	// console.log(columns)

@@ -1,6 +1,6 @@
 import React, { useState, memo } from "react";
 import { ResponsiveBar } from "@nivo/bar";
-import { ArraysToMap, isNumber } from "../../../utils";
+import { ArraysToMap, isNumber } from "../../../../utils";
 import classNames from "classnames";
 
 const BarChart = memo(({ data }) => {

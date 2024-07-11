@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
-import MessageBox from "../components/MessageBox";
-import Sidebar from "../components/Sidebar";
+import MessageBox from "../components/Chat/MessageBox";
+import Sidebar from "../components/Chat/Sidebar";
 import classNames from "classnames";
 
 export default function ChatPage() {
@@ -11,22 +11,27 @@ export default function ChatPage() {
 		is_explain: false,
 		model: "gemma2",
 	});
+	const [sidebarTab, setSidebarTab] = useState('chat');
 
-    const handleChangeForm = useCallback((name, value) => {
-		setFormData({ ...formData, [name]: value });
-	}, [formData]);
+	const handleChangeForm = useCallback(
+		(name, value) => {
+			setFormData({ ...formData, [name]: value });
+		},
+		[formData]
+	);
 
 	const [showDatabase, setShowDatabase] = useState(true);
-    const handleToggleDatabase = useCallback(() => {
-        setShowDatabase(prev => !prev)
-    }, [])
-	
+	const handleToggleDatabase = useCallback(() => {
+		setShowDatabase((prev) => !prev);
+	}, []);
 
 	return (
 		<div className="flex justify-start items-center w-full gap-0">
 			<div
 				className={classNames({
-					"w-[30%] h-[100svh] flex flex-col items-center shadow-messagebox bg-[#2d2d2d]": true,
+					"h-[100svh] flex flex-col items-center shadow-messagebox bg-[#2d2d2d]": true,
+					"w-[20%]": sidebarTab === 'chat',
+					"w-[30%]": sidebarTab === 'schema',
 					hidden: !showDatabase,
 				})}
 			>
@@ -34,6 +39,8 @@ export default function ChatPage() {
 					formData={formData}
 					handleChangeForm={handleChangeForm}
 					showDatabase={showDatabase}
+					sidebarTab={sidebarTab}
+					setSidebarTab={setSidebarTab}
 					handleToggleDatabase={handleToggleDatabase}
 				/>
 			</div>
@@ -46,12 +53,11 @@ export default function ChatPage() {
 			>
 				<MessageBox
 					formData={formData}
-                    handleChangeForm={handleChangeForm}
+					handleChangeForm={handleChangeForm}
 					showDatabase={showDatabase}
-                    handleToggleDatabase={handleToggleDatabase}
+					handleToggleDatabase={handleToggleDatabase}
 				/>
 			</div>
-			
 		</div>
 	);
 }

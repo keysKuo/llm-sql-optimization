@@ -4,7 +4,7 @@ const chatSchema = new Schema(
 	{
         user: { type: Types.ObjectId, ref: 'User', required: true },
 		title: { type: String, default: "New Chat"},
-        schema: { type: String }
+        schema: { type: String, default: "" }
 	},
 	{
 		timestamps: true,

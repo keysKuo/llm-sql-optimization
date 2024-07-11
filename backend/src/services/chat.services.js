@@ -4,7 +4,7 @@ const messageModel = require("../models/message.model");
 
 class ChatService {
 	static async createNewChat({ userId }) {
-		const newChat = new chatModel({ user: userId, schema: "" });
+		const newChat = new chatModel({ user: userId });
 		await newChat.save();
 		return newChat;
 	}
@@ -27,6 +27,20 @@ class ChatService {
 			body,
 			metadata,
 		}).save();
+	}
+
+	static async renameChat({ chatId, title, userId }) {
+		const existedChat = await chatModel.countDocuments({
+			_id: chatId,
+			user: userId,
+		});
+		if (!existedChat) throw new FileNotFoundError(`❌ Chat not found!`);
+
+		return await chatModel.findOneAndUpdate(
+			{ _id: chatId, user: userId },
+			{ $set: { title: title } },
+			{ returnOriginal: false }
+		);
 	}
 
 	static async updateSchema({ chatId, schema, userId }) {

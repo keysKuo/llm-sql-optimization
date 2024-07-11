@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import classNames from "classnames";
-import configs from "../../configs";
-import useFetch from "../../hooks/useFetch";
+import configs from "../../../configs";
+import useFetch from "../../../hooks/useFetch";
 import Header from "./Header";
 import Input from "./Input";
 import ChatBox from "./ChatBox";
@@ -14,7 +14,7 @@ const MessageBox = ({
 }) => {
 	const [messages, setMessages] = useState([]);
 	const { fetch, error, loading } = useFetch();
-	
+
 	const addMessage = (type, mess, data = {}) => {
 		setMessages((prev) => [
 			...prev,
@@ -27,28 +27,31 @@ const MessageBox = ({
 		]);
 	};
 
-	const onSendMessage = useCallback(async (input, callback) => {
-		if (!input) {
-			return;
-		}
+	const onSendMessage = useCallback(
+		async (input, callback) => {
+			if (!input) {
+				return;
+			}
 
-		addMessage("question", input);
-		callback();
-		const options = {
-			url: `${configs["CREWAI_URL"]}/test`,
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			data: JSON.stringify({...formData, question: input}),
-		};
+			addMessage("question", input);
+			callback();
+			const options = {
+				url: `${configs["CREWAI_URL"]}/test`,
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				data: JSON.stringify({ ...formData, question: input }),
+			};
 
-		const { output, execute, columns } = await fetch(options);
-		addMessage("response", output, { columns, execute });
-	}, [formData, addMessage]);
+			const { output, execute, columns } = await fetch(options);
+			addMessage("response", output, { columns, execute });
+		},
+		[formData, addMessage]
+	);
 
 	return (
-		<>	
+		<>
 			{/* HEADER */}
 			<Header
 				formData={formData}

@@ -1,8 +1,9 @@
 import React, { useCallback, useState } from "react";
 import { LuSave, LuSend } from "react-icons/lu";
-import useFetch from "../../../hooks/useFetch";
-import configs from "../../../configs";
+import useFetch from "../../../../hooks/useFetch";
+import configs from "../../../../configs";
 import Modal from "../../Modal";
+import useUpload from "../../../../hooks/useUpload";
 
 export default function Input({
 	loading,
@@ -10,26 +11,14 @@ export default function Input({
 	handleChangeForm,
 	onSendMessage,
 }) {
-	const { fetch, loading: fileLoading, error } = useFetch();
 	const [input, setInput] = useState("");
 	const [showModal, setShowModal] = useState(true);
+	const { upload, loading: fileLoading, error: uploadError } = useUpload();
 
 	const onChangeFile = async (e) => {
 		const file = e.target.files[0];
-		const formData = new FormData();
-		formData.append("file", file);
-
-		const options = {
-			url: configs["CREWAI_URL"] + "/upload",
-			method: "POST",
-			headers: {
-				"Content-Type": "multipart/form-data",
-			},
-			data: formData,
-		};
-
-		const result = await fetch(options);
-		if (!error) {
+		const result = await upload(file);
+		if (!uploadError) {
 			handleChangeForm("schema", result["sql_content"]);
 		}
 	};
@@ -113,7 +102,10 @@ export default function Input({
 							name="is_explain"
 							className="toggle toggle-sm checked:text-emerald-300"
 							onChange={(e) => {
-								handleChangeForm("is_explain", e.target.checked)
+								handleChangeForm(
+									"is_explain",
+									e.target.checked
+								);
 							}}
 						/>
 						<span className="label-text">Explaination</span>

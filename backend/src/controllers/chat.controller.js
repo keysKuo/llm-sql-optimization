@@ -41,6 +41,27 @@ class ChatController {
 		}).send({ response: res });
 	}
 
+	/************************************* RENAME CHAT **********************************************
+	 * @url     /api/v1/chat/rename
+	 * @method  PUT
+	 * @desc    Rename a chat
+	 * @param   {String} chatId
+	 * @param   {String} title
+	 * @param   {String} userId
+	 * @return  {JSON} updatedChat
+	 */
+	static async renameChat(req, res, next) {
+		const userId = req.user._id;
+		const { chatId, title } = req.body;
+		const metadata = await ChatService.renameChat({ chatId, title, userId });
+
+		return new SuccessResponse({
+			code: 200,
+			message: `✔️ Renamed chat`,
+			metadata,
+		}).send({ response: res });
+	}
+
 	/************************************* ADD NEW MESSAGE **********************************************
 	 * @url     /api/v1/chat/newMessage
 	 * @method  POST
