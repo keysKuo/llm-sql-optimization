@@ -1,18 +1,21 @@
 import React, { useCallback, useState } from "react";
 import { LuSave, LuSend } from "react-icons/lu";
-import useFetch from "../../../../hooks/useFetch";
 import configs from "../../../../configs";
 import Modal from "../../Modal";
 import useUpload from "../../../../hooks/useUpload";
+import useNewChat from "../../../../hooks/useChat";
 
 export default function Input({
 	loading,
 	formData,
 	handleChangeForm,
 	onSendMessage,
+	sidebarTab,
+	setSidebarTab,
 }) {
 	const [input, setInput] = useState("");
 	const [showModal, setShowModal] = useState(true);
+
 	const { upload, loading: fileLoading, error: uploadError } = useUpload();
 
 	const onChangeFile = async (e) => {
@@ -20,6 +23,7 @@ export default function Input({
 		const result = await upload(file);
 		if (!uploadError) {
 			handleChangeForm("schema", result["sql_content"]);
+			setSidebarTab("schema");
 		}
 	};
 

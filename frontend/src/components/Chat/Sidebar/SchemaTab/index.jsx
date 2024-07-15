@@ -1,14 +1,29 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { LuDatabase, LuDatabaseBackup, LuUpload } from "react-icons/lu";
 import Markdown from "../../../Markdown";
 import UserOptions from "../UserOptions/";
+import useUpload from "../../../../hooks/useUpload";
 
 export default function SchemaTab({
 	formData,
-	onLogout,
 	setSidebarTab,
 	handleToggleDatabase,
+	handleChangeForm
 }) {
+	const { upload, loading: fileLoading, error: uploadError } = useUpload();
+
+	// useEffect(() => {
+
+	// }, [handleChangeForm])
+
+	const onChangeFile = async (e) => {
+		const file = e.target.files[0];
+		const result = await upload(file);
+		if (!uploadError) {
+			handleChangeForm("schema", result["sql_content"]);
+		}
+	};
+
 	const formatAsPreCode = (content) => {
 		return `\`\`\`sql\n${content}\n\`\`\``;
 	};
@@ -23,7 +38,6 @@ export default function SchemaTab({
 				{/* USER OPTIONS DROPDOWN */}
 				<UserOptions
 					handleToggleDatabase={handleToggleDatabase}
-					onLogout={onLogout}
 					setSidebarTab={setSidebarTab}
 				/>
 			</div>
@@ -38,6 +52,13 @@ export default function SchemaTab({
 					<div className="flex flex-1 items-center justify-center w-full text-[#ccc]">
 						<div className="text-center flex flex-col justify-center items-center gap-2 cursor-pointer">
 							<LuUpload size={100} /> Click here to upload Schema
+							<input
+								disabled={fileLoading}
+								type="file"
+								className="absolute w-40 h-40 cursor-pointer opacity-0 ml-[-6px]"
+								name="file"
+								onChange={onChangeFile}
+							/>
 						</div>
 					</div>
 				)}

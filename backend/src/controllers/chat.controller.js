@@ -104,21 +104,37 @@ class ChatController {
 	}
 
 
-	/************************************* LOAD HISTORY **********************************************
-	 * @url     /api/v1/chat/history/:chatId
+	/************************************* LOAD HISTORY CHATS **********************************************
+	 * @url     /api/v1/chat/history-chats
+	 * @method  GET
+	 * @desc    Get history chats
+	 * @return  {JSON} historyChats
+	 */
+	static async loadHistoryChat(req, res, next) {
+		const userId = req.user._id;
+
+		return new SuccessResponse({
+			code: 200,
+			message: `✔️ Loaded history chats`,
+			metadata: await ChatService.loadHistoryChat({ userId })
+		}).send({ response: res });
+	}
+
+	/************************************* LOAD HISTORY MESSAGES **********************************************
+	 * @url     /api/v1/chat/history-message
 	 * @method  GET
 	 * @desc    Get history messages
 	 * @param   {String} chatId
-	 * @return  {JSON} messages
+	 * @return  {JSON} historyMessages
 	 */
-	static async loadHistory(req, res, next) {
+	static async loadHistoryMessages(req, res, next) {
 		const userId = req.user._id;
 		const { chatId } = req.params;
 
 		return new SuccessResponse({
 			code: 200,
-			message: `✔️ Loaded history chat`,
-			metadata: await ChatService.loadHistory({ chatId, userId })
+			message: `✔️ Loaded history messages`,
+			metadata: await ChatService.loadHistoryMessages({ chatId, userId })
 		}).send({ response: res });
 	}
 }

@@ -30,7 +30,7 @@ export default function UserOptions({ handleToggleDatabase, setSidebarTab }) {
 			</div>
 			<ul
 				tabIndex={0}
-				className="dropdown-content menu bg-zinc-800 rounded-box z-[1] w-52 p-2 shadow"
+				className="mr-[-10px] dropdown-content menu bg-zinc-800 rounded-box z-[1] w-52 p-2 shadow"
 			>
 				<li onClick={() => setSidebarTab("chat")}>
 					<a>Chats</a>

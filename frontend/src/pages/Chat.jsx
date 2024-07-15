@@ -9,7 +9,7 @@ export default function ChatPage() {
 		schema: "",
 		memory: "None",
 		is_explain: false,
-		model: "gemma2",
+		model: "gemma2:9b-instruct-q4_1",
 	});
 	const [sidebarTab, setSidebarTab] = useState('chat');
 
@@ -56,6 +56,8 @@ export default function ChatPage() {
 					handleChangeForm={handleChangeForm}
 					showDatabase={showDatabase}
 					handleToggleDatabase={handleToggleDatabase}
+					sidebarTab={sidebarTab}
+					setSidebarTab={setSidebarTab}
 				/>
 			</div>
 		</div>

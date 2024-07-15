@@ -3,12 +3,13 @@ import { useState } from "react";
 import { LuChevronDown, LuDatabase } from "react-icons/lu";
 
 const MODELS = [
-	{ name: "Gemma2 9b", model: "gemma2:9b" },
-	{ name: "Mistral 7b", model: "mistral" },
-	{ name: "Llama3 8b", model: "llama3" },
+	{ name: "Gemma2 9b", model: "gemma2:9b-instruct-q4_1" },
+	{ name: "Gemma2 9b text", model: "gemma2:9b-text-q4_1" },
+	{ name: "Mistral 7b", model: "mistral:instruct" },
+	{ name: "Llama3 8b", model: "llama3:instruct" },
 	{ name: "Llama3 70b", model: "llama3:70b" },
-	{ name: "Phi3 Mini", model: "phi3:3.8b" },
-	{ name: "Phi3 Medium", model: "phi3:14b" },
+	// { name: "Phi3 Mini", model: "phi3:3.8b" },
+	// { name: "Phi3 Medium", model: "phi3:14b" },
 	{ name: "Gemma2 Groq", model: "groq" },
 ];
 

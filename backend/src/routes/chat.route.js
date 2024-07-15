@@ -11,6 +11,7 @@ router.post('/newMessage', catchAsync(ChatController.addMessage));
 router.put('/update', catchAsync(ChatController.updateSchema));
 router.put('/rename', catchAsync(ChatController.renameChat));
 router.delete('/delete', catchAsync(ChatController.deleteChat));
-router.get('/history/:chatId', catchAsync(ChatController.loadHistory));
+router.get('/history-chats', catchAsync(ChatController.loadHistoryChat));
+router.get('/history-messages/:chatId', catchAsync(ChatController.loadHistoryMessages));
 
 module.exports = router;

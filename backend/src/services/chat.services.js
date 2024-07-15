@@ -6,6 +6,7 @@ class ChatService {
 	static async createNewChat({ userId }) {
 		const newChat = new chatModel({ user: userId });
 		await newChat.save();
+
 		return newChat;
 	}
 
@@ -57,15 +58,19 @@ class ChatService {
 		);
 	}
 
-	static async loadHistory({ chatId, userId }) {
+	static async loadHistoryChat({ userId }) {
+		return await chatModel.find({ user: userId }).lean();
+	}
+
+	static async loadHistoryMessages({ chatId, userId }) {
 		const existedChat = await chatModel.findOne({
 			_id: chatId,
 			user: userId,
-		});
+		}).lean();
 		if (!existedChat) throw new FileNotFoundError(`❌ Chat not found!`);
 
 		const messages = await messageModel
-			.find({ chat: existedChat._id })
+			.find({ chat: chatId })
 			.sort({ createdAt: -1 })
 			.limit(10)
 			.lean();
