@@ -22,8 +22,10 @@ services:
       - llm-network
     environment:
       - MONGODB_URL=mongodb://mongodb-backend:27017/EzChatDev  
+      - FRONTEND_URL=http://frontend:5173
     depends_on:
       - mongodb-backend
+      - frontend
 
   mongodb-backend:
     image: mongo:latest
