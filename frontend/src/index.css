@@ -13,7 +13,7 @@ input:-webkit-autofill:active{
 
 
 body {
-  background-color: #F2EFF2;
+  
   font-family: "Nunito Sans" !important;
   font-optical-sizing: auto;
   font-weight: 700;
@@ -175,6 +175,141 @@ pre {
 
 .scroll-smooth {
   scroll-behavior: smooth;
+}
+
+.premium {
+  transform: scale(1.05);
+  box-shadow: 0 0 0 .5rem #2d2d2d;
+  z-index: 1;
+}
+
+.pricing-tag {
+  box-shadow: 0 0.5rem 0.5rem rgba(11,12,12,.4);
+  position: absolute;
+  border-radius: .75rem;
+  height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: -1rem;
+  background-color: #f23d75;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+}
+
+.carousel-container {
+  -webkit-mask-image: linear-gradient(90deg,transparent 0%,#000 30%,#000 70%,transparent 100%);
+    mask-image: linear-gradient(90deg,transparent 0%,#000 30%,#000 70%,transparent 100%);
+}
+
+.collapse-title::before {
+    font-size: 1.7rem;
+    content: "•";
+    font-weight: 600;
+    display: inline-block;
+    width: 2rem;
+    min-width: 2rem;
+    line-height: 0;
+    color: #71B190;
+}
+
+.bg-modal {
+  background-color: rgba(11, 12, 12, .6);
+  max-height: -webkit-fill-available;
+}
+
+.uppbeat-logo {
+  transform: scale(1.1) translate(6px);
+  height: 4.5rem;
+  width: auto;
+}
+
+.dropdown-content::after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 0;
+    height: 0;
+    top: -12px;
+    right: 7px;
+    border-color: transparent transparent #323434;
+    border-style: solid;
+    border-width: 0 10px 15px;
+}
+
+
+@keyframes scrollBack {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+
+
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .border-main {
+    @apply border-[var(--light-grey)]
+  }
+
+  .bg-main, .active {
+    @apply bg-[var(--light-grey)]
+  }
+
+  .padding-clamp {
+    padding: clamp(4rem, 2vw, 5rem) clamp(1.5rem, 3cqw, 3rem);
+  }
+
+  .padding-clamp-playlist {
+    padding: .125rem clamp(.75rem, 1.5cqw, 1.5rem);
+  }
+
+  .padding-clamp-filter {
+    padding: clamp(1.5rem, 3vw, 3rem) clamp(1.5rem, 3cqw, 3rem) 1.5rem;
+  }
+  
+  .padding-clamp-footer {
+    padding: clamp(1.5rem, 3cqw, 3rem);
+  }
+  
+  .padding-clamp-home-heading {
+    padding: clamp(5rem, 2vw, 5rem) clamp(1.5rem, 3cqw, 3rem);
+  }
+
+  .padding-trend {
+    padding: clamp(2rem, 2vw, 3rem) clamp(1.5rem, 3vw, 3rem) clamp(1rem, 1vw, 1.5rem);
+  }
+
+  .padding-clamp-pricing {
+    padding: 5rem clamp(1.5rem, 3vw, 3rem) clamp(1.5rem, 3cqw, 3rem);
+  }
+
+  .padding-clamp-payments {
+    padding: clamp(2rem, 4vw, 5rem) clamp(1.5rem, 3cqw, 3rem);
+  }
+
+  .padding-clamp-platform {
+    padding: clamp(3rem, 4vw, 5rem) 0;
+  }
+
+
+  .truncate-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .bg-active {
+    background: linear-gradient(-90deg, var(--track-player-hover-right-bg), var(--track-player-hover-left-bg));
+  }
 }
 
 
