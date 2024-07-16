@@ -1,4 +1,4 @@
-version: '3.9'
+version: '3'
 
 services:
   frontend:
@@ -8,6 +8,28 @@ services:
     container_name: llm-frontend
     ports:
       - "5173:5173"
+    networks:
+      - llm-network
+    
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: llm-backend
+    ports:
+      - "2405:2405"
+    networks:
+      - llm-network
+    environment:
+      - MONGODB_URL=mongodb://mongodb-backend:27017/EzChatDev  
+    depends_on:
+      - mongodb-backend
+
+  mongodb-backend:
+    image: mongo:latest
+    container_name: llm-mongodb
+    ports:
+      - "27017:27017"
     networks:
       - llm-network
 

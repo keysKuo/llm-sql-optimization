@@ -1,6 +1,6 @@
 FROM node:20-alpine
 
-WORKDIR /frontend
+WORKDIR /backend
 
 COPY package*.json ./
 
@@ -14,7 +14,7 @@ COPY . .
 
 # RUN npm install -g serve
 
-EXPOSE 5173
+EXPOSE 2405
 
 # CMD ["serve", "-s", "dist", "-l", "5173"]
 CMD ["npm", "run", "dev"]
