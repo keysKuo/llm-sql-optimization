@@ -1,6 +1,6 @@
 import { Navigate, createBrowserRouter, RouterProvider } from "react-router-dom";
 import { MainLayout } from "./layouts";
-import { HomePage, ChartPage, ChatPage, LoginPage } from "./pages";
+import { HomePage, ChartPage, ChatPage, LoginPage, RegisterPage } from "./pages";
 import { useAuthContext } from "./contexts/AuthProvider";
 import PricingPage from "./pages/Pricing";
 import SecondLayout from "./layouts/Second";
@@ -18,6 +18,7 @@ function App() {
               { path: "/chat", element: user ? <ChatPage /> : <Navigate to='/login' /> },
               { path: "/chat/:chatId", element: user ? <ChatPage /> : <Navigate to='/login' /> },
               { path: "/login", element: user ? <Navigate to="/chat" /> : <LoginPage /> },
+              { path: "/register", element: <RegisterPage /> },
             //   { path: "/chart", element: <ChartPage /> },
           ],
       },

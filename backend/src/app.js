@@ -17,6 +17,8 @@ app.use(compression());
 app.use(
 	cors({
 		origin: configs["frontendURL"],
+		methods: ['GET', 'POST', 'PUT', 'DELETE'], // Các phương thức HTTP được cho phép
+  		allowedHeaders: ['Content-Type', 'Authorization'], 
 		credentials: true,
 	})
 );
@@ -34,23 +36,6 @@ app.use(
 
 require("./dbs/init.mongodb"); // Singleton - A method or class that only construct once
 checkOverload();
-
-const userModel = require("./models/user.model");
-userModel
-	.countDocuments({})
-	.then((count) => {
-		if (count == 0) {
-			new userModel({
-				email: "tester@gmail.com",
-				username: "Beta Tester",
-				password: "123123",
-				confirmPassword: "123123",
-				gender: "male",
-			}).save();
-			console.log("Registered for tester");
-		}
-	})
-	.catch((err) => console.log(err));
 
 app.use("/api/v1", require("./routes"));
 

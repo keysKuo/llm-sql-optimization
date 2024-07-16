@@ -1,8 +1,8 @@
 const dev = {
     port: 2405,
     mongodbURL: process.env.MONGODB_URL || 'mongodb://127.0.0.1:27017/EzChatDev',
-    frontendURL: 'http://localhost:5173',
-    backendURL: 'http://localhost:2405'
+    frontendURL: process.env.FRONTEND_URL || 'http://localhost:5173',
+    backendURL: process.env.BACKEND_URL || 'http://localhost:2405'
 }
 
 const production = {

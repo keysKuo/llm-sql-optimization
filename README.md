@@ -71,12 +71,6 @@ docker ps # List processing images
 docker-compose logs # View images' Logs
 ```
 
-Beta Tester account: 
-```sh
-email: tester@gmail.com
-password: 123123
-```
-
 # Installation:
 
 ```bash
