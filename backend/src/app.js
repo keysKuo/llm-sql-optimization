@@ -17,8 +17,6 @@ app.use(compression());
 app.use(
 	cors({
 		origin: configs["frontendURL"],
-		methods: ['GET', 'POST', 'PUT', 'DELETE'], // Các phương thức HTTP được cho phép
-  		allowedHeaders: ['Content-Type', 'Authorization'], 
 		credentials: true,
 	})
 );
