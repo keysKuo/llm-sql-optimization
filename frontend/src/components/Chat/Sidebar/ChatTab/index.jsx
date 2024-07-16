@@ -55,44 +55,40 @@ export default function ChatTab({
 				<UserOptions handleToggleDatabase={handleToggleDatabase} />
 			</div>
 
-			<div className="relative w-full flex flex-col flex-1 text-sm bg-[#2d2d2d] text-[#ccc] overflow-y-auto overflow-x-hidden p-4">
+			<div className="relative w-full flex flex-col flex-1 text-sm bg-[#2d2d2d] text-[#ccc] overflow-y-auto overflow-x-hidden">
 				{/* NOW CHATS */}
-				<div className="text-white">
+				<div className="text-white p-4">
 					<div className="py-2 font-normal text-xs cursor-default">
 						Now
 					</div>
-					<ul>
-						<li>
-							<div
-								onClick={() => {
-									handleChangeForm("schema", "");
-									setSidebarTab("schema");
-								}}
-								className={classNames({
-									"chat-title relative rounded-lg hover:bg-[#353535] cursor-pointer text-[.975rem]": true,
-									active: !chatId,
-								})}
-							>
-								<Link
-									to={"/chat"}
-									className="flex items-center justify-between gap-2 py-2 px-4"
-								>
-									<p>New chat</p>
-									<div className="flex items-center opacity-0">
-										<div className="p-2">
-											<LuPlus />
-										</div>
-									</div>
-								</Link>
+					<div
+						onClick={() => {
+							handleChangeForm("schema", "");
+							setSidebarTab("schema");
+						}}
+						className={classNames({
+							"chat-title relative rounded-lg bg-[#353535] cursor-pointer text-[.975rem]": true,
+							active: !chatId,
+						})}
+					>
+						<Link
+							to={"/chat"}
+							className="flex items-center justify-between gap-2 py-2 px-4"
+						>
+							<p>New chat</p>
+							<div className="flex items-center opacity-0">
+								<div className="p-2">
+									<LuPlus />
+								</div>
 							</div>
-						</li>
-					</ul>
+						</Link>
+					</div>
 				</div>
 
-				<div className="py-2"></div>
+				<div className="py-[0.05rem] bg-zinc-600"></div>
 
 				{/* PREVIOUS CHATS */}
-				<div className="flex-1 text-white">
+				<div className="flex-1 text-white p-4">
 					<div className="py-2 font-normal text-xs cursor-default">
 						Previous chats
 					</div>
@@ -133,7 +129,7 @@ export default function ChatTab({
 				</div>
 
 				{/* UPGRADE PLAN */}
-				<div className="upgrade-plan cursor-pointer w-[100%] h-16 flex items-center justify-start rounded-xl hover:bg-[#353535]">
+				<Link to={'/pricing'} className="upgrade-plan cursor-pointer h-16 flex items-center justify-start rounded-xl hover:bg-[#353535] m-4">
 					<div className="flex">
 						<div className="w-16 flex items-center justify-center">
 							<LuZap size={25} />
@@ -147,7 +143,7 @@ export default function ChatTab({
 							</div>
 						</div>
 					</div>
-				</div>
+				</Link>
 			</div>
 		</>
 	);
