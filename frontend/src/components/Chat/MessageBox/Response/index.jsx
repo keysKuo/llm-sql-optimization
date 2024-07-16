@@ -7,6 +7,7 @@ import classNames from "classnames";
 import BarChart from "../../Charts/Barchart";
 
 export default function Response({ message, isSkeleton = false }) {
+	// console.log(message)
 	return (
 		<div className="mx-auto flex flex-1 gap-1 text-base w-[100%] md:max-w-3xl lg:max-w-[40rem] xl:max-w-[48rem]">
 			<div className="flex-shrink-0 flex flex-col relative items-end">

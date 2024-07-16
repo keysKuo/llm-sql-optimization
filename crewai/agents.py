@@ -1,7 +1,8 @@
 import os 
 from configs import GROQ_API_BASE, GROQ_MODEL_NAME, GROQ_API_KEY, \
 SPECIALIST_AGENT_ROLE, SPECIALIST_AGENT_GOAL, SPECIALIST_AGENT_BACKSTORY, \
-EXPERT_AGENT_ROLE, EXPERT_AGENT_GOAL, EXPERT_AGENT_BACKSTORY
+EXPERT_AGENT_ROLE, EXPERT_AGENT_GOAL, EXPERT_AGENT_BACKSTORY, \
+TITLE_AGENT_ROLE, TITLE_AGENT_GOAL, TITLE_AGENT_BACKSTORY
 
 os.environ["OPENAI_API_BASE"] = GROQ_API_BASE
 os.environ["OPENAI_MODEL_NAME"] = GROQ_MODEL_NAME  # Adjust based on available model
@@ -50,4 +51,12 @@ class SQLAgents():
             verbose=True,
         )
 
+    def sql_title_agent(self):
+        return Agent(
+            role=TITLE_AGENT_ROLE,
+            goal=TITLE_AGENT_GOAL,
+            backstory=dedent(TITLE_AGENT_BACKSTORY),
+            allow_delegation=False,
+            verbose=True,
+        )
         

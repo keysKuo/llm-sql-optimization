@@ -15,7 +15,7 @@ class ChatService {
 		return await chatModel.deleteOne({ _id: chatId, user: userId });
 	}
 
-	static async addMessage({ chatId, type, body, metadata, userId }) {
+	static async addMessage({ chatId, type, body, data, userId }) {
 		const existedChat = await chatModel.countDocuments({
 			_id: chatId,
 			user: userId,
@@ -26,7 +26,7 @@ class ChatService {
 			type,
 			chat: chatId,
 			body,
-			metadata,
+			data,
 		}).save();
 	}
 
@@ -44,7 +44,7 @@ class ChatService {
 		);
 	}
 
-	static async updateSchema({ chatId, schema, userId }) {
+	static async updateSchema({ chatId, schema, title, userId }) {
 		const existedChat = await chatModel.countDocuments({
 			_id: chatId,
 			user: userId,
@@ -53,20 +53,25 @@ class ChatService {
 
 		return await chatModel.findOneAndUpdate(
 			{ _id: chatId, user: userId },
-			{ $set: { schema: schema } },
+			{ $set: { schema: schema, title: title } },
 			{ returnOriginal: false }
 		);
 	}
 
 	static async loadHistoryChat({ userId }) {
-		return await chatModel.find({ user: userId }).lean();
+		return await chatModel
+			.find({ user: userId })
+			.sort({ createdAt: -1 })
+			.lean();
 	}
 
 	static async loadHistoryMessages({ chatId, userId }) {
-		const existedChat = await chatModel.findOne({
-			_id: chatId,
-			user: userId,
-		}).lean();
+		const existedChat = await chatModel
+			.findOne({
+				_id: chatId,
+				user: userId,
+			})
+			.lean();
 		if (!existedChat) throw new FileNotFoundError(`❌ Chat not found!`);
 
 		const messages = await messageModel
@@ -77,8 +82,8 @@ class ChatService {
 
 		return {
 			chat: existedChat,
-			messages: messages
-		}
+			messages: messages.reverse(),
+		};
 	}
 }
 

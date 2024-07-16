@@ -21,7 +21,6 @@ const MessageBox = ({
 
 	const { fetch, error, loading } = useFetch();
 	const {
-		createNewChat,
 		addNewMessage,
 		loadHistoryMessages,
 		loading: chatLoading,
@@ -35,21 +34,23 @@ const MessageBox = ({
 				setMessages([]);
 				return;
 			}
-			
+
 			const result = await loadHistoryMessages(chatId);
-			console.log(result);
+			// console.log(result);
 			if (!chatError) {
 				setMessages(result?.metadata?.messages || []);
 			}
-		}
+		};
 
 		LoadMessages();
-	}, [chatId])
+	}, [chatId]);
 
-	const addMessage = (type, mess, data = {}) => {
+	const addMessage = (_id, type, mess, data = {}) => {
+		addNewMessage(_id, type, mess, data);
 		setMessages((prev) => [
 			...prev,
 			{
+				chatId: _id,
 				type: type,
 				body: mess,
 				data: data,
@@ -64,8 +65,13 @@ const MessageBox = ({
 				return;
 			}
 
-			const askBot = async () => {
-				addMessage("question", input);
+			if (!formData["schema"]) {
+				setSidebarTab("schema");
+				return;
+			}
+
+			const askBot = async (_id) => {
+				addMessage(_id, "question", input);
 				callback();
 				const options = {
 					url: `${configs["CREWAI_URL"]}/test`,
@@ -77,21 +83,10 @@ const MessageBox = ({
 				};
 
 				const { output, execute, columns } = await fetch(options);
-				addMessage("response", output, { columns, execute });
+				addMessage(_id, "response", output, { columns, execute });
 			};
 
-			if (chatId) {
-				Promise.all([
-					askBot(),
-					addNewMessage(chatId, "question", input, {})
-				]);
-			}
-			else {
-				Promise.all([
-					askBot(),
-					createNewChat()
-				]);
-			}
+			askBot(chatId);
 		},
 		[formData, addMessage]
 	);

@@ -31,8 +31,8 @@ class ChatController {
 	 */
 	static async updateSchema(req, res, next) {
 		const userId = req.user._id;
-		const { chatId, schema } = req.body;
-		const metadata = await ChatService.updateSchema({ chatId, schema, userId });
+		const { chatId, schema, title } = req.body;
+		const metadata = await ChatService.updateSchema({ chatId, schema, title, userId });
 
 		return new SuccessResponse({
 			code: 200,
@@ -69,18 +69,18 @@ class ChatController {
 	 * @param   {String} chatId
 	 * @param   {String} type
 	 * @param   {String} body
-	 * @param   {Array} metadata
+	 * @param   {Array} data
 	 * @param   {String} userId
 	 * @return  {JSON} newMessage
 	 */
 	static async addMessage(req, res, next) {
 		const userId = req.user._id;
-		const { chatId, type, body, metadata } = req.body;
+		const { chatId, type, body, data } = req.body;
 
 		return new SuccessResponse({
 			code: 201,
 			message: `✔️ Added new message`,
-			metadata: await ChatService.addMessage({ chatId, type, body, metadata, userId })
+			metadata: await ChatService.addMessage({ chatId, type, body, data, userId })
 		}).send({ response: res });
 	}
 

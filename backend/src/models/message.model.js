@@ -5,7 +5,7 @@ const messageSchema = new Schema(
 		type: { type: String, enum: ['question', 'response'], default: 'question' },
 		chat: { type: Types.ObjectId, ref: "Chat", required: true },
 		body: { type: String },
-		metadata: [{ type: Schema.Types.Mixed }]
+		data: { type: Schema.Types.Mixed }
 	},
 	{
 		timestamps: true,

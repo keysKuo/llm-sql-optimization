@@ -1,9 +1,9 @@
 import React, { useCallback, useState } from "react";
 import { LuSave, LuSend } from "react-icons/lu";
-import configs from "../../../../configs";
 import Modal from "../../Modal";
 import useUpload from "../../../../hooks/useUpload";
-import useNewChat from "../../../../hooks/useChat";
+import useChat from "../../../../hooks/useChat";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function Input({
 	loading,
@@ -14,9 +14,12 @@ export default function Input({
 	setSidebarTab,
 }) {
 	const [input, setInput] = useState("");
+	const navigate = useNavigate();
 	const [showModal, setShowModal] = useState(true);
+	const { chatId } = useParams();
 
 	const { upload, loading: fileLoading, error: uploadError } = useUpload();
+	const { createNewChat, updateSchema } = useChat();
 
 	const onChangeFile = async (e) => {
 		const file = e.target.files[0];
@@ -24,6 +27,15 @@ export default function Input({
 		if (!uploadError) {
 			handleChangeForm("schema", result["sql_content"]);
 			setSidebarTab("schema");
+
+			if (!chatId) {
+				const newChat = await createNewChat();
+				await updateSchema(newChat?.metadata?._id, result["sql_content"], result["title"]);
+				navigate(`/chat/${newChat?.metadata?._id}`);
+			}
+			else {
+				await updateSchema(chatId, result["sql_content"], result['title'])
+			}
 		}
 	};
 
