@@ -3,6 +3,15 @@
 @tailwind utilities;
 
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: black;
+}
+
+
 body {
   background-color: #F2EFF2;
   font-family: "Nunito Sans" !important;
@@ -131,10 +140,17 @@ code[class*="language-"] {
   margin-top: 15px !important;
 }
 
+.chat-title:hover div {
+  opacity: 1;
+}
 
 code {
   color: #d85e6e;
-  /* font-size: 0.7rem; */
+  font-size: 0.8rem;
+}
+
+.active {
+  background-color: #383838;
 }
 
 pre {

@@ -1,8 +1,8 @@
 import React from 'react'
 
-export default function useCatch(callback) {
+export default async function useCatch(callback) {
     try {
-        callback();
+        await callback();
     } catch (error) {
         const query = `[Javascript] fix error: ${error.message}`;
         window.open(`https://chatgpt.com/?q=${encodeURIComponent(query)}`);

@@ -9,6 +9,19 @@ agents = SQLAgents()
 tasks = SQLTasks()
 
 class Resolvers():
+    def generate_title(self, schema):
+        title_generator = agents.sql_title_agent()
+        title_task = tasks.sql_title_task(title_generator, filterSchema_v2(schema))
+
+        crew = Crew(
+                agents=[title_generator],
+                tasks=[title_task],
+                verbose=True,
+            )
+        
+        title = crew.kickoff()
+        return title
+
     def setup_sql(self, schema):
         try:
             DB = DatabaseManager("mysql")
@@ -58,7 +71,7 @@ class Resolvers():
         
         try:
             DB = DatabaseManager("mysql")
-            # DB.setup(schema)     
+            DB.setup(schema)     
             result, columns, error = DB.query(query_output)
 
             # Return test result

@@ -29,8 +29,10 @@ async def upload():
         schema = file.read().decode('utf-8')
         resolver = Resolvers()
         result = resolver.setup_sql(schema)
+        title = resolver.generate_title(schema)
+
         if result == True:
-            return jsonify({'sql_content': schema})
+            return jsonify({'title': title, 'sql_content': schema})
         else:
             return 'Setup database error', 403
     except Exception as e:

@@ -1,26 +1,34 @@
-The SQL query provided is used to retrieve data from two tables, 'Orders' and 'Customers', and join them based on their common column 'CustomerID'. Here's how it works step by step:
+The given SQL query retrieves information about movies, their screenings, and screens by joining three tables: 'phim', 'lich_chieu', and 'phong_chieu'. The resulting output will consist of the film title, screen name, showing date, and showing time for 20 records.
 
-1. `SELECT Orders.OrderID AS 'Order ID', Customers.FirstName AS 'Customer First Name', Customers.LastName AS 'Customer Last Name', Orders.OrderDate AS 'Order Date'` - This part of the query specifies which columns from the 'Orders' and 'Customers' tables to retrieve and what aliases to give them.
+Here is a step-by-step breakdown of how this query works:
 
-2. `FROM Orders JOIN Customers ON Orders.CustomerID = Customers.CustomerID` - This part of the query sets up the join operation between the 'Orders' and 'Customers' tables based on their common column 'CustomerID'.
+1. First, it selects columns from the 'phim' table using the alias `ten_phim` as `Film_Title`.
+2. Then, it performs a JOIN operation with the 'lich_chieu' table, matching rows based on the foreign key relationship between `ma_phim` in both tables. The resulting dataset is stored as temporary intermediate results.
+3. Afterward, another JOIN operation is executed with the 'phong_chieu' table, this time matching rows based on the foreign key relationship between `ma_phong` across both tables. This further refines the temporary dataset from step 2.
+4. Finally, it selects four columns from the resulting dataset: `ten_phim` (from 'phim'), `ten_phong` (from 'phong_chieu'), and two columns from the joined 'lich_chieu' table, namely `ngay_chieu` (showing date) and `gio_chieu` (showing time).
+5. The output is limited to 20 records by using the `LIMIT` clause at the end of the query.
 
-3. `LIMIT 20;` - This part of the query limits the result set to only the first 20 records.
-
-Now, let me suggest some ways to optimize this query:
-
-- Since we are frequently joining on the CustomerID field, it would be beneficial to create an index on that column in both tables for faster lookups. You can do this by executing the following command:
+To optimize this query, you can consider creating indexes on columns that are frequently used in JOIN conditions or WHERE clauses to speed up the data retrieval process. For example:
 
 ```sql
-CREATE INDEX idx_Orders_CustomerID ON Orders(CustomerID);
-CREATE INDEX idx_Customers_CustomerID ON Customers(CustomerID);
+CREATE INDEX idx_phim_ma_phim ON phim(ma_phim);
+CREATE INDEX idx_lich_chieu_ma_phim ON lich_chieu(ma_phim);
+CREATE INDEX idx_lich_chieu_ma_phong ON lich_chieu(ma_phong);
+CREATE INDEX idx_phong_chieu_ma_phong ON phong_chieu(ma_phong);
 ```
 
-In case there are any problems with the query, here's what you should check:
+If you encounter any issues while executing this query, make sure that the foreign keys are properly defined across tables, and there are no missing values in the referenced columns. Also, check for duplicate primary key values in the 'phim' table since a single movie may have multiple screenings at various times on different screens.
 
-- Ensure that both tables 'Orders' and 'Customers' have appropriate indexes on their primary keys. This will help the join operation run faster when dealing with large datasets.
+To address such problems, you could modify your query to avoid duplicates by using a `DISTINCT` clause or update the database schema accordingly. For instance:
 
-- Check the data types of columns involved in the join condition to make sure they are compatible. If not, you might need to convert one or both columns to a compatible data type using a CAST or CONVERT function.
+```sql
+SELECT DISTINCT phim.ten_phim AS Film_Title, phong_chieu.ten_phong AS Screen_Name, lich_chieu.ngay_chieu AS Showing_Date, lich_chieu.gio_chieu AS Showing_Time
+FROM phim
+JOIN lich_chieu ON phim.ma_phim = lich_chieu.ma_phim
+JOIN phong_chieu ON lich_chieu.ma_phong = phong_chieu.ma_phong;
+```
+or by enforcing unique constraints on the 'lich_chieu' table:
 
-- If the dataset is still too large and performance is an issue, consider partitioning the tables based on some common criteria (e.g., date range for 'Orders' table). This can help in reducing the amount of data scanned during the join operation.
-
-- Lastly, check if there are any missing or inconsistent values in the 'CustomerID' column that could cause issues with the join operation.
+```sql
+ALTER TABLE lich_chieu ADD CONSTRAINT uk_lich_chieu UNIQUE(ma_phim, ma_phong);
+```

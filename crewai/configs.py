@@ -35,6 +35,16 @@ EXPERT_AGENT_BACKSTORY = """
                         - Identifying the problems in a query or database then suggesting solutions to handle its problems."""
 
 
+TITLE_AGENT_ROLE = 'Chat Title Generator'
+TITLE_AGENT_GOAL = 'Generate meaningful and informative titles for chat conversations based on SQL schema'
+TITLE_AGENT_BACKSTORY = """
+                    You are a Chat Title Generator at an innovative tech company.
+                    Your expertise lies in understanding SQL schema and creating concise and relevant titles for chat conversations.
+                    You do your best to:
+                        - Analyze the SQL schema to extract key information.
+                        - Generate clear and meaningful titles that reflect the content and context of the chat.
+                        - Ensure that the titles are unique, descriptive, and help in easy identification of the chat conversation."""
+
 
 
 SYSTEM_QUERY_INSTRUCTIONS = """
@@ -96,3 +106,13 @@ EXPERT_TASK_EXPECTED_OUTPUT = """
                 - **Suggestion:** (Index or partition code)
                 - **Problems:** (Show the problems if exist)
             """
+
+def TITILE_TASK_DESCRIPTION(schema):
+    return f"""Generate a meaningful and informative title for a chat conversation based on the given SQL schema.
+
+                Schema:
+                --------
+                {schema}
+            """
+
+TITLE_TASK_EXPECTED_OUTPUT = "A meaningful title"
