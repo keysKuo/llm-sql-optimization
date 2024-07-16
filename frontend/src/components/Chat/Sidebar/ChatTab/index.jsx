@@ -108,7 +108,7 @@ export default function ChatTab({
 									>
 										<Link
 											to={`/chat/${chat._id}`}
-											className="flex items-center justify-between gap-2 py-1"
+											className="flex items-center justify-between gap-2 py-1 w-[80%]"
 										>
 											<p className="">{chat.title}</p>
 										</Link>

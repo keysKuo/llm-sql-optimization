@@ -1,0 +1,97 @@
+{
+    "free": {
+        "label": "Free",
+        "desc": "Get started for free with incredible music, sound effects & no copyright issues",
+        "price": {
+            "integer": "0",
+            "decimal": ".00"
+        },
+        "benefits": [
+            {
+                "content": "3 downloads (renewed monthly*)",
+                "isChecked": true
+            },
+            {
+                "content": "30% catalog access",
+                "isChecked": true
+            },
+            {
+                "content": "Avoid claims with Uppbeat Credits",
+                "isChecked": true
+            },
+            {
+                "content": "For individual creators",
+                "isChecked": true
+            },
+            {
+                "content": "Premium tracks",
+                "isChecked": false
+            },
+            {
+                "content": "Premium sound effects",
+                "isChecked": false
+            },
+            {
+                "content": "Ad-free",
+                "isChecked": false
+            }
+        ]
+    },
+    "premium": {
+        "label": "Premium",
+        "desc": "Unleash your creativity with unlimited downloads, premium tracks & sound effects",
+        "price": {
+            "integer": "6",
+            "decimal": ".99"
+        },
+        "benefits": [
+            {
+                "content": "Unlimited downloads",
+                "isChecked": true
+            },
+            {
+                "content": "100% catalog access",
+                "isChecked": true
+            },
+            {
+                "content": "Whitelist up to 3 YouTube channels",
+                "isChecked": true
+            },
+            {
+                "content": "Premium tracks & sound effects",
+                "isChecked": true
+            },
+            {
+                "content": "Ad-free",
+                "isChecked": true
+            },
+            {
+                "content": "For individual creators micro organizations",
+                "isChecked": true
+            }
+        ]
+    },
+    "business": {
+        "label": "Business",
+        "desc": "The ultimate music, sound effects subscription for your business",
+        "price": {
+            "integer": "18",
+            "decimal": ".99"
+        },
+        "benefits": [
+            {
+                "content": "License for organizations of any scale",
+                "isChecked": true
+            },
+            {
+                "content": "Covers digital ads & client content",
+                "isChecked": true
+            },
+            {
+                "content": "Whitelist up to 10 YouTube channels",
+                "isChecked": true
+            }
+        ]
+    }
+
+}
