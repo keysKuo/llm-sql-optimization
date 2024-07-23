@@ -58,7 +58,7 @@ def generate_local(question, schema, memory=""):
             # tools= [search_tool],
             expected_output="""
                 ONLY An optimal, syntactically correct MySQL query to retrieve relevant information of the Question based on the Schema
-                No Explaination, No Note
+                No Explanation, No Note
             """
         )
 
@@ -86,7 +86,7 @@ def generate_local(question, schema, memory=""):
             """,
             agent=extractor,
             expected_output = """
-                Explaination of the query,
+                Explanation of the query,
                 SQL language markdown code get from 'generator'.
             """,
             context = [generator_task]

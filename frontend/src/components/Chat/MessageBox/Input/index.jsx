@@ -30,11 +30,18 @@ export default function Input({
 
 			if (!chatId) {
 				const newChat = await createNewChat();
-				await updateSchema(newChat?.metadata?._id, result["sql_content"], result["title"]);
+				await updateSchema(
+					newChat?.metadata?._id,
+					result["sql_content"],
+					result["title"]
+				);
 				navigate(`/chat/${newChat?.metadata?._id}`);
-			}
-			else {
-				await updateSchema(chatId, result["sql_content"], result['title'])
+			} else {
+				await updateSchema(
+					chatId,
+					result["sql_content"],
+					result["title"]
+				);
 			}
 		}
 	};
@@ -124,7 +131,7 @@ export default function Input({
 								);
 							}}
 						/>
-						<span className="label-text">Explaination</span>
+						<span className="label-text">Explanation</span>
 					</label>
 				</div>
 			</div>

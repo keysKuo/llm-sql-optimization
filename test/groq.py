@@ -61,7 +61,7 @@ def generate_groq(question, schema, memory=""):
         agent=generator,
         expected_output="""
            ONLY An Markdown optimal, syntactically correct MySQL query to retrieve relevant information of the Question based on the Schema
-           No Explaination, No Note
+           No Explanation, No Note
         """
     )
 
@@ -88,7 +88,7 @@ def generate_groq(question, schema, memory=""):
         """,
         agent=extractor,
         expected_output = """
-            Explaination of the query,  
+            Explanation of the query,  
             SQL language markdown code get from 'generator' as ```sql ``` format.
         """,
         context = [generator_task]

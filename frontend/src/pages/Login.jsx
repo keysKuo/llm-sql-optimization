@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import configDev from "../configs";
 import { AuthContext } from "../contexts/AuthProvider";
 import useFetch from "../hooks/useFetch";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import useLoginWithGoogle from "../hooks/useLoginWithGoogle";
 
 export default function LoginPage() {
 	const { user, setUser } = useContext(AuthContext);
@@ -13,10 +15,30 @@ export default function LoginPage() {
 		email: "",
 		password: "",
 	});
+	const { loginWithGoogle } = useLoginWithGoogle();
+	
+	const auth = getAuth();
+
+	const onLoginWithGoogle = async () => {
+		const provider = new GoogleAuthProvider();
+
+		await signInWithPopup(auth, provider)
+			.then(async (res) => {
+				// console.log(res)
+				const tempUser = res?.user?.providerData[0];
+				const result = await loginWithGoogle(tempUser.displayName, tempUser.email, tempUser.photoURL, tempUser.uid);
+				if (result) {
+					storeLocalStorageUser(result);
+				}
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
 
 	const onSubmit = async () => {
 		const options = {
-			url: configDev['BACKEND_URL'] + "/auth/signIn",
+			url: configDev["BACKEND_URL"] + "/auth/signIn",
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -27,7 +49,7 @@ export default function LoginPage() {
 
 		const result = await fetch(options);
 		if (result) {
-			storeUser(result);
+			storeLocalStorageUser(result);
 		}
 	};
 
@@ -42,7 +64,7 @@ export default function LoginPage() {
 		}
 	};
 
-	const storeUser = (result) => {
+	const storeLocalStorageUser = (result) => {
 		setUser(result.metadata.user);
 		localStorage.setItem("user", JSON.stringify(result.metadata.user));
 		localStorage.setItem("refreshToken", result.metadata.refreshToken);
@@ -110,13 +132,16 @@ export default function LoginPage() {
 			</Link>
 
 			<button
+				onClick={onLoginWithGoogle}
 				className="google-login-btn w-[90%] h-10 rounded-badge text-sm mb-3
         		bg-[#3273FF] border-2 border-[#3273FF] flex items-center justify-start gap-16"
 			>
 				<div className="w-[2.2rem] h-[2.2rem] rounded-full bg-white flex items-center justify-center">
 					<GoogleSVG />
 				</div>
-				<span className="text-white">Sign in with Google</span>
+				<span  className="text-white">
+					Sign in with Google
+				</span>
 			</button>
 		</div>
 	);

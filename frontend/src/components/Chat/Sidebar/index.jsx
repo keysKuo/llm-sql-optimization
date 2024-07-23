@@ -26,8 +26,8 @@ export default function Sidebar({
 			const result = await loadHistoryChats();
 			if (!chatError) {
 				// console.log(result);
-				setChats(result.metadata);
-				const chat = result.metadata.find(
+				setChats(result?.metadata);
+				const chat = result?.metadata.find(
 					(chat) => chat._id === chatId
 				);
 				handleChangeForm("schema", chat?.schema || "");

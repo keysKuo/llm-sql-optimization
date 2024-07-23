@@ -1,34 +1,32 @@
-The given SQL query retrieves information about movies, their screenings, and screens by joining three tables: 'phim', 'lich_chieu', and 'phong_chieu'. The resulting output will consist of the film title, screen name, showing date, and showing time for 20 records.
+**SQL Query:**
+                ```sql
+                SELECT
+                    dt.ngay,
+                    SUM(dt.tong_doanh_thu) AS tong_doanh_thu
+                FROM
+                    doanh_thu_ngay dt
+                GROUP BY
+                    dt.ngay
+                LIMIT 20;  
+                ```
 
-Here is a step-by-step breakdown of how this query works:
+                **Explanation:** 
+                This SQL query calculates the total revenue for each day from a table named 'doanh_thu_ngay' (likely meaning 'daily revenue').
 
-1. First, it selects columns from the 'phim' table using the alias `ten_phim` as `Film_Title`.
-2. Then, it performs a JOIN operation with the 'lich_chieu' table, matching rows based on the foreign key relationship between `ma_phim` in both tables. The resulting dataset is stored as temporary intermediate results.
-3. Afterward, another JOIN operation is executed with the 'phong_chieu' table, this time matching rows based on the foreign key relationship between `ma_phong` across both tables. This further refines the temporary dataset from step 2.
-4. Finally, it selects four columns from the resulting dataset: `ten_phim` (from 'phim'), `ten_phong` (from 'phong_chieu'), and two columns from the joined 'lich_chieu' table, namely `ngay_chieu` (showing date) and `gio_chieu` (showing time).
-5. The output is limited to 20 records by using the `LIMIT` clause at the end of the query.
+                1. **`SELECT dt.ngay, SUM(dt.tong_doanh_thu) AS tong_doanh_thu`**: This part specifies the columns to be retrieved:
+                   - `dt.ngay`:  The 'ngay' column from the 'doanh_thu_ngay' table, which presumably stores the date.
+                   - `SUM(dt.tong_doanh_thu)`: This calculates the sum of the 'tong_doanh_thu' (total revenue) column for each distinct date.  The result is aliased as 'tong_doanh_thu'.
 
-To optimize this query, you can consider creating indexes on columns that are frequently used in JOIN conditions or WHERE clauses to speed up the data retrieval process. For example:
+                2. **`FROM doanh_thu_ngay dt`**: This indicates the table from which the data is being retrieved: 'doanh_thu_ngay', aliased as 'dt' for brevity.
 
-```sql
-CREATE INDEX idx_phim_ma_phim ON phim(ma_phim);
-CREATE INDEX idx_lich_chieu_ma_phim ON lich_chieu(ma_phim);
-CREATE INDEX idx_lich_chieu_ma_phong ON lich_chieu(ma_phong);
-CREATE INDEX idx_phong_chieu_ma_phong ON phong_chieu(ma_phong);
-```
+                3. **`GROUP BY dt.ngay`**: This clause groups the rows in the 'doanh_thu_ngay' table by the 'ngay' column. This means the `SUM` function will be applied to aggregate revenue for each unique date.
 
-If you encounter any issues while executing this query, make sure that the foreign keys are properly defined across tables, and there are no missing values in the referenced columns. Also, check for duplicate primary key values in the 'phim' table since a single movie may have multiple screenings at various times on different screens.
+                4. **`LIMIT 20`**: This clause limits the number of rows returned by the query to the first 20 rows.
 
-To address such problems, you could modify your query to avoid duplicates by using a `DISTINCT` clause or update the database schema accordingly. For instance:
+                **Suggestion:** 
+                - **Index on 'ngay' column:** Creating an index on the 'ngay' column in the 'doanh_thu_ngay' table will significantly improve the performance of this query, especially if you frequently query by date.
 
-```sql
-SELECT DISTINCT phim.ten_phim AS Film_Title, phong_chieu.ten_phong AS Screen_Name, lich_chieu.ngay_chieu AS Showing_Date, lich_chieu.gio_chieu AS Showing_Time
-FROM phim
-JOIN lich_chieu ON phim.ma_phim = lich_chieu.ma_phim
-JOIN phong_chieu ON lich_chieu.ma_phong = phong_chieu.ma_phong;
-```
-or by enforcing unique constraints on the 'lich_chieu' table:
-
-```sql
-ALTER TABLE lich_chieu ADD CONSTRAINT uk_lich_chieu UNIQUE(ma_phim, ma_phong);
-```
+                **Problems:** 
+                - **Potential Performance Bottleneck:**  
+                   - If the 'doanh_thu_ngay' table is large, this query could potentially be slow, especially without an index on the 'ngay' column. The database will have to scan the entire table to group and sum the revenues.
+                - **Limited Scope:** The `LIMIT 20` clause restricts the results to only the first 20 days. If you need to analyze revenue for a wider range of dates, you'll need to adjust this limit.

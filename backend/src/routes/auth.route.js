@@ -7,6 +7,7 @@ const { verifyAuth } = require('../middlewares/auth.verify');
 
 router.post('/signUp', catchAsync(AuthController.signUp));
 router.post('/signIn', catchAsync(AuthController.signIn));
+router.post('/signInWithGoogle', catchAsync(AuthController.signInWithGoogle));
 
 router.use(catchAsync(verifyAuth));
 router.post('/logOut', catchAsync(AuthController.logOut));

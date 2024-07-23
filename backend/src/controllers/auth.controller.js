@@ -59,6 +59,35 @@ class AuthController {
 		});
 	}
 
+	/************************************* SIGN IN WITH GOOGLE **********************************************
+	 * @url     /api/v1/auth/signInWithGoogle
+	 * @method  POST
+	 * @desc    login with google
+	 * @param   {String} username
+	 * @param   {String} email
+	 * @param   {String} avatar
+	 * @param   {String} googleId
+	 * @return  {JSON} user, accessToken, refreshToken
+	 */
+	static async signInWithGoogle(req, res, next) {
+		const metadata = await AuthService.signInWithGoogle({ ...req.body });
+		return new SuccessResponse({
+			code: 200,
+			message: `✔️ Login Successfully`,
+			metadata,
+		}).send({
+			response: res,
+			callback: (res) => {
+				res.cookie("accessToken", metadata.accessToken, {
+					maxAge: 2 * 24 * 60 * 60 * 1000,
+					httpOnly: true,
+					sameSite: "strict",
+					secure: process.env.NODE_ENV !== "development",
+				});
+			},
+		});
+	}
+
 	/************************************* LOG OUT **********************************************
 	 * @url     /api/v1/auth/logOut
 	 * @method  POST

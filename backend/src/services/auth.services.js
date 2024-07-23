@@ -15,6 +15,50 @@ const configs = require("../configs");
 class AuthService {
 	static async refreshToken() {}
 
+	static async signInWithGoogle({ username, email, avatar, googleId }) {
+		const existedUser = await userModel.findOne({ email, googleId }).lean();
+		let resultUser = existedUser;
+
+		if (!resultUser) {
+			const newUser = await userModel.create({
+				username, email, avatar, googleId
+			});
+			if (!newUser) throw new BadRequestError(`❌ Created user fail!`);
+			resultUser = newUser;
+		}
+
+		// Generate new Keys
+		const { publicKey, privateKey } = generateKeys();
+		if (!publicKey || !privateKey)
+			throw new ForbiddenError(`❌ Generated KeyPair Fail!`);
+
+		// Generate new Tokens
+		const { accessToken, refreshToken } = await generateTokens(
+			{ userId: resultUser._id },
+			publicKey,
+			privateKey
+		);
+		if (!accessToken || !refreshToken)
+			throw new ForbiddenError(`❌ Create Tokens fail!`);
+		
+		await KeyStoreService.createKeyStore({
+			userId: resultUser._id,
+			publicKey,
+			privateKey,
+			refreshToken,
+			refreshTokensUsed: []
+		});
+
+		return {
+			user: filterData({
+				object: resultUser,
+				fields: ["_id", "username", "email", "gender", "avatar"],
+			}),
+			accessToken,
+			refreshToken,
+		};
+	}
+
 	static async signIn({ email, password }) {
         // Check if user existed by email
 		const existedUser = await userModel.findOne({ email }).lean();
