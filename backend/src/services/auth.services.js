@@ -13,20 +13,7 @@ const KeyStoreService = require("./keystore.services");
 const configs = require("../configs");
 
 class AuthService {
-	static async refreshToken() {}
-
-	static async signInWithGoogle({ username, email, avatar, googleId }) {
-		const existedUser = await userModel.findOne({ email, googleId }).lean();
-		let resultUser = existedUser;
-
-		if (!resultUser) {
-			const newUser = await userModel.create({
-				username, email, avatar, googleId
-			});
-			if (!newUser) throw new BadRequestError(`❌ Created user fail!`);
-			resultUser = newUser;
-		}
-
+	static async refreshToken(userId) {
 		// Generate new Keys
 		const { publicKey, privateKey } = generateKeys();
 		if (!publicKey || !privateKey)
@@ -34,7 +21,7 @@ class AuthService {
 
 		// Generate new Tokens
 		const { accessToken, refreshToken } = await generateTokens(
-			{ userId: resultUser._id },
+			{ userId },
 			publicKey,
 			privateKey
 		);
@@ -42,16 +29,33 @@ class AuthService {
 			throw new ForbiddenError(`❌ Create Tokens fail!`);
 		
 		await KeyStoreService.createKeyStore({
-			userId: resultUser._id,
+			userId,
 			publicKey,
 			privateKey,
 			refreshToken,
 			refreshTokensUsed: []
 		});
 
+		return { accessToken, refreshToken };
+	}
+
+	static async signInWithGoogle({ username, email, avatar, googleId }) {
+		const existedUser = await userModel.findOne({ email, googleId }).lean();
+		let googleUser = existedUser;
+
+		if (!googleUser) {
+			const newUser = await userModel.create({
+				username, email, avatar, googleId
+			});
+			if (!newUser) throw new BadRequestError(`❌ Created user fail!`);
+			googleUser = newUser;
+		}
+
+		const { accessToken, refreshToken } = await this.refreshToken(googleUser._id);
+
 		return {
 			user: filterData({
-				object: resultUser,
+				object: googleUser,
 				fields: ["_id", "username", "email", "gender", "avatar"],
 			}),
 			accessToken,
@@ -70,28 +74,7 @@ class AuthService {
 		if (!passwordMatched)
 			throw new AuthorizedError(`❌ Authentication Error!`);
 
-		// Generate new Keys with randomBytes(64)
-		const { publicKey, privateKey } = generateKeys();
-		if (!publicKey || !privateKey)
-			throw new ForbiddenError(`❌ Generated KeyPair Fail!`);
-
-		// Generate new Tokens by signing JWT 
-		const { accessToken, refreshToken } = await generateTokens(
-			{ userId: existedUser._id },
-			publicKey,
-			privateKey
-		);
-		if (!accessToken || !refreshToken)
-			throw new ForbiddenError(`❌ Create Tokens fail!`);
-
-        // Store new Keys to db
-        await KeyStoreService.createKeyStore({
-			userId: existedUser._id,
-			publicKey,
-			privateKey,
-			refreshToken,
-			refreshTokensUsed: []
-		});
+		const { accessToken, refreshToken } = await this.refreshToken(existedUser._id);
 
         return {
             user: filterData({
@@ -138,19 +121,7 @@ class AuthService {
 		});
 		if (!newUser) throw new BadRequestError(`❌ Created user fail!`);
 
-		// Generate new Keys
-		const { publicKey, privateKey } = generateKeys();
-		if (!publicKey || !privateKey)
-			throw new ForbiddenError(`❌ Generated KeyPair Fail!`);
-
-		// Generate new Tokens
-		const { accessToken, refreshToken } = await generateTokens(
-			{ userId: newUser._id },
-			publicKey,
-			privateKey
-		);
-		if (!accessToken || !refreshToken)
-			throw new ForbiddenError(`❌ Create Tokens fail!`);
+		const { accessToken, refreshToken } = await this.refreshToken(newUser._id);
 
 		return {
 			user: filterData({
