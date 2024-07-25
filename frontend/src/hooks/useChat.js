@@ -63,7 +63,7 @@ export default function useChat() {
 			});
 	};
 
-	const updateSchema = async (chatId, schema, title) => {
+	const updateSchema = async (chatId, schema, title, recommends) => {
 		setLoading(true);
 
 		const options = {
@@ -73,7 +73,7 @@ export default function useChat() {
 				"Content-Type": "application/json",
 				"x-client-id": user._id,
 			},
-			data: JSON.stringify({ chatId, schema, title }),
+			data: JSON.stringify({ chatId, schema, title, recommends }),
 			withCredentials: true,
 		};
 

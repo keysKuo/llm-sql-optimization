@@ -33,8 +33,8 @@ export default function ChatBox({
 					<div className="w-full h-[80svh] flex flex-col items-center justify-center">
 						<img
 							className={classNames({
-								"w-56": formData['schema'],
-								"w-72": !formData['schema']
+								"w-56": formData["schema"],
+								"w-72": !formData["schema"],
 							})}
 							src="https://ezticket.io.vn/logo_2.png"
 							alt=""

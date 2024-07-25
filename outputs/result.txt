@@ -1,32 +1,37 @@
 **SQL Query:**
-                ```sql
-                SELECT
-                    dt.ngay,
-                    SUM(dt.tong_doanh_thu) AS tong_doanh_thu
-                FROM
-                    doanh_thu_ngay dt
-                GROUP BY
-                    dt.ngay
-                LIMIT 20;  
-                ```
+```sql
+SELECT 
+    p.ten_phim,
+    COUNT(lc.ma_lich_chieu) AS so_lan_chieu
+FROM 
+    phim p
+JOIN 
+    lich_chieu lc ON p.ma_phim = lc.ma_phim
+GROUP BY 
+    p.ten_phim
+ORDER BY 
+    so_lan_chieu DESC
+LIMIT 10;
+```
 
-                **Explanation:** 
-                This SQL query calculates the total revenue for each day from a table named 'doanh_thu_ngay' (likely meaning 'daily revenue').
+**Explanation:**
+This SQL query retrieves the top 10 movies with the highest number of screenings. Here's a breakdown of how it works:
 
-                1. **`SELECT dt.ngay, SUM(dt.tong_doanh_thu) AS tong_doanh_thu`**: This part specifies the columns to be retrieved:
-                   - `dt.ngay`:  The 'ngay' column from the 'doanh_thu_ngay' table, which presumably stores the date.
-                   - `SUM(dt.tong_doanh_thu)`: This calculates the sum of the 'tong_doanh_thu' (total revenue) column for each distinct date.  The result is aliased as 'tong_doanh_thu'.
+1. **`SELECT p.ten_phim, COUNT(lc.ma_lich_chieu) AS so_lan_chieu`**: This part specifies the columns to be retrieved. 
+    - `p.ten_phim`: Selects the movie title from the `phim` table (aliased as `p`).
+    - `COUNT(lc.ma_lich_chieu)`: Counts the number of movie showtimes (represented by `ma_lich_chieu` in the `lich_chieu` table, aliased as `lc`) for each movie. The result is aliased as `so_lan_chieu` (number of screenings).
 
-                2. **`FROM doanh_thu_ngay dt`**: This indicates the table from which the data is being retrieved: 'doanh_thu_ngay', aliased as 'dt' for brevity.
+2. **`FROM phim p JOIN lich_chieu lc ON p.ma_phim = lc.ma_phim`**: This section joins the `phim` and `lich_chieu` tables based on the common column `ma_phim` (movie ID). This combines data from both tables to perform the count.
 
-                3. **`GROUP BY dt.ngay`**: This clause groups the rows in the 'doanh_thu_ngay' table by the 'ngay' column. This means the `SUM` function will be applied to aggregate revenue for each unique date.
+3. **`GROUP BY p.ten_phim`**:  The results are grouped by movie title (`p.ten_phim`). This ensures that the `COUNT()` function calculates the number of screenings per movie.
 
-                4. **`LIMIT 20`**: This clause limits the number of rows returned by the query to the first 20 rows.
+4. **`ORDER BY so_lan_chieu DESC`**:  The grouped results are sorted in descending order based on the `so_lan_chieu` column (number of screenings), so the movies with the most screenings appear first.
 
-                **Suggestion:** 
-                - **Index on 'ngay' column:** Creating an index on the 'ngay' column in the 'doanh_thu_ngay' table will significantly improve the performance of this query, especially if you frequently query by date.
+5. **`LIMIT 10`**:  Finally, only the top 10 movies (based on the sorting) are returned.
 
-                **Problems:** 
-                - **Potential Performance Bottleneck:**  
-                   - If the 'doanh_thu_ngay' table is large, this query could potentially be slow, especially without an index on the 'ngay' column. The database will have to scan the entire table to group and sum the revenues.
-                - **Limited Scope:** The `LIMIT 20` clause restricts the results to only the first 20 days. If you need to analyze revenue for a wider range of dates, you'll need to adjust this limit.
+**Suggestion:**
+- **Index:** Create an index on the `ma_phim` column in both the `phim` and `lich_chieu` tables. This will significantly speed up the join operation, as the database can efficiently find matching movie IDs.  
+
+ **Problems:**
+-  **Potential for Performance Issues:** 
+    - Without proper indexing, especially on the `ma_phim` column, large tables could lead to slow query execution times due to the full table scan during the join.

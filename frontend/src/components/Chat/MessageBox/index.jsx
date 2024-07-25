@@ -13,7 +13,6 @@ const MessageBox = ({
 	handleChangeForm,
 	showDatabase,
 	handleToggleDatabase,
-	sidebarTab,
 	setSidebarTab,
 	recommends,
 	setRecommends,
@@ -40,6 +39,7 @@ const MessageBox = ({
 			const result = await loadHistoryMessages(chatId);
 			// console.log(result);
 			if (!chatError) {
+				setRecommends(result?.metadata?.chat?.recommends)
 				setMessages(result?.metadata?.messages || []);
 			}
 		};
@@ -62,7 +62,7 @@ const MessageBox = ({
 	};
 
 	const onSendMessage = useCallback(
-		async (input, callback) => {
+		async (chatId, input, callback) => {
 			if (!input) {
 				return;
 			}
@@ -115,10 +115,8 @@ const MessageBox = ({
 			{/* MESSAGE INPUT */}
 			<Input
 				loading={loading}
-				formData={formData}
 				handleChangeForm={handleChangeForm}
 				onSendMessage={onSendMessage}
-				sidebarTab={sidebarTab}
 				setSidebarTab={setSidebarTab}
 				setRecommends={setRecommends}
 			/>

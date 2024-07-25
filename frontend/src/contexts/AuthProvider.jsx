@@ -13,6 +13,7 @@ export default function AuthProvider({ children }) {
 		const jsonUser = localStorage.getItem("user");
 		return JSON.parse(jsonUser) || null;
 	});
+	const [chats, setChats] = useState([]);
 	const [showLoading, setShowLoading] = useState(false);
 	
 	
@@ -24,7 +25,7 @@ export default function AuthProvider({ children }) {
 	}, [user]);
 
 	return (
-		<AuthContext.Provider value={{ user, setUser, showLoading, setShowLoading }}>
+		<AuthContext.Provider value={{ user, setUser, showLoading, setShowLoading, chats, setChats }}>
 			{children}
 		</AuthContext.Provider>
 	);

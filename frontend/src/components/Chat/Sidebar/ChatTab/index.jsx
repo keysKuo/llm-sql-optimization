@@ -12,15 +12,15 @@ import UserOptions from "../UserOptions";
 import useChat from "../../../../hooks/useChat";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import classNames from "classnames";
+import { useAuthContext } from "../../../../contexts/AuthProvider";
 
 export default function ChatTab({
 	handleToggleDatabase,
 	setSidebarTab,
-	chats,
-	setChats,
 	handleChangeForm,
 }) {
 	const { chatId } = useParams();
+	const { chats, setChats } = useAuthContext();
 	const navigate = useNavigate();
 	const { deleteChat, error: chatError } = useChat();
 
@@ -55,7 +55,7 @@ export default function ChatTab({
 				<UserOptions handleToggleDatabase={handleToggleDatabase} />
 			</div>
 
-			<div className="relative w-full flex flex-col flex-1 text-sm bg-[#2d2d2d] text-[#ccc] overflow-y-auto overflow-x-hidden">
+			<div className="overflow-y-hidden relative w-full flex flex-col flex-1 text-sm bg-[#2d2d2d] text-[#ccc] overflow-x-hidden">
 				{/* NOW CHATS */}
 				<div className="text-white p-4">
 					<div className="py-2 font-normal text-xs cursor-default">
@@ -92,7 +92,7 @@ export default function ChatTab({
 					<div className="py-2 font-normal text-xs cursor-default">
 						Previous chats
 					</div>
-					<ul className="space-y-1">
+					<ul className="space-y-1 max-h-[70svh] overflow-y-scroll my-2">
 						{chats?.map((chat, idx) => {
 							return (
 								<li key={idx}>
@@ -106,7 +106,9 @@ export default function ChatTab({
 											to={`/chat/${chat._id}`}
 											className="flex items-center justify-between gap-2 py-1 w-[80%]"
 										>
-											<p className="">{chat.title}</p>
+											<p className={classNames({
+												"typing": chat._id == chatId
+											})}>{chat.title}</p>
 										</Link>
 										<div className="flex items-center opacity-0">
 											<div className="p-2 hover:bg-[#2d2d2d] rounded-full">
@@ -129,7 +131,7 @@ export default function ChatTab({
 				</div>
 
 				{/* UPGRADE PLAN */}
-				<Link to={'/pricing'} className="upgrade-plan cursor-pointer h-16 flex items-center justify-start rounded-xl hover:bg-[#353535] m-4">
+				<Link to={'/pricing'} className="absolute bottom-3 w-[90%] translate-x-[-50%] left-[50%] upgrade-plan cursor-pointer h-16 flex items-center justify-start rounded-xl hover:bg-[#353535]">
 					<div className="flex">
 						<div className="w-16 flex items-center justify-center">
 							<LuZap size={25} />

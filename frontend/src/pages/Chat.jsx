@@ -11,8 +11,8 @@ export default function ChatPage() {
 		is_explain: false,
 		model: "gemma2:9b-instruct-q4_1",
 	});
-	const [sidebarTab, setSidebarTab] = useState('chat');
-	
+	const [sidebarTab, setSidebarTab] = useState("chat");
+
 	const handleChangeForm = useCallback(
 		(name, value) => {
 			setFormData({ ...formData, [name]: value });
@@ -32,8 +32,8 @@ export default function ChatPage() {
 			<div
 				className={classNames({
 					"h-[100svh] flex flex-col items-center shadow-messagebox bg-[#2d2d2d] transition-all": true,
-					"w-[20%]": sidebarTab === 'chat',
-					"w-[30%]": sidebarTab === 'schema',
+					"w-[20%]": sidebarTab === "chat",
+					"w-[30%]": sidebarTab === "schema",
 					hidden: !showDatabase,
 				})}
 			>
@@ -59,7 +59,6 @@ export default function ChatPage() {
 					handleChangeForm={handleChangeForm}
 					showDatabase={showDatabase}
 					handleToggleDatabase={handleToggleDatabase}
-					sidebarTab={sidebarTab}
 					setSidebarTab={setSidebarTab}
 					recommends={recommends}
 					setRecommends={setRecommends}

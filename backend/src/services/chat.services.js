@@ -44,7 +44,7 @@ class ChatService {
 		);
 	}
 
-	static async updateSchema({ chatId, schema, title, userId }) {
+	static async updateSchema({ chatId, schema, title, recommends, userId }) {
 		const existedChat = await chatModel.countDocuments({
 			_id: chatId,
 			user: userId,
@@ -53,7 +53,13 @@ class ChatService {
 
 		return await chatModel.findOneAndUpdate(
 			{ _id: chatId, user: userId },
-			{ $set: { schema: schema, title: title } },
+			{
+				$set: {
+					schema: schema,
+					title: title,
+					recommends: recommends,
+				},
+			},
 			{ returnOriginal: false }
 		);
 	}

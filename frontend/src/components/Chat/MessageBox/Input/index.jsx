@@ -3,24 +3,28 @@ import { LuSave, LuSend } from "react-icons/lu";
 import Modal from "../../Modal";
 import useUpload from "../../../../hooks/useUpload";
 import useChat from "../../../../hooks/useChat";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useAuthContext } from "../../../../contexts/AuthProvider";
 
 export default function Input({
 	loading,
-	formData,
 	handleChangeForm,
 	onSendMessage,
-	sidebarTab,
 	setSidebarTab,
-	setRecommends
+	setRecommends,
 }) {
 	const [input, setInput] = useState("");
-	const navigate = useNavigate();
 	const [showModal, setShowModal] = useState(true);
 	const { chatId } = useParams();
-	
+	const { chats, setChats } = useAuthContext();
+
 	const { upload, loading: fileLoading, error: uploadError } = useUpload();
-	const { createNewChat, updateSchema } = useChat();
+	const {
+		createNewChat,
+		updateSchema,
+		error: chatError,
+		loading: chatLoading,
+	} = useChat();
 
 	const onChangeFile = async (e) => {
 		const file = e.target.files[0];
@@ -28,21 +32,36 @@ export default function Input({
 		if (!uploadError) {
 			handleChangeForm("schema", result["sql_content"]);
 			setSidebarTab("schema");
-			setRecommends(JSON.parse(result['recommends']));
+			const recommends = JSON.parse(result["recommends"]);
+			setRecommends(recommends);
 
 			if (!chatId) {
 				const newChat = await createNewChat();
+				console.log(newChat);
 				await updateSchema(
 					newChat?.metadata?._id,
 					result["sql_content"],
-					result["title"]
+					result["title"],
+					recommends
 				);
-				navigate(`/chat/${newChat?.metadata?._id}`);
+
+				if (!chatError) {
+					setChats([
+						{
+							...newChat,
+							title: result["title"],
+							recommends: recommends,
+						},
+						...chats,
+					]);
+					window.location.href = `/chat/${newChat?.metadata?._id}`;
+				}
 			} else {
 				await updateSchema(
 					chatId,
 					result["sql_content"],
-					result["title"]
+					result["title"],
+					recommends
 				);
 			}
 		}

@@ -3,6 +3,7 @@ import ChatTab from "./ChatTab";
 import SchemaTab from "./SchemaTab";
 import useChat from "../../../hooks/useChat";
 import { useParams } from "react-router-dom";
+import { useAuthContext } from "../../../contexts/AuthProvider";
 
 export default function Sidebar({
 	formData,
@@ -13,7 +14,7 @@ export default function Sidebar({
 	handleToggleDatabase,
 	setRecommends,
 }) {
-	const [chats, setChats] = useState([]);
+	const { chats, setChats } = useAuthContext();
 	const {
 		loadHistoryChats,
 		loading: chatLoading,
@@ -26,7 +27,7 @@ export default function Sidebar({
 		const LoadHistory = async () => {
 			const result = await loadHistoryChats();
 			if (!chatError) {
-				// console.log(result);
+				console.log(result);
 				setChats(result?.metadata);
 				const chat = result?.metadata.find(
 					(chat) => chat._id === chatId
@@ -45,8 +46,6 @@ export default function Sidebar({
 					handleToggleDatabase={handleToggleDatabase}
 					handleChangeForm={handleChangeForm}
 					setSidebarTab={setSidebarTab}
-					chats={chats}
-					setChats={setChats}
 				/>
 			) : (
 				<SchemaTab

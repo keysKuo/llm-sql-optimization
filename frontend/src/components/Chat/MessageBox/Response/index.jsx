@@ -34,7 +34,7 @@ export default function Response({ message, isSkeleton = false }) {
 					</div>
 				</>
 			) : (
-				<div className="group/conversation-turn relative flex w-full min-w-0 flex-col agent-turn">
+				<div className="relative flex w-full min-w-0 flex-col agent-turn">
 					<div className="flex-col gap-1 md:gap-3">
 						<div className="flex flex-grow flex-col w-full max-w-full">
 							<div className="min-h-[20px] text-message flex flex-col items-start break-words juice:w-full juice:items-end overflow-x-auto gap-2">

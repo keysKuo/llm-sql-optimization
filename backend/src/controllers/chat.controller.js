@@ -31,8 +31,14 @@ class ChatController {
 	 */
 	static async updateSchema(req, res, next) {
 		const userId = req.user._id;
-		const { chatId, schema, title } = req.body;
-		const metadata = await ChatService.updateSchema({ chatId, schema, title, userId });
+		const { chatId, schema, title, recommends } = req.body;
+		const metadata = await ChatService.updateSchema({
+			chatId,
+			schema,
+			title,
+			recommends,
+			userId,
+		});
 
 		return new SuccessResponse({
 			code: 200,
@@ -53,7 +59,11 @@ class ChatController {
 	static async renameChat(req, res, next) {
 		const userId = req.user._id;
 		const { chatId, title } = req.body;
-		const metadata = await ChatService.renameChat({ chatId, title, userId });
+		const metadata = await ChatService.renameChat({
+			chatId,
+			title,
+			userId,
+		});
 
 		return new SuccessResponse({
 			code: 200,
@@ -80,7 +90,13 @@ class ChatController {
 		return new SuccessResponse({
 			code: 201,
 			message: `✔️ Added new message`,
-			metadata: await ChatService.addMessage({ chatId, type, body, data, userId })
+			metadata: await ChatService.addMessage({
+				chatId,
+				type,
+				body,
+				data,
+				userId,
+			}),
 		}).send({ response: res });
 	}
 
@@ -90,7 +106,7 @@ class ChatController {
 	 * @desc    Delete a chat
 	 * @param   {String} chatId
 	 * @param   {String} userId
-	 * @return  {JSON} 
+	 * @return  {JSON}
 	 */
 	static async deleteChat(req, res, next) {
 		const userId = req.user._id;
@@ -99,10 +115,9 @@ class ChatController {
 		return new SuccessResponse({
 			code: 200,
 			message: `✔️ Deleted chat`,
-			metadata: await ChatService.deleteChat({ chatId, userId })
+			metadata: await ChatService.deleteChat({ chatId, userId }),
 		}).send({ response: res });
 	}
-
 
 	/************************************* LOAD HISTORY CHATS **********************************************
 	 * @url     /api/v1/chat/history-chats
@@ -116,7 +131,7 @@ class ChatController {
 		return new SuccessResponse({
 			code: 200,
 			message: `✔️ Loaded history chats`,
-			metadata: await ChatService.loadHistoryChat({ userId })
+			metadata: await ChatService.loadHistoryChat({ userId }),
 		}).send({ response: res });
 	}
 
@@ -134,7 +149,7 @@ class ChatController {
 		return new SuccessResponse({
 			code: 200,
 			message: `✔️ Loaded history messages`,
-			metadata: await ChatService.loadHistoryMessages({ chatId, userId })
+			metadata: await ChatService.loadHistoryMessages({ chatId, userId }),
 		}).send({ response: res });
 	}
 }
