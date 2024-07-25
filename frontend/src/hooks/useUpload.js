@@ -1,13 +1,16 @@
 import axios from "axios";
 import { useState } from "react";
 import configs from "../configs";
+import { useAuthContext } from "../contexts/AuthProvider";
 
 export default function useUpload() {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
+	const { showLoading, setShowLoading } = useAuthContext();
 
 	const upload = async (file) => {
 		setLoading(true);
+		setShowLoading(true);
         const formData = new FormData();
 		formData.append("file", file);
 
@@ -30,6 +33,7 @@ export default function useUpload() {
 			})
 			.finally(() => {
 				setLoading(false);
+				setShowLoading(false);
 				setError(null);
 			});
 	};

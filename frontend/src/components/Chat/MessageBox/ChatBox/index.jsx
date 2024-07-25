@@ -1,17 +1,25 @@
 import React, { useCallback, useEffect, useRef } from "react";
 import Message from "../Message";
 import Response from "../Response";
+import Recommend from "../../Recommend";
+import classNames from "classnames";
 
-export default function ChatBox({ loading, messages }) {
-    const chatBoxRef = useRef(null);
+export default function ChatBox({
+	loading,
+	messages,
+	formData,
+	onSendMessage,
+	recommends,
+}) {
+	const chatBoxRef = useRef(null);
 
-    const scrollToBottom = useCallback(() => {
+	const scrollToBottom = useCallback(() => {
 		if (chatBoxRef.current) {
 			chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
 		}
 	}, []);
 
-    useEffect(() => {
+	useEffect(() => {
 		scrollToBottom();
 	}, [messages]);
 
@@ -24,10 +32,19 @@ export default function ChatBox({ loading, messages }) {
 				{messages.length === 0 ? (
 					<div className="w-full h-[80svh] flex flex-col items-center justify-center">
 						<img
-							className="w-72"
+							className={classNames({
+								"w-56": formData['schema'],
+								"w-72": !formData['schema']
+							})}
 							src="https://ezticket.io.vn/logo_2.png"
 							alt=""
 						></img>
+						{formData["schema"] && (
+							<Recommend
+								recommends={recommends}
+								onSendMessage={onSendMessage}
+							/>
+						)}
 					</div>
 				) : (
 					<>

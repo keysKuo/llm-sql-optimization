@@ -12,12 +12,13 @@ export default function Input({
 	onSendMessage,
 	sidebarTab,
 	setSidebarTab,
+	setRecommends
 }) {
 	const [input, setInput] = useState("");
 	const navigate = useNavigate();
 	const [showModal, setShowModal] = useState(true);
 	const { chatId } = useParams();
-
+	
 	const { upload, loading: fileLoading, error: uploadError } = useUpload();
 	const { createNewChat, updateSchema } = useChat();
 
@@ -27,6 +28,7 @@ export default function Input({
 		if (!uploadError) {
 			handleChangeForm("schema", result["sql_content"]);
 			setSidebarTab("schema");
+			setRecommends(JSON.parse(result['recommends']));
 
 			if (!chatId) {
 				const newChat = await createNewChat();

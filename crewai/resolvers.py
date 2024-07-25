@@ -9,18 +9,22 @@ agents = SQLAgents()
 tasks = SQLTasks()
 
 class Resolvers():
-    def generate_title(self, schema):
-        title_generator = agents.sql_title_agent()
-        title_task = tasks.sql_title_task(title_generator, filterSchema_v2(schema))
-
+    def initialize_chat(self, schema):              
+        title_agent = agents.sql_title_agent()
+        recommended_agent = agents.sql_recommended_agent();
+        title_task = tasks.sql_title_task(title_agent, filterSchema_v2(schema))
+        recommended_task = tasks.sql_recommended_task(recommended_agent, filterSchema_v2(schema))
+        
         crew = Crew(
-                agents=[title_generator],
-                tasks=[title_task],
+                agents=[title_agent, recommended_agent],
+                tasks=[title_task, recommended_task],
                 verbose=True,
             )
         
-        title = crew.kickoff()
-        return title
+        crew.kickoff()
+        title = title_task.output.raw_output
+        recommends = recommended_task.output.raw_output
+        return title, recommends
 
     def setup_sql(self, schema):
         try:
@@ -67,20 +71,17 @@ class Resolvers():
             
         query_output = extractMarkdown(design_task.output.raw_output)      
         print(query_output)      
-        response = dict()
         
         try:
             DB = DatabaseManager("mysql")
             DB.setup(schema)     
             result, columns, error = DB.query(query_output)
-
+        
             # Return test result
-            response['output'] = markdownSQL(query_output) if explain_output == None else explain_output
-            response['execute'] = result
-            response['columns'] = columns
-            return response
+            output = markdownSQL(query_output) if explain_output == None else explain_output
+            execute = result
+            return output, execute, columns
 
         except Exception as e:
-            print("Lỗi ở local: " + str(e))
-            return response
+            return "Error: " + str(e), 500
     

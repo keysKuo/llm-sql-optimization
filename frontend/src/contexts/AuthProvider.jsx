@@ -13,6 +13,7 @@ export default function AuthProvider({ children }) {
 		const jsonUser = localStorage.getItem("user");
 		return JSON.parse(jsonUser) || null;
 	});
+	const [showLoading, setShowLoading] = useState(false);
 	
 	
 	useEffect(() => {
@@ -23,7 +24,7 @@ export default function AuthProvider({ children }) {
 	}, [user]);
 
 	return (
-		<AuthContext.Provider value={{ user, setUser }}>
+		<AuthContext.Provider value={{ user, setUser, showLoading, setShowLoading }}>
 			{children}
 		</AuthContext.Provider>
 	);

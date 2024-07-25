@@ -15,6 +15,8 @@ const MessageBox = ({
 	handleToggleDatabase,
 	sidebarTab,
 	setSidebarTab,
+	recommends,
+	setRecommends,
 }) => {
 	const [messages, setMessages] = useState([]);
 	const { chatId } = useParams();
@@ -72,7 +74,7 @@ const MessageBox = ({
 
 			const askBot = async (_id) => {
 				addMessage(_id, "question", input);
-				callback();
+				if (callback) callback();
 				const options = {
 					url: `${configs["CREWAI_URL"]}/test`,
 					method: "POST",
@@ -102,7 +104,13 @@ const MessageBox = ({
 			/>
 
 			{/* CONVERSATION'S MESSAGES */}
-			<ChatBox loading={loading} messages={messages} />
+			<ChatBox
+				loading={loading}
+				messages={messages}
+				formData={formData}
+				onSendMessage={onSendMessage}
+				recommends={recommends}
+			/>
 
 			{/* MESSAGE INPUT */}
 			<Input
@@ -112,6 +120,7 @@ const MessageBox = ({
 				onSendMessage={onSendMessage}
 				sidebarTab={sidebarTab}
 				setSidebarTab={setSidebarTab}
+				setRecommends={setRecommends}
 			/>
 		</>
 	);

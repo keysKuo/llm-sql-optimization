@@ -25,6 +25,8 @@ export default function ChatPage() {
 		setShowDatabase((prev) => !prev);
 	}, []);
 
+	const [recommends, setRecommends] = useState([]);
+
 	return (
 		<div className="flex justify-start items-center w-full gap-0">
 			<div
@@ -42,6 +44,7 @@ export default function ChatPage() {
 					sidebarTab={sidebarTab}
 					setSidebarTab={setSidebarTab}
 					handleToggleDatabase={handleToggleDatabase}
+					setRecommends={setRecommends}
 				/>
 			</div>
 			<div
@@ -58,6 +61,8 @@ export default function ChatPage() {
 					handleToggleDatabase={handleToggleDatabase}
 					sidebarTab={sidebarTab}
 					setSidebarTab={setSidebarTab}
+					recommends={recommends}
+					setRecommends={setRecommends}
 				/>
 			</div>
 		</div>

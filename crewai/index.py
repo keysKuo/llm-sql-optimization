@@ -14,7 +14,12 @@ async def test():
     is_explain = req['is_explain']
     
     resolver = Resolvers()
-    return resolver.generate_sql(question, schema, model, is_explain)
+    output, execute, columns = resolver.generate_sql(question, schema, model, is_explain)
+    return jsonify({
+        'output': output,
+        'execute': execute,
+        'columns': columns
+    })
 
 @app.route('/upload', methods=['POST'])
 async def upload():
@@ -29,10 +34,14 @@ async def upload():
         schema = file.read().decode('utf-8')
         resolver = Resolvers()
         result = resolver.setup_sql(schema)
-        title = resolver.generate_title(schema)
+        title, recommends = resolver.initialize_chat(schema)
 
         if result == True:
-            return jsonify({'title': title, 'sql_content': schema})
+            return jsonify({
+                'title': title,
+                'sql_content': schema,
+                'recommends': recommends
+            })
         else:
             return 'Setup database error', 403
     except Exception as e:

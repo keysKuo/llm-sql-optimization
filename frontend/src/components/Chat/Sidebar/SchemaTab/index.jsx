@@ -10,7 +10,8 @@ export default function SchemaTab({
 	formData,
 	setSidebarTab,
 	handleToggleDatabase,
-	handleChangeForm
+	handleChangeForm,
+	setRecommends
 }) {
 	const { upload, loading: fileLoading, error: uploadError } = useUpload();
 	const { createNewChat, updateSchema } = useChat();
@@ -22,6 +23,7 @@ export default function SchemaTab({
 		const result = await upload(file);
 		if (!uploadError) {
 			handleChangeForm("schema", result["sql_content"]);
+			setRecommends(JSON.parse(result['recommends']));
 
 			if (!chatId) {
 				const newChat = await createNewChat();

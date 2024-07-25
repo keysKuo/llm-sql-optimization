@@ -11,6 +11,7 @@ export default function Sidebar({
 	sidebarTab,
 	setSidebarTab,
 	handleToggleDatabase,
+	setRecommends,
 }) {
 	const [chats, setChats] = useState([]);
 	const {
@@ -38,7 +39,7 @@ export default function Sidebar({
 	}, [chatId]);
 
 	return (
-		<>	
+		<>
 			{sidebarTab === "chat" ? (
 				<ChatTab
 					handleToggleDatabase={handleToggleDatabase}
@@ -53,9 +54,9 @@ export default function Sidebar({
 					handleChangeForm={handleChangeForm}
 					setSidebarTab={setSidebarTab}
 					handleToggleDatabase={handleToggleDatabase}
+					setRecommends={setRecommends}
 				/>
 			)}
-			
 		</>
 	);
 }
