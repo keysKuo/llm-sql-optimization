@@ -15,7 +15,7 @@ export default function useUpload() {
 		formData.append("file", file);
 
         const options = {
-			url: configs["CREWAI_URL"] + "/upload",
+			url: configs["CREWAI_URL"] + "/init-chat",
 			method: "POST",
 			headers: {
 				"Content-Type": "multipart/form-data",

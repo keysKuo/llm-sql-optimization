@@ -1,11 +1,13 @@
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 
 export default function Modal({ onSendMessage, input, clearInput, setShowModal }) {
 	const [checked, setChecked] = useState(false);
-
+	const { chatId } = useParams();
+	
 	const onConfirm = () => {
         setShowModal(!checked)
-        onSendMessage(input, clearInput)
+        onSendMessage(chatId, input, clearInput)
     };
 
 	return (

@@ -26,7 +26,7 @@ function formatTimestamp(timestamp) {
 }
 
 function isNumber(str) {
-    return !isNaN(parseFloat(str)) && ("" + parseFloat(str)).length === ("" + str).length;
+    return typeof(str) == 'number';
 }
 
 function isDate(str) {

@@ -57,7 +57,7 @@ export default function ChatTab({
 
 			<div className="overflow-y-hidden relative w-full flex flex-col flex-1 text-sm bg-[#2d2d2d] text-[#ccc] overflow-x-hidden">
 				{/* NOW CHATS */}
-				<div className="text-white p-4">
+				<div className="text-white p-3">
 					<div className="py-2 font-normal text-xs cursor-default">
 						Now
 					</div>
@@ -88,28 +88,28 @@ export default function ChatTab({
 				<div className="py-[0.05rem] bg-zinc-600"></div>
 
 				{/* PREVIOUS CHATS */}
-				<div className="flex-1 text-white p-4">
+				<div className="flex-1 text-white p-3">
 					<div className="py-2 font-normal text-xs cursor-default">
 						Previous chats
 					</div>
-					<ul className="space-y-1 max-h-[70svh] overflow-y-scroll my-2">
+					<ul className="font-normal space-y-[0.4rem] max-h-[70svh] overflow-y-scroll my-2">
 						{chats?.map((chat, idx) => {
 							return (
 								<li key={idx}>
-									<div
+									<Link
+										to={`/chat/${chat._id}`}
 										className={classNames({
 											"chat-title flex item-center justify-between relative rounded-lg hover:bg-[#353535] text-[.975rem] px-3 py-1": true,
 											active: chat._id == chatId,
 										})}
 									>
-										<Link
-											to={`/chat/${chat._id}`}
+										<div
 											className="flex items-center justify-between gap-2 py-1 w-[80%]"
 										>
 											<p className={classNames({
 												"typing": chat._id == chatId
 											})}>{chat.title}</p>
-										</Link>
+										</div>
 										<div className="flex items-center opacity-0">
 											<div className="p-2 hover:bg-[#2d2d2d] rounded-full">
 												<LuPencil />
@@ -123,7 +123,7 @@ export default function ChatTab({
 												<LuTrash color="#FA7070" />
 											</div>
 										</div>
-									</div>
+									</Link>
 								</li>
 							);
 						})}

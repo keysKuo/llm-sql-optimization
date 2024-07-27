@@ -27,7 +27,7 @@ export default function Sidebar({
 		const LoadHistory = async () => {
 			const result = await loadHistoryChats();
 			if (!chatError) {
-				console.log(result);
+				// console.log(result);
 				setChats(result?.metadata);
 				const chat = result?.metadata.find(
 					(chat) => chat._id === chatId
