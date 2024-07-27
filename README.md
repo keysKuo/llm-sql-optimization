@@ -23,7 +23,7 @@
 
 <div align="center">
   <br/>
-  <img width="800" src="./frontend/public/demo.gif" alt="Demo" />
+  <img width="700" src="./frontend/public/demo.gif" alt="Demo" />
   <br/>
   <br/>
 </div>
