@@ -12,11 +12,7 @@
 
  [![React][React.js]][React-url] ![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white) [![TailwindCSS][TailwindCSS]][TailwindCSS-url] 
  
- <br/>
-
  ![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)![MySQL][MySQL]
-
- <br/>
 
  ![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB) ![MongoDB][MongoDB] ![Ollama](https://img.shields.io/badge/Ollama-white.svg?style=for-the-badge&logo=ollama&logoColor=black)
 
