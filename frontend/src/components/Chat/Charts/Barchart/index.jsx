@@ -4,10 +4,11 @@ import { ArraysToMap, isNumber } from "../../../../utils";
 import classNames from "classnames";
 
 const BarChart = memo(({ data }) => {
+	// console.log(data)
 	const columns = data?.columns;
-	const execute = data?.execute;
-	const yStart = data?.execute[0].findIndex((e) => isNumber(e));
-	const mapData = ArraysToMap(columns, execute);
+	const rows = data?.rows;
+	const yStart = data?.rows[0].findIndex((e) => isNumber(e));
+	const mapData = ArraysToMap(columns, rows);
 	const [axis, setAxis] = useState({
 		x: 0,
 		y: yStart,

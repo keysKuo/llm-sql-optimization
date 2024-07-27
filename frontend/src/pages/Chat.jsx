@@ -7,8 +7,7 @@ export default function ChatPage() {
 	const [formData, setFormData] = useState({
 		question: "",
 		schema: "",
-		memory: "None",
-		is_explain: false,
+		// is_explain: false,
 		model: "gemma2:9b-instruct-q4_1",
 	});
 	const [sidebarTab, setSidebarTab] = useState("chat");
@@ -32,8 +31,8 @@ export default function ChatPage() {
 			<div
 				className={classNames({
 					"h-[100svh] flex flex-col items-center shadow-messagebox bg-[#2d2d2d] transition-all": true,
-					"w-[20%]": sidebarTab === "chat",
-					"w-[30%]": sidebarTab === "schema",
+					"w-[25rem]": sidebarTab === "chat",
+					"w-[35rem]": sidebarTab === "schema",
 					hidden: !showDatabase,
 				})}
 			>

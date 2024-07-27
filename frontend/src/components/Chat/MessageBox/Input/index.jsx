@@ -32,7 +32,7 @@ export default function Input({
 		if (!uploadError) {
 			handleChangeForm("schema", result["sql_content"]);
 			setSidebarTab("schema");
-			const recommends = JSON.parse(result["recommends"]);
+			const recommends = result["recommends"];
 			setRecommends(recommends);
 
 			if (!chatId) {
@@ -71,7 +71,7 @@ export default function Input({
 		if (e.key === "Enter") {
 			showModal
 				? document.getElementById("confirm").showModal()
-				: onSendMessage(input, clearInput);
+				: onSendMessage(chatId, input, clearInput);
 		}
 	};
 
@@ -128,7 +128,7 @@ export default function Input({
 					onClick={() =>
 						showModal
 							? document.getElementById("confirm").showModal()
-							: onSendMessage(input, clearInput)
+							: onSendMessage(chatId, input, clearInput)
 					}
 				>
 					{loading || fileLoading ? (

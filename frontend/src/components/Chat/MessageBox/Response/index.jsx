@@ -5,9 +5,17 @@ import Table from "../../Table";
 import { formatTimestamp, isNumber } from "../../../../utils";
 import classNames from "classnames";
 import BarChart from "../../Charts/Barchart";
+import { useParams } from "react-router-dom";
 
-export default function Response({ message, isSkeleton = false }) {
-	// console.log(message)
+export default function Response({
+	message,
+	recommends,
+	onSendMessage,
+	isSkeleton = false,
+}) {
+	const { chatId } = useParams();
+
+	// message?.execute?.forEach(e => console.log(e))
 	return (
 		<div className="mx-auto flex flex-1 gap-1 text-base w-[100%] md:max-w-3xl lg:max-w-[40rem] xl:max-w-[48rem]">
 			<div className="flex-shrink-0 flex flex-col relative items-end">
@@ -40,21 +48,22 @@ export default function Response({ message, isSkeleton = false }) {
 							<div className="min-h-[20px] text-message flex flex-col items-start break-words juice:w-full juice:items-end overflow-x-auto gap-2">
 								<div className="flex w-full flex-col gap-1 juice:empty:hidden juice:first:pt-[3px]">
 									<div className="markdown prose w-full break-words dark:prose-invert dark text-sm leading-7 p-2 rounded-lg space-y-6">
+										<strong>SQL Query: </strong>
 										<Markdown content={message?.body} />
 									</div>
 
-									{message?.data?.execute ? (
+									{message?.data?.rows?.length != 0 ? (
 										<>
 											<div className="markdown prose w-full break-words dark:prose-invert dark text-sm leading-6 p-2 rounded-lg">
 												<strong>Execution: </strong>
 											</div>
 											<Table
-												data={message?.data?.execute}
+												data={message?.data?.rows}
 												columns={message?.data?.columns}
 											/>
 
-											{message?.data?.execute[0]?.some(
-												(e) => isNumber(e)
+											{message?.data?.rows[0]?.some((e) =>
+												isNumber(e)
 											) && (
 												<BarChart
 													data={message?.data}
@@ -62,16 +71,27 @@ export default function Response({ message, isSkeleton = false }) {
 											)}
 										</>
 									) : (
-										<p className="text-rose-700 text-sm p-[8px]">
-											The query execution failed. Please
-											check your request and try again.{" "}
-											<br />
-											Possible issues: <br />
-											- Irrelevant request <br />-
-											Provided conflicted columns name{" "}
-											<br />
-											- Database schema issues <br />
-										</p>
+										<>
+											<p className="text-rose-700 text-sm p-[8px]">
+												The query execution failed.
+												Please check your request and
+												try again. <br />
+												Possible issues: <br />
+												- Irrelevant request <br />-
+												Provided conflicted columns name{" "}
+												<br />
+												- Database schema issues <br />
+											</p>
+
+											<strong>Hints:</strong>
+											<ul className="w-full flex flex-col items-start justify-center gap-2">
+												{recommends?.map((rec, idx) => {
+													return <li onClick={() => {
+														onSendMessage(chatId, rec);
+													}} className="hover:bg-[#bdc] cursor-pointer w-full p-2 rounded-lg text-sm" key={idx}>{idx + 1}. {rec}</li>
+												})}
+											</ul>
+										</>
 									)}
 								</div>
 							</div>

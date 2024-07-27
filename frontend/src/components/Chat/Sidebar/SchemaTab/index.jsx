@@ -34,7 +34,7 @@ export default function SchemaTab({
 		const result = await upload(file);
 		if (!uploadError) {
 			handleChangeForm("schema", result["sql_content"]);
-			const recommends = JSON.parse(result["recommends"]);
+			const recommends = result["recommends"];
 			setRecommends(recommends);
 
 			if (!chatId) {

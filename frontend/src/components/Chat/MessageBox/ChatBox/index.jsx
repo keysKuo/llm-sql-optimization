@@ -52,7 +52,7 @@ export default function ChatBox({
 							return mess.type === "question" ? (
 								<Message key={idx} message={mess} />
 							) : (
-								<Response key={idx} message={mess} />
+								<Response recommends={recommends} onSendMessage={onSendMessage} key={idx} message={mess} />
 							);
 						})}
 

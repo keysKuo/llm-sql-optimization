@@ -48,17 +48,33 @@ const MessageBox = ({
 	}, [chatId]);
 
 	const addMessage = (_id, type, mess, data = {}) => {
-		addNewMessage(_id, type, mess, data);
-		setMessages((prev) => [
-			...prev,
-			{
-				chatId: _id,
-				type: type,
-				body: mess,
-				data: data,
-				createdAt: new Date().toISOString(),
-			},
-		]);
+		if (type == 'response') {
+			const msg = mess['query'] + mess['explain'];
+			addNewMessage(_id, type, msg, data);
+			setMessages((prev) => [
+				...prev,
+				{
+					chatId: _id,
+					type: type,
+					body: msg,
+					data: data,
+					createdAt: new Date().toISOString(),
+				},
+			]);
+		}
+		else {
+			addNewMessage(_id, type, mess, data);
+			setMessages((prev) => [
+				...prev,
+				{
+					chatId: _id,
+					type: type,
+					body: mess,
+					data: data,
+					createdAt: new Date().toISOString(),
+				},
+			]);
+		}
 	};
 
 	const onSendMessage = useCallback(
@@ -66,7 +82,7 @@ const MessageBox = ({
 			if (!input) {
 				return;
 			}
-
+			// console.log(input)
 			if (!formData["schema"]) {
 				setSidebarTab("schema");
 				return;
@@ -75,17 +91,22 @@ const MessageBox = ({
 			const askBot = async (_id) => {
 				addMessage(_id, "question", input);
 				if (callback) callback();
+				const formToRequest = new FormData();
+				formToRequest.append('question', input);
+				formToRequest.append('schema', formData['schema']);
+				formToRequest.append('model', formData['model']);
+
 				const options = {
-					url: `${configs["CREWAI_URL"]}/test`,
+					url: `${configs["CREWAI_URL"]}/ask-chat`,
 					method: "POST",
 					headers: {
-						"Content-Type": "application/json",
+						"Content-Type": "multipart/form-data",
 					},
-					data: JSON.stringify({ ...formData, question: input }),
+					data: formToRequest,
 				};
 
-				const { output, execute, columns } = await fetch(options);
-				addMessage(_id, "response", output, { columns, execute });
+				const { query, explain, rows, columns} = await fetch(options);
+				addMessage(_id, "response", { query, explain }, { rows, columns });
 			};
 
 			askBot(chatId);
