@@ -83,7 +83,9 @@ export default function Response({
 												- Database schema issues <br />
 											</p>
 
-											<strong>Hints:</strong>
+											<div className="markdown prose w-full break-words dark:prose-invert dark text-sm leading-6 p-2 rounded-lg">
+												<strong>Hints: </strong>
+											</div>
 											<ul className="w-full flex flex-col items-start justify-center gap-2">
 												{recommends?.map((rec, idx) => {
 													return <li onClick={() => {

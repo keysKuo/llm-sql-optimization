@@ -7,7 +7,7 @@ export default function ChatPage() {
 	const [formData, setFormData] = useState({
 		question: "",
 		schema: "",
-		// is_explain: false,
+		is_explain: false,
 		model: "gemma2:9b-instruct-q4_1",
 	});
 	const [sidebarTab, setSidebarTab] = useState("chat");

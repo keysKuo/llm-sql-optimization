@@ -40,8 +40,7 @@ class SQLAgents():
                 goal=EXPERT_AGENT_GOAL,
                 backstory=dedent(EXPERT_AGENT_BACKSTORY),
                 allow_delegation=False,
-                verbose=True,
-                llm=Ollama(model=model)
+                verbose=True
             )
         else:
             return Agent(
@@ -50,6 +49,7 @@ class SQLAgents():
             backstory=dedent(EXPERT_AGENT_BACKSTORY),
             allow_delegation=False,
             verbose=True,
+            llm=Ollama(model=model)
         )
 
     def sql_title_agent(self):

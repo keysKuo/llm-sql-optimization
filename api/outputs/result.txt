@@ -1,34 +1,24 @@
-## Query Analysis:
+The SQL query aims to retrieve the names of movies (ten_phim) and their average ticket prices (gia_ve) from a database containing information about movies (`phim` table) and movie showtimes (`lich_chieu` table).  Let's break down how it works step by step:
 
 **Explanation:**
 
-This SQL query retrieves a list of 20 orders along with customer information. Here's a breakdown:
+1. **`SELECT p.ten_phim, AVG(l.gia_ve) AS average_ticket_price`**: This part specifies the columns to be retrieved in the result set. 
+    - `p.ten_phim`: Selects the movie name from the `phim` table (aliased as `p`).
+    - `AVG(l.gia_ve)`: Calculates the average ticket price for each movie. It takes the `gia_ve` column from the `lich_chieu` table (aliased as `l`) and applies the `AVG` aggregate function to it. The result is aliased as `average_ticket_price`.
 
-1. **`SELECT o.order_id, c.customer_name, o.order_date, o.total_amount`**: This part specifies the columns to be retrieved from the database. 
-   - `o.order_id`: The order ID from the `Orders` table (aliased as `o`).
-   - `c.customer_name`: The customer name from the `Customer` table (aliased as `c`).
-   - `o.order_date`: The order date from the `Orders` table.
-   - `o.total_amount`: The total amount of the order from the `Orders` table.
+2. **`FROM phim p JOIN lich_chieu l ON p.ma_phim = l.ma_phim`**: This defines the tables involved and how they are related.
+    - `FROM phim p`:  Indicates that the `phim` table is the primary table in the query. It's aliased as `p` for brevity.
+    - `JOIN lich_chieu l`: Joins the `lich_chieu` table to the `phim` table. The `lich_chieu` table is aliased as `l`.
+    - `ON p.ma_phim = l.ma_phim`: Specifies the join condition. It connects rows from the two tables where the `ma_phim` (movie ID) column in both tables matches.
 
-2. **`FROM Orders o JOIN Customer c ON o.customer_id = c.customer_id`**: This section defines the tables involved and how they are related.
-   - `FROM Orders o`:  Specifies the `Orders` table as the primary source and assigns it the alias `o` for brevity.
-   - `JOIN Customer c`: Joins the `Orders` table with the `Customer` table, using the alias `c` for the `Customer` table.
-   - `ON o.customer_id = c.customer_id`: This is the join condition. It links rows from the `Orders` table to rows in the `Customer` table based on matching `customer_id` values in both tables.
+3. **`GROUP BY p.ten_phim, p.the_loai`**: Groups the results based on unique combinations of movie names and genres. This is essential because we want to calculate the average ticket price for each distinct movie.
 
-3. **`LIMIT 20`**: This clause limits the number of rows returned by the query to 20.
+4. **`LIMIT 20`**: Restricts the number of returned rows to 20.
 
 **Suggestion:**
 
-- **Create an Index:**  To improve query performance, consider creating an index on the `customer_id` column in both the `Orders` and `Customer` tables. This will allow the database to quickly locate matching rows during the join operation.
+- **Index:** Create an index on the `ma_phim` column in both the `phim` and `lich_chieu` tables. This will significantly speed up the join operation, as the database can quickly find matching rows based on the indexed column.
 
-```sql
--- Example for Orders table
-CREATE INDEX idx_orders_customer_id ON Orders (customer_id);
 
--- Example for Customer table
-CREATE INDEX idx_customers_customer_id ON Customer (customer_id);
-```
 
-**Problems:**
-
-- **No Indexing:** Without an index on the `customer_id` column, the query might perform a full table scan on both `Orders` and `Customer` tables to find matching rows. This can be slow, especially for large datasets.
+Let me know if you have any other SQL queries you'd like me to analyze!

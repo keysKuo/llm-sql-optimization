@@ -49,7 +49,7 @@ const MessageBox = ({
 
 	const addMessage = (_id, type, mess, data = {}) => {
 		if (type == 'response') {
-			const msg = mess['query'] + mess['explain'];
+			const msg = mess['query'] + "\n" + mess['explain'];
 			addNewMessage(_id, type, msg, data);
 			setMessages((prev) => [
 				...prev,
@@ -95,6 +95,7 @@ const MessageBox = ({
 				formToRequest.append('question', input);
 				formToRequest.append('schema', formData['schema']);
 				formToRequest.append('model', formData['model']);
+				formToRequest.append('is_explain', formData['is_explain']);
 
 				const options = {
 					url: `${configs["CREWAI_URL"]}/ask-chat`,

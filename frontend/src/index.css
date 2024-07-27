@@ -145,8 +145,9 @@ code[class*="language-"] {
 }
 
 code {
-  color: #d85e6e;
-  font-size: 0.8rem;
+  color: #71b190;
+  font-size: 0.9rem;
+  font-weight: 700 !important;
 }
 
 .active {

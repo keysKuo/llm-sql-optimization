@@ -23,8 +23,8 @@ async def root() -> dict:
     return {"data": 'FastAPI'}
 
 @app.post('/ask-chat')
-async def ask_chat(question: str = Form(...), schema: str = Form(...), model: str = Form(...)) -> dict:    
-    return await resolver.ask_chat(question, schema, model, False)
+async def ask_chat(question: str = Form(...), schema: str = Form(...), model: str = Form(...), is_explain: bool = Form(...)) -> dict:    
+    return await resolver.ask_chat(question, schema, model, is_explain)
 
 @app.post('/init-chat')
 async def initialize_chat(file: UploadFile = File(...)) -> dict:
