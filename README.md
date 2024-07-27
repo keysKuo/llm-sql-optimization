@@ -4,7 +4,7 @@
 # SQL Learning Support System with Large Language Models
 
 
-**The SQL Learning Support System with Large Language Models is designed to improve how individuals learn and work with SQL. By using advanced language models like Llama3, Gemma2, Mistral,... this system provides smart and helpful support for understanding, writing, and optimizing SQL queries. It offers an interactive platform where learners can ask questions, get clear explanations and visualizations, receive real-time help with their SQL tasks. Whether you're a beginner learning the basics or an experienced user looking to enhance your skills, this system can be a significant supporter to your SQL learning.**
+The SQL Learning Support System with Large Language Models is designed to improve how individuals learn and work with SQL. By using advanced language models like Llama3, Gemma2, Mistral,... this system provides smart and helpful support for understanding, writing, and optimizing SQL queries. It offers an interactive platform where learners can ask questions, get clear explanations and visualizations, receive real-time help with their SQL tasks. Whether you're a beginner learning the basics or an experienced user looking to enhance your skills, this system can be a significant supporter to your SQL learning.
 
 
 <div align="center">
@@ -14,12 +14,14 @@
 
 # Built with:
  [![React][React.js]][React-url]
-  ![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
+ ![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
  [![TailwindCSS][TailwindCSS]][TailwindCSS-url]
  [![Flask][Flask]][Flask-url]
+ ![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)
+ ![NodeJs][Node.js]
  ![MongoDB][MongoDB]
  ![MySQL][MySQL]
-   ![Ollama](https://img.shields.io/badge/Ollama-white.svg?style=for-the-badge&logo=ollama&logoColor=black)
+ ![Ollama](https://img.shields.io/badge/Ollama-white.svg?style=for-the-badge&logo=ollama&logoColor=black)
 
 
 # Requiments:
@@ -73,26 +75,29 @@ docker-compose logs # View images' Logs
 
 # Installation:
 
-```bash
-# Clone dự án từ GitHub
+Clone dự án từ GitHub
+```sh
 git clone https://github.com/keysKuo/Llama3-sql-optimization.git
-
-# Đi vào thư mục của dự án
 cd Llama3-sql-optimization/
+```
 
-# Cài đặt các package từ tệp requirements.txt
+`Fastapi`:
+```sh
+cd api/
+pip install fastapi
 pip install -r requirements.txt
+```
 
-# Đi vào thư mục frontend
-cd frontend/
-
-# Cài đặt các package frontend
+`Authentication`:
+```sh
+cd auth/
 npm install
+npm install nodemon --save-dev # Nếu cần thiết
+```
 
-# Đi vào thư mục backend
-cd backend/
-
-# Cài đặt các package backend
+`Frontend`:
+```sh
+cd frontend
 npm install
 ```
 
@@ -130,7 +135,7 @@ GROQ_MODEL_NAME = os.getenv('GROQ_MODEL_NAME')
 GROQ_API_KEY = os.getenv('GROQ_API_KEY')
 
 
-# Agents
+# ------------------------------------------------ SQL SPECIALIST ----------------------------------------------
 SPECIALIST_AGENT_ROLE = 'SQL Specialist'
 SPECIALIST_AGENT_GOAL = 'Design optimical SQL queries for database'
 SPECIALIST_AGENT_BACKSTORY = """
@@ -139,28 +144,6 @@ SPECIALIST_AGENT_BACKSTORY = """
                     You do your best to:
                         - Ensure the highest syntax quality and query performance within the database context.
                         - Optimize performance of your SQL queries."""
-
-EXPERT_AGENT_ROLE = 'SQL Expert'
-EXPERT_AGENT_GOAL = 'Analyze and evaluate SQL queries'
-EXPERT_AGENT_BACKSTORY = """
-                    You are an SQL Expert at a leading tech think tank.
-                    Your expertise in analyzing and evaluating how effect the SQL queries to the database.
-                    You do your best to:
-                        - Explaining step by step how a query work.
-                        - Identifying the problems in a query or database then suggesting solutions to handle its problems."""
-
-
-TITLE_AGENT_ROLE = 'Chat Title Generator'
-TITLE_AGENT_GOAL = 'Generate meaningful and informative titles for chat conversations based on SQL schema'
-TITLE_AGENT_BACKSTORY = """
-                    You are a Chat Title Generator at an innovative tech company.
-                    Your expertise lies in understanding SQL schema and creating concise and relevant titles for chat conversations.
-                    You do your best to:
-                        - Analyze the SQL schema to extract key information.
-                        - Generate clear and meaningful titles that reflect the content and context of the chat.
-                        - Ensure that the titles are unique, descriptive, and help in easy identification of the chat conversation."""
-
-
 
 SYSTEM_QUERY_INSTRUCTIONS = """
             * Generate a MySQL query to answer to the question
@@ -182,7 +165,6 @@ SYSTEM_QUERY_INSTRUCTIONS = """
             * DO NOT generate any DML statements (INSERT, UPDATE, DELETE, DROP etc.) to the database
 """
 
-# Tasks
 def DESIGN_TASK_DESCRIPTION(schema, requirement):
     return f"""
             Based on the Schema, you will design MySQL query to solve the Requirement below while strictly adhering to the Instructions:
@@ -204,7 +186,18 @@ DESIGN_TASK_EXPECTED_OUTPUT = """
                 Result includes:
                 - **SQL Query** (output)
             """
-        
+
+
+# ------------------------------------------------ SQL EXPERT ----------------------------------------------
+EXPERT_AGENT_ROLE = 'SQL Expert'
+EXPERT_AGENT_GOAL = 'Analyze and evaluate SQL queries'
+EXPERT_AGENT_BACKSTORY = """
+                    You are an SQL Expert at a leading tech think tank.
+                    Your expertise in analyzing and evaluating how effect the SQL queries to the database.
+                    You do your best to:
+                        - Explaining step by step how a query work.
+                        - Identifying the problems in a query or database then suggesting solutions to handle its problems."""
+
 EXPERT_TASK_DESCRIPTION = """
             You will analyze and evaluate the query from the 'SQL Specialist'.
             If the query worked:
@@ -216,11 +209,22 @@ EXPERT_TASK_DESCRIPTION = """
             
 EXPERT_TASK_EXPECTED_OUTPUT = """
                 Result includes:
-                - **SQL Query:** (Query from 'SQL Specialist')
                 - **Explanation:** (Explain how query work)
                 - **Suggestion:** (Index or partition code)
                 - **Problems:** (Show the problems if exist)
             """
+
+
+# ------------------------------------------------ TITLE GENERATOR ----------------------------------------------
+TITLE_AGENT_ROLE = 'Chat Title Generator'
+TITLE_AGENT_GOAL = 'Generate meaningful and informative titles for chat conversations based on SQL schema'
+TITLE_AGENT_BACKSTORY = """
+                    You are a Chat Title Generator at an innovative tech company.
+                    Your expertise lies in understanding SQL schema and creating concise and relevant titles for chat conversations.
+                    You do your best to:
+                        - Analyze the SQL schema to extract key information.
+                        - Generate clear and meaningful titles that reflect the content and context of the chat.
+                        - Ensure that the titles are unique, descriptive, and help in easy identification of the chat conversation."""
 
 def TITILE_TASK_DESCRIPTION(schema):
     return f"""Generate a meaningful and informative title for a chat conversation based on the given SQL schema.
@@ -230,15 +234,35 @@ def TITILE_TASK_DESCRIPTION(schema):
                 {schema}
             """
 
-TITLE_TASK_EXPECTED_OUTPUT = "A meaningful title"
+TITLE_TASK_EXPECTED_OUTPUT = 'A meaningful title'
+
+# ------------------------------------------------ QUESTION RECOMMENDER ----------------------------------------------
+RECOMMEND_AGENT_ROLE = 'Question Recommender'
+RECOMMEND_AGENT_GOAL = 'Generate meaningful and informative recommended questions for SQL schema'
+RECOMMEND_AGENT_BACKSTORY = """
+                    You are a SQL Expert at am innovative tech company.
+                    You have responsibility to recommend the firstly questions to query for SQL schema.
+                    Ensure that the recommended questions are related and focused on major of the schema.
+                            """                            
+
+def RECOMMEND_TASK_DESCRIPTION(schema):
+    return f"""Generate 4 meaningful and informative recommended questions for SQL schema.
+
+                Schema:
+                --------
+                {schema}
+            """
+            
+RECOMMEND_TASK_EXPECTED_OUTPUT = 'An array with 4 recommended questions'
 ```
 
 # Run app:
 
 ```bash
-# Run Backend from root directory
-python crewai/index.py 
-# Default http://localhost:5000
+# Run API
+cd api/
+fastapi dev main.py 
+# Default http://localhost:8000
 
 # Run Frontend from frontend directory
 cd frontend/
@@ -246,7 +270,7 @@ npm run dev
 # Default http://localhost:5173
 
 # Run Backend from backend directory
-cd backend/
+cd auth/
 npm run dev 
 # Default http://localhost:2405
 ```
@@ -258,7 +282,7 @@ npm run dev
 [React-url]: https://reactjs.org/
 [Flask]: https://img.shields.io/badge/Flask-1D5C87?style=for-the-badge&logo=flask&logoColor=white
 [Flask-url]: https://flask.palletsprojects.com/en/3.0.x/
-
+[Node.js]: https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white
 [MySQL]: https://img.shields.io/badge/mysql-4479A1.svg?style=for-the-badge&logo=mysql&logoColor=white
 
 [MongoDB]: https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white
