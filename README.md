@@ -10,12 +10,6 @@
   [![GitHub release](https://img.shields.io/github/release/liyasthomas/postwoman/all?logo=GitHub)](https://github.com/keysKuo/Llama3-sql-optimization.git) [![Website shields.io](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](https://ezticket.io.vn) [![Chat on Discord](https://img.shields.io/badge/chat-Discord-71b190?logo=discord)](https://discord.gg/Z4ZxSRF6) [![PyPI license](https://img.shields.io/pypi/l/ansicolortags.svg)](https://pypi.python.org/pypi/ansicolortags/)
 
 
- [![React][React.js]][React-url] ![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white) [![TailwindCSS][TailwindCSS]][TailwindCSS-url] 
- 
- ![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)![MySQL][MySQL]
-
- ![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB) ![MongoDB][MongoDB] ![Ollama](https://img.shields.io/badge/Ollama-white.svg?style=for-the-badge&logo=ollama&logoColor=black)
-
   </p>
   <p>
     <sub>Built with ✏️ by
@@ -71,6 +65,14 @@
 ⏰ **History**: 
  - Request chats are synced with database storage to reuse with a single click.
 
+
+# Build with:
+
+ [![React][React.js]][React-url] ![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white) [![TailwindCSS][TailwindCSS]][TailwindCSS-url] 
+ 
+ ![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)![MySQL][MySQL]
+
+ ![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB) ![MongoDB][MongoDB] ![Ollama](https://img.shields.io/badge/Ollama-white.svg?style=for-the-badge&logo=ollama&logoColor=black)
 
 # Requiments:
 | Library| Version |
