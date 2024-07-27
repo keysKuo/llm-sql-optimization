@@ -10,9 +10,9 @@
   [![GitHub release](https://img.shields.io/github/release/liyasthomas/postwoman/all?logo=GitHub)](https://github.com/keysKuo/Llama3-sql-optimization.git) [![Website shields.io](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](https://ezticket.io.vn) [![Chat on Discord](https://img.shields.io/badge/chat-Discord-71b190?logo=discord)](https://discord.gg/Z4ZxSRF6) [![PyPI license](https://img.shields.io/pypi/l/ansicolortags.svg)](https://pypi.python.org/pypi/ansicolortags/)
 
 
- [![React][React.js]][React-url]![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)[![TailwindCSS][TailwindCSS]][TailwindCSS-url]
+ [![React][React.js]][React-url] ![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white) [![TailwindCSS][TailwindCSS]][TailwindCSS-url]
  ![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)![MySQL][MySQL]
- ![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)![MongoDB][MongoDB]![Ollama](https://img.shields.io/badge/Ollama-white.svg?style=for-the-badge&logo=ollama&logoColor=black)
+ ![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB) ![MongoDB][MongoDB] ![Ollama](https://img.shields.io/badge/Ollama-white.svg?style=for-the-badge&logo=ollama&logoColor=black)
 
   </p>
   <p>
@@ -23,19 +23,51 @@
   </p>
 </div>
 
-# SQL Learning Support System with Large Language Models
-
-
-The SQL Learning Support System with Large Language Models is designed to improve how individuals learn and work with SQL. By using advanced language models like Llama3, Gemma2, Mistral,... this system provides smart and helpful support for understanding, writing, and optimizing SQL queries. It offers an interactive platform where learners can ask questions, get clear explanations and visualizations, receive real-time help with their SQL tasks. Whether you're a beginner learning the basics or an experienced user looking to enhance your skills, this system can be a significant supporter to your SQL learning.
-
+---
 
 <div align="center">
-  <img width="1200" src="./frontend/public/demo.gif" alt="Demo" />
+  <br/>
+  <img width="800" src="./frontend/public/demo.gif" alt="Demo" />
+  <br/>
+  <br/>
 </div>
 
 
-# Built with:
-   
+✨ **Features**: 
+ - Explore deeper to unlock a extend understanding of SQL queries.
+ - Instantly support whether cases.
+ - An alternative teacher.
+ - Response with both data and visualization.
+ - Suitable for research purposes
+
+🚀 **Request**:
+
+ - Start new chat
+ - Upload schema
+ - Send requirement
+
+🌩 **Socket.IO**: 
+ - Send and Receive streaming data with socketio server.
+ - Asynchronous execution
+
+🔐 **Authentication**: 
+ - Basic
+ - JWT
+ - Bearer Token
+ - OAuth 2.0
+
+👋 **Responses**: 
+ - SQL Query
+ - Explanation
+ - Suggestion
+ - Problems
+
+📁 **Support**: 
+ - Copy response to clipboard
+ - Download response to as a file
+
+⏰ **History**: 
+ - Request chats are synced with database storage to reuse with a single click.
 
 
 # Requiments:
