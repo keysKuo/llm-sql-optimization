@@ -64,7 +64,7 @@ def DESIGN_TASK_DESCRIPTION(schema, requirement):
             
 DESIGN_TASK_EXPECTED_OUTPUT = """
                 Result includes:
-                - **SQL Query** (output)
+                - query (SQL query output)
             """
 
 
@@ -76,22 +76,30 @@ EXPERT_AGENT_BACKSTORY = """
                     Your expertise in analyzing and evaluating how effect the SQL queries to the database.
                     You do your best to:
                         - Explaining step by step how a query work.
-                        - Identifying the problems in a query or database then suggesting solutions to handle its problems."""
+                        - Suggesting solutions to handle its problems.
+                        - Write example create index.
+                        - Write example create partition.
+                        - Identifying the problems in a query or database.
+                        """
 
 EXPERT_TASK_DESCRIPTION = """
             You will analyze and evaluate the query from the 'SQL Specialist'.
             If the query worked:
                 _ Explain how it works
-                - Suggest how to optimize it (such as index, partition, ...) 
+                - Suggest how to optimize it
+                - Write Index SQL query
+                - Write Partition SQL query
             else:
                 - Show its problems
             """
             
 EXPERT_TASK_EXPECTED_OUTPUT = """
                 Result includes:
-                - **Explanation:** (Explain how query work)
-                - **Suggestion:** (Index or partition code)
-                - **Problems:** (Show the problems if exist)
+                - explanation (Explain how query work)
+                - suggestion (Optimized suggestion)
+                - index (Example Index SQL query)
+                - partition (Example Partition SQL query)
+                - problems (Show the problems if exist)
             """
 
 

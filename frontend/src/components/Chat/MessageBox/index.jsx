@@ -39,7 +39,7 @@ const MessageBox = ({
 			const result = await loadHistoryMessages(chatId);
 			// console.log(result);
 			if (!chatError) {
-				setRecommends(result?.metadata?.chat?.recommends)
+				setRecommends(result?.metadata?.chat?.recommends);
 				setMessages(result?.metadata?.messages || []);
 			}
 		};
@@ -48,33 +48,18 @@ const MessageBox = ({
 	}, [chatId]);
 
 	const addMessage = (_id, type, mess, data = {}) => {
-		if (type == 'response') {
-			const msg = mess['query'] + "\n" + mess['explain'];
-			addNewMessage(_id, type, msg, data);
-			setMessages((prev) => [
-				...prev,
-				{
-					chatId: _id,
-					type: type,
-					body: msg,
-					data: data,
-					createdAt: new Date().toISOString(),
-				},
-			]);
-		}
-		else {
-			addNewMessage(_id, type, mess, data);
-			setMessages((prev) => [
-				...prev,
-				{
-					chatId: _id,
-					type: type,
-					body: mess,
-					data: data,
-					createdAt: new Date().toISOString(),
-				},
-			]);
-		}
+		const body = typeof(mess) === 'string' ? mess : JSON.stringify(mess)
+		addNewMessage(_id, type, body, data);
+		setMessages((prev) => [
+			...prev,
+			{
+				chatId: _id,
+				type: type,
+				body: body,
+				data: data,
+				createdAt: new Date().toISOString(),
+			},
+		]);
 	};
 
 	const onSendMessage = useCallback(
@@ -92,10 +77,10 @@ const MessageBox = ({
 				addMessage(_id, "question", input);
 				if (callback) callback();
 				const formToRequest = new FormData();
-				formToRequest.append('question', input);
-				formToRequest.append('schema', formData['schema']);
-				formToRequest.append('model', formData['model']);
-				formToRequest.append('is_explain', formData['is_explain']);
+				formToRequest.append("question", input);
+				formToRequest.append("schema", formData["schema"]);
+				formToRequest.append("model", formData["model"]);
+				formToRequest.append("is_explain", formData["is_explain"]);
 
 				const options = {
 					url: `${configs["CREWAI_URL"]}/ask-chat`,
@@ -106,8 +91,22 @@ const MessageBox = ({
 					data: formToRequest,
 				};
 
-				const { query, explain, rows, columns} = await fetch(options);
-				addMessage(_id, "response", { query, explain }, { rows, columns });
+				const {
+					query, 		// SQL Query
+					explain, 	// Explanation
+					index, 		// Indexing code
+					partition, 	// Partition code
+					suggest, 	// Suggestions
+					problems, 	// Problems
+					rows, 		// Data records
+					columns, 	// Data columns
+				} = await fetch(options);
+				addMessage(
+					_id,
+					"response",
+					{ query, explain, index, partition, suggest, problems },
+					{ rows, columns }
+				);
 			};
 
 			askBot(chatId);

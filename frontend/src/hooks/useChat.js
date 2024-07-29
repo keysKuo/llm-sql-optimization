@@ -26,12 +26,11 @@ export default function useChat() {
 			.then((response) => response.data)
 			.catch((err) => {
 				console.log(err);
-				setError(err?.response?.data?.message || "Error occured!");
+				setError(err?.response?.data);
 				return null;
 			})
 			.finally(() => {
 				setLoading(false);
-				setError(null);
 			});
 	};
 
@@ -54,12 +53,11 @@ export default function useChat() {
 			.then((response) => response.data)
 			.catch((err) => {
 				console.log(err);
-				setError(err?.response?.data?.message || "Error occured!");
+				setError(err?.response?.data);
 				return null;
 			})
 			.finally(() => {
 				setLoading(false);
-				setError(null);
 			});
 	};
 
@@ -82,12 +80,11 @@ export default function useChat() {
 			.then((response) => response.data)
 			.catch((err) => {
 				console.log(err);
-				setError(err?.response?.data?.message || "Error occured!");
+				setError(err?.response?.data);
 				return null;
 			})
 			.finally(() => {
 				setLoading(false);
-				setError(null);
 			});
 	};
 
@@ -109,12 +106,11 @@ export default function useChat() {
 			.then((response) => response.data)
 			.catch((err) => {
 				console.log(err);
-				setError(err?.response?.data?.message || "Error occured!");
+				setError(err?.response?.data);
 				return null;
 			})
 			.finally(() => {
 				setLoading(false);
-				setError(null);
 			});
 	};
 
@@ -136,12 +132,11 @@ export default function useChat() {
 			.then((response) => response.data)
 			.catch((err) => {
 				console.log(err);
-				setError(err?.response?.data?.message || "Error occured!");
+				setError(err?.response?.data);
 				return null;
 			})
 			.finally(() => {
 				setLoading(false);
-				setError(null);
 			});
 	};
 
@@ -164,12 +159,11 @@ export default function useChat() {
 			.then((response) => response.data)
 			.catch((err) => {
 				console.log(err);
-				setError(err?.response?.data?.message || "Error occured!");
+				setError(err?.response?.data);
 				return null;
 			})
 			.finally(() => {
 				setLoading(false);
-				setError(null);
 			});
 	};
 

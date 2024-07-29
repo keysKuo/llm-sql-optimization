@@ -10,6 +10,7 @@ router.post('/signIn', catchAsync(AuthController.signIn));
 router.post('/signInWithGoogle', catchAsync(AuthController.signInWithGoogle));
 
 router.use(catchAsync(verifyAuth));
+router.get('/protected', (req, res, next) => res.status(200).json({success: true, msg: 'Authenticated'}));
 router.post('/logOut', catchAsync(AuthController.logOut));
 
 module.exports = router;

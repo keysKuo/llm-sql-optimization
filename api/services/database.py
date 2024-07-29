@@ -25,10 +25,10 @@ class DatabaseManager:
                 rows = cursor.fetchall()
                 columns = [i[0] for i in cursor.description]
                 
-                for row in rows:
-                    for value in row:
-                        print(type(value))
-                        print(str(value))
+                # for row in rows:
+                #     for value in row:
+                #         print(type(value))
+                #         print(str(value))
                 
                 print("Query successfully")
                 return {"rows": rows, "columns": columns}

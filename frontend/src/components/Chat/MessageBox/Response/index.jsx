@@ -14,8 +14,12 @@ export default function Response({
 	isSkeleton = false,
 }) {
 	const { chatId } = useParams();
+	let metadata = {};
+	if (typeof message == "object") {
+		metadata = JSON.parse(message?.body);
+	}
 
-	// message?.execute?.forEach(e => console.log(e))
+	// console.log(metadata);
 	return (
 		<div className="mx-auto flex flex-1 gap-1 text-base w-[100%] md:max-w-3xl lg:max-w-[40rem] xl:max-w-[48rem]">
 			<div className="flex-shrink-0 flex flex-col relative items-end">
@@ -49,8 +53,41 @@ export default function Response({
 								<div className="flex w-full flex-col gap-1 juice:empty:hidden juice:first:pt-[3px]">
 									<div className="markdown prose w-full break-words dark:prose-invert dark text-sm leading-7 p-2 rounded-lg space-y-6">
 										<strong>SQL Query: </strong>
-										<Markdown content={message?.body} />
+										<Markdown content={metadata.query} />
 									</div>
+
+									{metadata.explain && (
+										<div className="markdown prose w-full break-words dark:prose-invert dark text-sm leading-7 p-2 rounded-lg space-y-6">
+											<strong>Explanation: </strong>
+											<Markdown
+												content={metadata.explain}
+											/>
+										</div>
+									)}
+
+									{metadata.suggest && (
+										<div className="markdown prose w-full break-words dark:prose-invert dark text-sm leading-7 p-2 rounded-lg space-y-6">
+											<strong>Suggestion: </strong>
+											<Markdown
+												content={metadata.suggest}
+											/>
+											<Markdown
+												content={metadata.index}
+											/>
+											<Markdown
+												content={metadata.partition}
+											/>
+										</div>
+									)}
+
+									{metadata.problems && (
+										<div className="markdown prose w-full break-words dark:prose-invert dark text-sm leading-7 p-2 rounded-lg space-y-6">
+											<strong>Problems: </strong>
+											<Markdown
+												content={metadata.problems}
+											/>
+										</div>
+									)}
 
 									{message?.data?.rows?.length != 0 ? (
 										<>
@@ -88,9 +125,20 @@ export default function Response({
 											</div>
 											<ul className="w-full flex flex-col items-start justify-center gap-2">
 												{recommends?.map((rec, idx) => {
-													return <li onClick={() => {
-														onSendMessage(chatId, rec);
-													}} className="hover:bg-[#bdc] cursor-pointer w-full p-2 rounded-lg text-sm" key={idx}>{idx + 1}. {rec}</li>
+													return (
+														<li
+															onClick={() => {
+																onSendMessage(
+																	chatId,
+																	rec
+																);
+															}}
+															className="hover:bg-[#bdc] cursor-pointer w-full p-2 rounded-lg text-sm"
+															key={idx}
+														>
+															{idx + 1}. {rec}
+														</li>
+													);
 												})}
 											</ul>
 										</>

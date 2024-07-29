@@ -12,12 +12,11 @@ export default function useFetch() {
 			.then((response) => response.data)
 			.catch((err) => {
 				console.log(err);
-				setError(err?.response?.data?.message || "Error occured!");
+				setError(err);
 				return null;
 			})
 			.finally(() => {
 				setLoading(false);
-				setError(null);
 			});
 	};
 

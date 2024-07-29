@@ -22,6 +22,7 @@ class SQLAgents():
                 backstory=dedent(SPECIALIST_AGENT_BACKSTORY),
                 allow_delegation=False,
                 verbose=True,
+                max_execution_time=10
             )
         else:         
             return Agent(
@@ -30,7 +31,8 @@ class SQLAgents():
                 backstory=dedent(SPECIALIST_AGENT_BACKSTORY),
                 allow_delegation=False,
                 verbose=True,
-                llm=Ollama(model=model)
+                llm=Ollama(model=model),
+                max_execution_time=20
             )
         
     def sql_expert_agent(self, model):
@@ -40,7 +42,8 @@ class SQLAgents():
                 goal=EXPERT_AGENT_GOAL,
                 backstory=dedent(EXPERT_AGENT_BACKSTORY),
                 allow_delegation=False,
-                verbose=True
+                verbose=True,
+                max_execution_time=10
             )
         else:
             return Agent(
@@ -49,7 +52,8 @@ class SQLAgents():
             backstory=dedent(EXPERT_AGENT_BACKSTORY),
             allow_delegation=False,
             verbose=True,
-            llm=Ollama(model=model)
+            llm=Ollama(model=model),
+            max_execution_time=20
         )
 
     def sql_title_agent(self):
@@ -59,6 +63,7 @@ class SQLAgents():
             backstory=dedent(TITLE_AGENT_BACKSTORY),
             allow_delegation=False,
             verbose=True,
+            max_execution_time=10
         )
         
     def sql_recommended_agent(self):
@@ -68,5 +73,6 @@ class SQLAgents():
             backstory=dedent(RECOMMEND_AGENT_BACKSTORY),
             allow_delegation=False,
             verbose=True,
+            max_execution_time=10
         )
         

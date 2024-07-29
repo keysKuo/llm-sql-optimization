@@ -43,8 +43,8 @@ class Resolvers():
     async def ask_chat(self, requirement, schema, model, is_explain=False):     
         try:   
             filtered_schema = filterSchema_v2(schema)
-            query_output = ""
-            explain_output = ""
+            query_output = {"query", ""}
+            explain_output = {"explain": ""}
             
             if is_explain == True:
                 specialist = agents.sql_specialist_agent(model)
@@ -58,8 +58,8 @@ class Resolvers():
                 crew = Crew(agents=agent_list, tasks=task_list, verbose=True, process=Process.sequential)       
                 crew.kickoff()
                 
-                query_output = extractMarkdown(design_task.output.raw_output) 
-                explain_output = analyze_task.output.raw_output
+                query_output = json.loads(design_task.output.exported_output)
+                explain_output = json.loads(analyze_task.output.exported_output)
             else:
                 specialist = agents.sql_specialist_agent(model)
                 agent_list = [specialist]
@@ -70,17 +70,28 @@ class Resolvers():
                 crew = Crew(agents=agent_list, tasks=task_list, verbose=True)       
                 crew.kickoff()
             
-                query_output = extractMarkdown(design_task.output.raw_output) 
+                query_output = json.loads(design_task.output.exported_output)
           
             completed_setup = await database.setup(schema)   
             if completed_setup == False:
                 raise HTTPException(status_code=409, detail='SQL setup failed')
 
-            metadata = await database.execute(query_output)
-            query = markdownSQL(query_output)
+            # print(f"Query Output: {design_task.output.exported_output}")  
+            # print(f"Explain Output: {analyze_task.output.exported_output}")  
+            
+            metadata = await database.execute(query_output.get("query", ""))
                 
-            return {'query': query, 'explain': explain_output, 'rows': process_data(metadata['rows']), 'columns': metadata['columns']}
-        except Exception as e:
-            raise HTTPException(status_code=500, detail=str(e))
+            return {
+                'query': markdownSQL(query_output.get("query", "")),
+                'explain': explain_output.get("explanation", ""),
+                'index': markdownSQL(explain_output.get("index", "")),
+                'partition': markdownSQL(explain_output.get("partition", "")),
+                'suggest': explain_output.get("suggestion", ""),
+                'problems':explain_output.get("problems", ""),
+                'rows': process_data(metadata['rows']),
+                'columns': metadata['columns']
+            }
+        except HTTPException as e:
+            raise HTTPException(status_code=500, detail="Output")
           
            

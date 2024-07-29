@@ -34,6 +34,9 @@ export default function Sidebar({
 				);
 				handleChangeForm("schema", chat?.schema || "");
 			}
+			else {
+				console.log(chatError)
+			}
 		};
 
 		LoadHistory();
