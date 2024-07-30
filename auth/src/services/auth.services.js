@@ -66,7 +66,7 @@ class AuthService {
 	static async signIn({ email, password }) {
         // Check if user existed by email
 		const existedUser = await userModel.findOne({ email }).lean();
-		if (!existedUser)
+		if (!existedUser || existedUser.googleId)
 			throw new FileNotFoundError(`❌ User Not Exists!`);
         
         // Check if password matched

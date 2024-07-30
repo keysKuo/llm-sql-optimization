@@ -8,7 +8,7 @@ export default function ChatPage() {
 		question: "",
 		schema: "",
 		is_explain: false,
-		model: "gemma2:9b-instruct-q4_1",
+		model: "gemma2:9b",
 	});
 	const [sidebarTab, setSidebarTab] = useState("chat");
 

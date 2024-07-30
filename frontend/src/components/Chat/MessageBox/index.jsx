@@ -94,8 +94,6 @@ const MessageBox = ({
 				const {
 					query, 		// SQL Query
 					explain, 	// Explanation
-					index, 		// Indexing code
-					partition, 	// Partition code
 					suggest, 	// Suggestions
 					problems, 	// Problems
 					rows, 		// Data records
@@ -104,7 +102,7 @@ const MessageBox = ({
 				addMessage(
 					_id,
 					"response",
-					{ query, explain, index, partition, suggest, problems },
+					{ query, explain, suggest, problems },
 					{ rows, columns }
 				);
 			};

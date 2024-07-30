@@ -71,12 +71,6 @@ export default function Response({
 											<Markdown
 												content={metadata.suggest}
 											/>
-											<Markdown
-												content={metadata.index}
-											/>
-											<Markdown
-												content={metadata.partition}
-											/>
 										</div>
 									)}
 

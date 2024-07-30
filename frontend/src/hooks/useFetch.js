@@ -12,7 +12,7 @@ export default function useFetch() {
 			.then((response) => response.data)
 			.catch((err) => {
 				console.log(err);
-				setError(err);
+				setError(err.toString());
 				return null;
 			})
 			.finally(() => {

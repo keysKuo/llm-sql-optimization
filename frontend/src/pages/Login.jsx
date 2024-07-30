@@ -1,15 +1,15 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { LuAtSign, LuKey } from "react-icons/lu";
 import GoogleSVG from "../components/SVG/GoogleSVG";
 import { Link } from "react-router-dom";
 import configDev from "../configs";
-import { AuthContext } from "../contexts/AuthProvider";
+import { useAuthContext } from "../contexts/AuthProvider";
 import useFetch from "../hooks/useFetch";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import useLoginWithGoogle from "../hooks/useLoginWithGoogle";
 
 export default function LoginPage() {
-	const { user, setUser } = useContext(AuthContext);
+	const { user, setUser } = useAuthContext();
 	const { fetch, loading, error } = useFetch();
 	const [formData, setFormData] = useState({
 		email: "",

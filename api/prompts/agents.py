@@ -13,6 +13,7 @@ from textwrap import dedent
 from crewai import Agent
 from langchain_community.llms import Ollama
 
+
 class SQLAgents():
     def sql_specialist_agent(self, model):
         if model == 'groq':

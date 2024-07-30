@@ -47,20 +47,14 @@ SYSTEM_QUERY_INSTRUCTIONS = """
 
 def DESIGN_TASK_DESCRIPTION(schema, requirement):
     return f"""
-            Based on the Schema, you will design MySQL query to solve the Requirement below while strictly adhering to the Instructions:
+        Based on the Schema, you will design MySQL query to solve the Requirement
+        below while strictly adhering to the Instructions: {SYSTEM_QUERY_INSTRUCTIONS}         
             
-            Schema:
-            -----------
-            {schema}
-            
-            Requirement
-            -----------
-            {requirement}
-            
-            Instructions
-            ------------
-            {SYSTEM_QUERY_INSTRUCTIONS}
-            """
+        ---------------- Schema -----------------
+        {schema}
+        ------------- Requirement ---------------
+        {requirement}
+        """
             
 DESIGN_TASK_EXPECTED_OUTPUT = """
                 Result includes:
@@ -74,12 +68,7 @@ EXPERT_AGENT_GOAL = 'Analyze and evaluate SQL queries'
 EXPERT_AGENT_BACKSTORY = """
                     You are an SQL Expert at a leading tech think tank.
                     Your expertise in analyzing and evaluating how effect the SQL queries to the database.
-                    You do your best to:
-                        - Explaining step by step how a query work.
-                        - Suggesting solutions to handle its problems.
-                        - Write example create index.
-                        - Write example create partition.
-                        - Identifying the problems in a query or database.
+                    You do your best to explain as clearly and accurately as possible what you have analyzed.
                         """
 
 EXPERT_TASK_DESCRIPTION = """
@@ -87,8 +76,6 @@ EXPERT_TASK_DESCRIPTION = """
             If the query worked:
                 _ Explain how it works
                 - Suggest how to optimize it
-                - Write Index SQL query
-                - Write Partition SQL query
             else:
                 - Show its problems
             """
@@ -97,8 +84,6 @@ EXPERT_TASK_EXPECTED_OUTPUT = """
                 Result includes:
                 - explanation (Explain how query work)
                 - suggestion (Optimized suggestion)
-                - index (Example Index SQL query)
-                - partition (Example Partition SQL query)
                 - problems (Show the problems if exist)
             """
 

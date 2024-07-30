@@ -32,7 +32,7 @@ class DatabaseManager:
                 
                 print("Query successfully")
                 return {"rows": rows, "columns": columns}
-        except Exception as e:
+        except Error as e:
             print(f"Error: {e}")
             return {"rows": [], "columns": []}
         finally:
@@ -69,7 +69,7 @@ class DatabaseManager:
                 print("Setup Database successfully")
                 return True
 
-        except Exception as e:
+        except Error as e:
             print(f"Error: {e}")
             return False
         finally:

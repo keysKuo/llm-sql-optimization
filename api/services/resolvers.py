@@ -36,7 +36,7 @@ class Resolvers():
             title = title_task.output.raw_output
             recommends = recommended_task.output.raw_output
             return {'title': title, 'recommends': json.loads(recommends), 'sql_content': schema}
-        except Exception as e:
+        except HTTPException as e:
              raise HTTPException(status_code=500, detail="Initialize error")         
         
     
@@ -84,8 +84,6 @@ class Resolvers():
             return {
                 'query': markdownSQL(query_output.get("query", "")),
                 'explain': explain_output.get("explanation", ""),
-                'index': markdownSQL(explain_output.get("index", "")),
-                'partition': markdownSQL(explain_output.get("partition", "")),
                 'suggest': explain_output.get("suggestion", ""),
                 'problems':explain_output.get("problems", ""),
                 'rows': process_data(metadata['rows']),

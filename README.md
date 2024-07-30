@@ -2,7 +2,7 @@
 
 
 <div align="center">
-  <a href="https://postwoman.io"><img src="https://www.newai.vn/static/img/logo.png" alt="newai.vn logo" height="160">
+  <a href="https://www.newai.vn"><img src="https://www.newai.vn/static/img/logo.png" alt="newai.vn logo" height="160">
   </a>
   <br/>
   <br/>
@@ -23,7 +23,7 @@
 
 <div align="center">
   <br/>
-  <img width="800" src="./frontend/public/demo.gif" alt="Demo" />
+  <img width="700" src="./frontend/public/demo.gif" alt="Demo" />
   <br/>
   <br/>
 </div>

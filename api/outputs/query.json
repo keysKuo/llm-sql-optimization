@@ -1,0 +1,1 @@
+{"query": "SELECT \n    o.order_id,\n    c.customer_name,\n    o.order_date,\n    o.total_amount \nFROM Orders o\nJOIN Customer c ON o.customer_id = c.customer_id\nLIMIT 20;"}

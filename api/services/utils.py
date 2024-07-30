@@ -51,7 +51,8 @@ def parseQuery(sql):
     for match in re.finditer(column_regex, columns_part):
         column_name = match.group(1)
         column_definition = match.group(2).strip()
-        columns[column_name] = column_definition
+        if column_name != 'FOREIGN':
+            columns[column_name] = column_definition.split()[0]
 
     return table_name, columns
 
