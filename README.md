@@ -65,6 +65,8 @@
 ⏰ **History**: 
  - Request chats are synced with database storage to reuse with a single click.
 
+❌ **Issues**:
+ - CrewAI tools infinite loop: https://github.com/crewAIInc/crewAI/issues/455
 
 # Build with:
 

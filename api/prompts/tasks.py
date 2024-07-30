@@ -18,13 +18,13 @@ class ExplainOutput(BaseModel):
 
 class SQLTasks():
     def sql_design_task(self, agent, requirement, schema):
-        # sql_read_tool = SQLReadTool(schema=schema, requirement=requirement)
+        sql_read_tool = SQLReadTool(schema=schema, requirement=requirement)
         return Task(
-            description=dedent(DESIGN_TASK_DESCRIPTION(schema, requirement)),
+            description="",
             agent=agent,
             output_file='outputs/query.json',
             create_directory=True,
-            # tools=[sql_read_tool],
+            tools=[sql_read_tool],
             expected_output=DESIGN_TASK_EXPECTED_OUTPUT,
             output_json=QueryOutput
         )
