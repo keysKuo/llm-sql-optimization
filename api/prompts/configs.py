@@ -18,16 +18,18 @@ GROQ_API_KEY = os.getenv('GROQ_API_KEY')
 # ------------------------------------------------ SQL SPECIALIST ----------------------------------------------
 SPECIALIST_AGENT_ROLE = 'SQL Specialist'
 SPECIALIST_AGENT_GOAL = 'Design optimical SQL queries for database'
-SPECIALIST_AGENT_BACKSTORY = """
+def SPECIALIST_AGENT_BACKSTORY(schema):
+    return f"""
                     You are a SQL Specialist at a leading tech think tank.
                     Your expertise in designing SQL queries in MySQL language.
                     You do your best to:
                         - Ensure the highest syntax quality and query performance within the database context.
-                        - Optimize performance of your SQL queries."""
+                        - Optimize performance of your SQL queries.       
+                    {schema}
+            """
 
 SYSTEM_QUERY_INSTRUCTIONS = """
-            * Generate a MySQL query to answer to the question
-            * Respond as a valid MySQL query in type string
+            * Respond as type SQL script
             * 'SELECT' at least 4 columns in query
             * DO NOT use 'SELECT *'
             * DO NOT use 'WHERE' clause unless Question mention
@@ -45,15 +47,11 @@ SYSTEM_QUERY_INSTRUCTIONS = """
             * DO NOT generate any DML statements (INSERT, UPDATE, DELETE, DROP etc.) to the database
 """
 
-def DESIGN_TASK_DESCRIPTION(schema, requirement):
+def DESIGN_TASK_DESCRIPTION(requirement):
     return f"""
         Based on the Schema, you will design MySQL query to solve the Requirement
-        below while strictly adhering to the Instructions: {SYSTEM_QUERY_INSTRUCTIONS}         
-            
-        ---------------- Schema -----------------
-        {schema}
-        ------------- Requirement ---------------
-        {requirement}
+        below while strictly adhering to the Instructions: {SYSTEM_QUERY_INSTRUCTIONS}                  
+        Requirement: {requirement}
         """
             
 DESIGN_TASK_EXPECTED_OUTPUT = """

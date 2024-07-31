@@ -15,12 +15,12 @@ from langchain_community.llms import Ollama
 
 
 class SQLAgents():
-    def sql_specialist_agent(self, model):
+    def sql_specialist_agent(self, model, schema):
         if model == 'groq':
             return Agent(
                 role=SPECIALIST_AGENT_ROLE,
                 goal=SPECIALIST_AGENT_GOAL,
-                backstory=dedent(SPECIALIST_AGENT_BACKSTORY),
+                backstory=dedent(SPECIALIST_AGENT_BACKSTORY(schema)),
                 allow_delegation=False,
                 verbose=True,
                 max_execution_time=10
@@ -29,7 +29,7 @@ class SQLAgents():
             return Agent(
                 role=SPECIALIST_AGENT_ROLE,
                 goal=SPECIALIST_AGENT_GOAL,
-                backstory=dedent(SPECIALIST_AGENT_BACKSTORY),
+                backstory=dedent(SPECIALIST_AGENT_BACKSTORY(schema)),
                 allow_delegation=False,
                 verbose=True,
                 llm=Ollama(model=model),

@@ -17,10 +17,10 @@ class ExplainOutput(BaseModel):
     problems: str
 
 class SQLTasks():
-    def sql_design_task(self, agent, requirement, schema):
+    def sql_design_task(self, agent, requirement):
         # sql_read_tool = SQLReadTool(schema=schema, requirement=requirement)
         return Task(
-            description=dedent(DESIGN_TASK_DESCRIPTION(schema, requirement)),
+            description=dedent(DESIGN_TASK_DESCRIPTION(requirement)),
             agent=agent,
             output_file='outputs/query.json',
             create_directory=True,

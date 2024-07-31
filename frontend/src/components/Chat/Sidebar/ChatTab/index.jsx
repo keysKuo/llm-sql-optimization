@@ -92,7 +92,7 @@ export default function ChatTab({
 					<div className="py-2 font-normal text-xs cursor-default">
 						Previous chats
 					</div>
-					<ul className="font-normal space-y-[0.4rem] max-h-[70svh] overflow-y-scroll my-2">
+					<ul className="space-y-[0.4rem] max-h-[70svh] overflow-y-scroll my-2">
 						{chats?.map((chat, idx) => {
 							return (
 								<li key={idx}>

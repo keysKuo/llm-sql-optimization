@@ -47,11 +47,11 @@ class Resolvers():
             explain_output = {"explain": ""}
             
             if is_explain == True:
-                specialist = agents.sql_specialist_agent(model)
+                specialist = agents.sql_specialist_agent(model, filtered_schema)
                 expert = agents.sql_expert_agent(model)
                 agent_list = [specialist, expert]
 
-                design_task = tasks.sql_design_task(specialist, requirement, filtered_schema)  
+                design_task = tasks.sql_design_task(specialist, requirement)  
                 analyze_task = tasks.sql_expert_task(expert, design_task)
                 task_list = [design_task, analyze_task]
 
@@ -61,10 +61,10 @@ class Resolvers():
                 query_output = json.loads(design_task.output.exported_output)
                 explain_output = json.loads(analyze_task.output.exported_output)
             else:
-                specialist = agents.sql_specialist_agent(model)
+                specialist = agents.sql_specialist_agent(model, filtered_schema)
                 agent_list = [specialist]
 
-                design_task = tasks.sql_design_task(specialist, requirement, filtered_schema)  
+                design_task = tasks.sql_design_task(specialist, requirement)  
                 task_list = [design_task]
             
                 crew = Crew(agents=agent_list, tasks=task_list, verbose=True)       
