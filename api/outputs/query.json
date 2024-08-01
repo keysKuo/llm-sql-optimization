@@ -1,1 +1,1 @@
-{"query": "SELECT\n    p.ProductName,\n    c.CategoryName,\n    p.Price,\n    p.Stock\nFROM Products p\nJOIN Categories c ON p.CategoryID = c.CategoryID\nLIMIT 20;"}
+{"query": "SELECT c.club_name, c.club_type FROM Clubs c LIMIT 20;"}

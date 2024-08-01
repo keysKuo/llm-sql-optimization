@@ -102,3 +102,15 @@ def custom_serializer(obj):
         return obj.isoformat()  # Chuyển thành định dạng ISO
     raise TypeError(f"Type {type(obj)} not serializable")
 
+
+def free_vram():
+    import torch
+    import gc
+
+    # Free up CUDA memory
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
+        torch.cuda.ipc_collect()
+
+    # Collect garbage
+    gc.collect()
